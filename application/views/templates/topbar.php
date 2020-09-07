@@ -1,17 +1,82 @@
-<nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
-    <a class="navbar-brand" href="<?= base_url('guru') ?>">Tazkia Insani</a>
-    <button class="btn btn-link btn-sm order-1 order-lg-0" id="sidebarToggle" href="#"><i class="fas fa-bars"></i></button>
-    <div class="d-none d-md-inline-block ml-auto mr-0 mr-md-3 my-2 my-md-0"></div>
-    <!-- Navbar-->
-    <ul class="navbar-nav ml-auto ml-md-0">
-        <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" id="userDropdown" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
-            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
-                <a class="dropdown-item" href="#">My Profile</a>
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="<?= base_url('auth/logout') ?>">Logout</a>
+<!-- ============================================================== -->
+<!-- Topbar header - style you can find in pages.scss -->
+<!-- ============================================================== -->
+<header class="topbar" data-navbarbg="skin6">
+    <nav class="navbar top-navbar navbar-expand-md">
+        <div class="navbar-header" data-logobg="skin6">
+            <!-- This is for the sidebar toggle which is visible on mobile only -->
+            <a class="nav-toggler waves-effect waves-light d-block d-md-none" href="javascript:void(0)"><i class="ti-menu ti-close"></i></a>
+            <!-- ============================================================== -->
+            <!-- Logo -->
+            <!-- ============================================================== -->
+            <div class="navbar-brand">
+                <!-- Logo icon -->
+                <a href="index.html">
+                    <b class="logo-icon">
+                        <!-- Dark Logo icon -->
+                        <img src="<?= base_url('/') ?>assets/templates/images/logo_with_text.png" width="230px" alt="homepage" class="dark-logo mt-2 ml-n3" />
+                    </b>
+                    <!--End Logo icon -->
+                </a>
             </div>
-        </li>
-    </ul>
-</nav>
-<div id="layoutSidenav">
+            <!-- ============================================================== -->
+            <!-- End Logo -->
+            <!-- ============================================================== -->
+            <!-- ============================================================== -->
+            <!-- Toggle which is visible on mobile only -->
+            <!-- ============================================================== -->
+            <a class="topbartoggler d-block d-md-none waves-effect waves-light" href="javascript:void(0)" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <i class="ti-more"></i>
+            </a>
+        </div>
+        <!-- ============================================================== -->
+        <!-- End Logo -->
+        <!-- ============================================================== -->
+        <div class="navbar-collapse collapse" id="navbarSupportedContent">
+            <!-- ============================================================== -->
+            <!-- Right side toggle and nav items -->
+            <!-- ============================================================== -->
+            <ul class="navbar-nav ml-auto float-right">
+                <!-- ============================================================== -->
+                <!-- User profile and search -->
+                <!-- ============================================================== -->
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="javascript:void(0)" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <?php if ($user->foto == 'default.jpg') { ?>
+                            <i class="fas fa-user fa-2x"></i>
+                        <?php } else { ?>
+                            <img src="<?= base_url('/') ?>assets/img/profile/<?= $user->foto ?>" width="45px" />
+                        <?php } ?>
+                        <span class="ml-2 d-none d-lg-inline-block"><span>Hello,</span>
+                            <span class="text-dark"><?= ucwords($user->nama) ?></span>
+                            <i data-feather="chevron-down" class="svg-icon"></i>
+                        </span>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right user-dd animated flipInY">
+                        <?php if ($this->session->userdata('id_role') == 1) { ?>
+                            <a class="dropdown-item" href="<?= base_url('staff/my_profile') ?>">
+                                <i data-feather="user" class="svg-icon mr-2 ml-1"></i>
+                                My Profile
+                            </a>
+                        <?php } else { ?>
+                            <a class="dropdown-item" href="<?= base_url('pendaftar/my_profile') ?>">
+                                <i data-feather="user" class="svg-icon mr-2 ml-1"></i>
+                                My Profile
+                            </a>
+                        <?php } ?>
+                        <a class="dropdown-item" href="<?= base_url('auth/logout') ?>">
+                            <i data-feather="power" class="svg-icon mr-2 ml-1"></i>
+                            Logout
+                        </a>
+                    </div>
+                </li>
+                <!-- ============================================================== -->
+                <!-- User profile and search -->
+                <!-- ============================================================== -->
+            </ul>
+        </div>
+    </nav>
+</header>
+<!-- ============================================================== -->
+<!-- End Topbar header -->
+<!-- ============================================================== -->
