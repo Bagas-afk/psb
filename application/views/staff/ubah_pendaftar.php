@@ -7,8 +7,7 @@
     <!-- ============================================================== -->
     <div class="container-fluid">
         <div class="card shadow p-4">
-            <h1><strong>Ubah Data Pendaftar</strong></h1>
-            <?= $data_pendaftar->nama ?>
+            <h1 class="mb-3"><strong>Ubah Data Pendaftar</strong></h1>
         </div>
     </div>
     <!-- ============================================================== -->

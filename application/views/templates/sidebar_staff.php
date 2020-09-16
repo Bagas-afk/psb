@@ -50,17 +50,10 @@
                         <span class="hide-menu">Data Kelulusan</span>
                     </a>
                 </li>
-
-                <li class="list-divider"></li>
-
-                <li class="nav-small-cap">
-                    <span class="hide-menu">Auth</span>
-                </li>
-
-                <li class="sidebar-item">
-                    <a class="sidebar-link sidebar-link" href="<?= base_url('auth/logout') ?>" aria-expanded="false">
+                <li class="sidebar-item <?= $selected[6] ?>">
+                    <a class="sidebar-link sidebar-link <?= $active[6] ?>" href="<?= base_url('staff/cetak_laporan') ?>" aria-expanded="false">
                         <i data-feather="home" class="feather-icon"></i>
-                        <span class="hide-menu">Logout</span>
+                        <span class="hide-menu">Cetak Laporan</span>
                     </a>
                 </li>
 

@@ -9,14 +9,60 @@
         <div class="card shadow p-4">
             <h1><strong>Data Pendaftar</strong></h1>
             <div class="mt-3 mb-3">
-                <a href="" class="btn btn-primary" style="width: 180px;"><i class="fas fa-plus"></i> Tambah Pendaftar</a>
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#staticBackdrop">
+                    <i class="fas fa-plus"></i> Tambah Pendaftar
+                </button>
                 <a href="" target="_blank" rel="noopener noreferrer" style="width: 180px;" class="btn btn-secondary"><i class="fas fa-download"></i> Download</a>
+                <!-- Modal Ubah Profile -->
+                <div class="modal fade" id="staticBackdrop" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-lg" role="document">
+                        <div class="modal-content">
+                            <div class="container">
+                                <div class="modal-header">
+                                    <h3 class="modal-title" id="staticBackdropLabel">Tambah Data Pendaftar</h3>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <form action="<?= base_url('c_pendaftar/simpan_pendaftar') ?>" method="post">
+                                        <div class="form-group">
+                                            <label>Nama Lengkap</label>
+                                            <input type="text" name="nama_pendaftar" class="form-control">
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Email</label>
+                                            <input type="email" name="email_pendaftar" class="form-control">
+                                        </div>
+                                        <div class="form-group">
+                                            <label>NISN</label>
+                                            <input type="text" name="nisn" oninput="this.value = this.value.replace(/[^0-9]/g,'').replace(/(\..*)\./g, '$1')" class="form-control">
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Password</label>
+                                            <input type="password" name="password" class="form-control">
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Konfirmasi Password</label>
+                                            <input type="password" name="password_confirm" class="form-control">
+                                        </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    <button type="submit" class="btn btn-success">Simpan Data Pendaftar</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
             <table id="datatable" class="table table-responsive">
-                <thead>
+                <thead class="bg-dark text-light">
                     <th class="text-center" style="width: 30px;">No</th>
                     <th style="min-width: 250px;">Nama Lengkap</th>
                     <th style="min-width: 200px;">Email</th>
+                    <th style="min-width: 130px;">NISN</th>
                     <th style="min-width: 300px;">Alamat</th>
                     <th class="text-center" style="min-width: 150px;">Aksi</th>
                 </thead>
@@ -27,8 +73,17 @@
                             <td class="text-center"><?= $no++ ?>.</td>
                             <td><?= $data->nama ?></td>
                             <td><?= $data->email ?></td>
-                            <td><?= $data->email ?></td>
-                            <td class="text-center"><button class="btn btn-info btn-sm" style="width: 35px;"><i class="fas fa-info"></i></button> <a href="<?= base_url('staff/ubah_pendaftar/' . md5($data->id_user)) ?>" class="btn btn-warning btn-sm" style="width: 35px;"><i class="fas fa-edit"></i></a> <button class="btn btn-danger btn-sm" style="width: 35px;"><i class="fas fa-trash"></i></button></td>
+                            <td><?= $data->nisn ?></td>
+                            <?php if ($data->alamat && $data->dusun && $data->kelurahan && $data->kecamatan && $data->kota && $data->provinsi) { ?>
+                                <td><?= $data->alamat ?> <?= $data->dusun ?>, Kel. <?= $data->kelurahan ?>, Kec. <?= $data->kecamatan ?>, <?= $data->kota ?>, <?= $data->provinsi ?></td>
+                            <?php } else { ?>
+                                <td>Alamat Belum Lengkap</td>
+                            <?php } ?>
+                            <td class="text-center">
+                                <button class="btn btn-info btn-sm" style="width: 35px;"><i class="fas fa-info"></i></button>
+                                <a href="<?= base_url('staff/ubah_pendaftar/' . md5($data->id_pendaftar)) ?>" class="btn btn-warning btn-sm" style="width: 35px;"><i class="fas fa-edit"></i></a>
+                                <button class="btn btn-danger btn-sm" style="width: 35px;"><i class="fas fa-trash"></i></button>
+                            </td>
                         </tr>
                     <?php } ?>
                 </tbody>

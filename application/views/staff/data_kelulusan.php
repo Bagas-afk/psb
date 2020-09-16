@@ -13,10 +13,11 @@
                     <thead>
                         <th class="text-center" style="width: 30px;">No</th>
                         <th class="text-center" style="min-width: 150px;">Tahun Ajaran</th>
+                        <th class="text-center" style="min-width: 150px;">NISN</th>
                         <th style="min-width: 300px;">Nama Pendaftar</th>
                         <th style="min-width: 130px;">Score Kelulusan</th>
                         <th style="min-width: 100px;">Keterangan</th>
-                        <th class="text-center" style="min-width: 100px;">Aksi</th>
+                        <!-- <th class="text-center" style="min-width: 100px;">Aksi</th> -->
                     </thead>
                     <tbody></tbody>
                 </table>

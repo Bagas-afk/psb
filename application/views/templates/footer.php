@@ -40,10 +40,13 @@
 <script src="<?= base_url('/') ?>assets/templates/js/pages/dashboards/dashboard1.min.js"></script>
 <script src="<?= base_url('/') ?>assets/fontawesome/js/all.min.js"></script>
 <script src="<?= base_url('/') ?>assets/datatables/datatables.js"></script>
+<script src="<?= base_url('/') ?>assets/sweetalert2/sweetalert2.all.min.js"></script>
+<script src="<?= base_url('/') ?>assets/select2/js/select2.full.min.js"></script>
 <script src="<?= base_url('/') ?>assets/templates/js/main.js"></script>
 
 <!-- My JavaScript -->
 <script src="<?= base_url('/') ?>assets/js/my_script.js"></script>
+<script src="<?= base_url('/') ?>assets/js/my_swal.js"></script>
 
 </body>
 

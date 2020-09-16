@@ -54,6 +54,11 @@
                             <small class="text-danger"><?php echo form_error('nama'); ?></small>
                         </div>
                         <div class="form-group">
+                            <label class="mb-1" for="inputName">NISN</label>
+                            <input class="form-control py-4" id="inputName" type="text" name="nisn" value="<?= set_value('nisn') ?>" placeholder="Masukan NISN Pendaftar" />
+                            <small class="text-danger"><?php echo form_error('nisn'); ?></small>
+                        </div>
+                        <div class="form-group">
                             <label class="mb-1" for="inputEmailAddress">Email</label>
                             <input class="form-control py-4" id="inputEmailAddress" name="email" type="text" value="<?= set_value('email') ?>" aria-describedby="emailHelp" placeholder="Masukan Email" />
                             <small class="text-danger"><?php echo form_error('email'); ?></small>
@@ -78,7 +83,7 @@
                             <button type="submit" class="btn btn-dark btn-block">Daftar</button>
                         </div>
                         </form>
-                        <div class="mt-3 text-center">Sudah Punya Akun? <a href="<?= base_url('auth') ?>">Masuk</a></div>
+                        <div class="mt-3 text-center">Sudah Punya Akun? <a href="<?= base_url('auth/pendaftar') ?>">Masuk</a></div>
                     </div>
                 </div>
             </div>

@@ -80,9 +80,7 @@
                             <button type="submit" class="btn btn-dark btn-block">Masuk</button>
                         </div>
                         </form>
-                    </div>
-                    <div class="card-footer text-center">
-                        <div>Belum Punya Akun? <a href="<?= base_url('auth/registrasi') ?>">Daftar</a></div>
+                        <div class="mt-3 text-center">Belum Punya Akun? <a href="<?= base_url('auth/registrasi') ?>">Daftar</a></div>
                     </div>
                 </div>
             </div>

@@ -159,6 +159,16 @@ class Auth extends CI_Controller
             ]
          ],
          [
+            'field'  => 'nisn',
+            'label'  => 'NISN',
+            'rules'  => 'required|trim|max_length[10]',
+            'errors' => [
+               'required'     => 'NISN Harus Diisi.',
+               'max_length'   => 'NISN Tidak Lebih Dari 10 Karakter'
+
+            ]
+         ],
+         [
             'field'  => 'email',
             'label'  => 'Email',
             'rules'  => 'required|valid_email|trim|is_unique[tb_user.email]',
@@ -180,7 +190,7 @@ class Auth extends CI_Controller
          ],
          [
             'field'  => 'password_confirm',
-            'label'  => 'Password Confirmasi',
+            'label'  => 'Password Konfirmasi',
             'rules'  => 'required'
          ]
       ];
@@ -194,26 +204,37 @@ class Auth extends CI_Controller
          // jika berhasil
          $nama = trim($this->input->post('nama', TRUE));
          $email = trim($this->input->post('email', TRUE));
-         $password = password_hash(trim($this->input->post('password', TRUE)), PASSWORD_BCRYPT);
+         $nisn = trim($this->input->post('nisn', TRUE));
+         $password = password_hash(trim($this->input->post('password', TRUE)), PASSWORD_DEFAULT);
 
          $data = [
+            'id_pendaftar' => '',
             'nama'         => $nama,
             'email'        => $email,
             'password'     => $password,
+            'nisn'         => $nisn,
             'id_role'      => '2',
-            'is_active'    => '1',
+            'is_active'    => '0',
             'foto'         => 'default.jpg',
             'date_created' => date('Y-m-d H:i:s')
          ];
 
-         $simpan_registrasi = $this->User_Model->simpan_data_registrasi($data);
-         $cari_pendaftar = $this->Pendaftar_Model->cari_email_pendaftar($email)->row();
-         $detail = ['id_user' => $cari_pendaftar->id_user];
-         $simpan_detail = $this->Pendaftar_Model->simpan_detail($detail);
+         $simpan_registrasi = $this->Pendaftar_Model->simpan_registrasi($data);
+         $data_pendaftar = $this->Pendaftar_Model->cari_email_pendaftar($email)->row();
 
-         if ($simpan_registrasi && $simpan_detail) {
-            $this->session->set_flashdata('berhasil', "Segera Lakukan Verifikasi Email");
-            redirect('auth');
+         $token = [
+            'id_token'     => '',
+            'id_pendaftar' => $data_pendaftar->id_pendaftar,
+            'token'        => '1',
+            'mulai_token'  => date('d-M-Y H:i:s'),
+            'akhir_token'  => date('d-M-Y H:i:s', strtotime('+2 Days', date('d-M-Y H:i:s')))
+         ];
+
+         $simpan_token = $this->Token_Model->simpan_token($token);
+
+         if ($simpan_registrasi && $simpan_token) {
+            $this->session->set_flashdata('berhasil', "Verifikasi Email Terkirim. Segera Lakukan Verifikasi Email Dalam 2 Hari!");
+            redirect('auth/pendaftar');
          }
       }
    }

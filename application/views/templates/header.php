@@ -21,6 +21,8 @@
     <link href="<?= base_url('/') ?>assets/templates/extra-libs/jvector/jquery-jvectormap-2.0.2.css" rel="stylesheet" />
     <link href="<?= base_url('/') ?>assets/fontawesome/css/all.min.css" rel="stylesheet" />
     <link href="<?= base_url('/') ?>assets/datatables/datatables.css" rel="stylesheet" />
+    <link href="<?= base_url('/') ?>assets/select2/css/select2.css" rel="stylesheet" />
+    <link href="<?= base_url('/') ?>assets/select2/css/select2-bootstrap4.css" rel="stylesheet" />
     <!-- Custom CSS -->
     <link href="<?= base_url('/') ?>assets/templates/css/style.min.css" rel="stylesheet">
     <!-- My CSS -->
@@ -43,6 +45,9 @@
             <div class="lds-pos"></div>
         </div>
     </div>
+    <div class="flash-data-notif" data-flashdata="<?= $this->session->flashdata('notif'); ?>"></div>
+    <div class="flash-data-perintah" data-flashdata="<?= $this->session->flashdata('perintah'); ?>"></div>
+    <div class="flash-data-pesan" data-flashdata="<?= $this->session->flashdata('pesan'); ?>"></div>
     <!-- ============================================================== -->
     <!-- Main wrapper - style you can find in pages.scss -->
     <!-- ============================================================== -->

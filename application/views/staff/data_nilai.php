@@ -17,7 +17,7 @@
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title" id="staticBackdropLabel">Modal title</h5>
+                                <h5 class="modal-title" id="staticBackdropLabel">Input Nilai</h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
@@ -37,11 +37,9 @@
                 <thead>
                     <th class="text-center" style="width: 30px;">No</th>
                     <th class="text-center" style="min-width: 150px;">Tahun Ajaran</th>
+                    <th style="min-width: 120px;">NISN</th>
                     <th style="min-width: 300px;">Nama Pendaftar</th>
-                    <th style="min-width: 70px;">Nilai 1.1</th>
-                    <th style="min-width: 70px;">Nilai 1.2</th>
-                    <th style="min-width: 70px;">Nilai 1.3</th>
-                    <th style="min-width: 70px;">Nilai 1.4</th>
+                    <th style="min-width: 70px;">Nilai 1</th>
                     <th style="min-width: 70px;">Nilai 2</th>
                     <th class="text-center" style="min-width: 100px;">Aksi</th>
                 </thead>

@@ -11,6 +11,10 @@
     <h1>Home</h1>
     <a href="<?= base_url('auth/staff') ?>">Staff</a> |
     <a href="<?= base_url('auth/pendaftar') ?>">Pendaftar</a>
+    <div>
+        Staff : <?= password_hash('staff', PASSWORD_DEFAULT) ?> <br />
+        Pendaftar : <?= password_hash('pendaftar', PASSWORD_DEFAULT) ?>
+    </div>
 </body>
 
 </html>

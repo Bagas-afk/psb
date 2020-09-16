@@ -47,7 +47,7 @@
                         <?php } else { ?>
                             <img src="<?= base_url('/') ?>assets/img/profile/<?= $user->foto ?>" width="45px" />
                         <?php } ?>
-                        <span class="ml-2 d-none d-lg-inline-block"><span>Hello,</span>
+                        <span class="ml-2 d-none d-lg-inline-block"><span>Selamat Datang,</span>
                             <span class="text-dark"><?= ucwords($user->nama) ?></span>
                             <i data-feather="chevron-down" class="svg-icon"></i>
                         </span>
