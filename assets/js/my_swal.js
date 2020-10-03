@@ -37,13 +37,13 @@ function hapus_data(nama, href) {
 
 if (flashDataNotif == 'Berhasil') {
 	Swal.fire({
-		title: flashDataNotif,
+		title: flashDataPerintah,
 		text: flashDataPesan,
 		icon: 'success'
 	})
 } else if (flashDataNotif == 'Gagal') {
 	Swal.fire({
-		title: flashDataNotif,
+		title: flashDataPerintah,
 		text: flashDataPesan,
 		icon: 'error'
 	})

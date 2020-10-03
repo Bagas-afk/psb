@@ -32,8 +32,8 @@ class Staff extends CI_Controller
     function my_profile()
     {
         $data['judul'] = "My Profile";
-        $data['selected'] = ['', '', '', '', '', ''];
-        $data['active'] = ['', '', '', '', '', ''];
+        $data['selected'] = ['', '', '', '', '', '', ''];
+        $data['active'] = ['', '', '', '', '', '', ''];
         $data['user'] = $this->Staff_Model->cari_email_staff($this->session->userdata('email'))->row();
 
         $this->load->view('templates/header', $data);

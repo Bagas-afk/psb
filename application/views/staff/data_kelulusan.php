@@ -8,6 +8,13 @@
     <div class="container-fluid">
         <div class="card shadow p-4">
             <h1><strong>Data Kelulusan</strong></h1>
+            <div class="form-group">
+                <label>Plih Tahun Ajaran</label>
+                <select class="form-control select" id="tahun_ajaran_pendaftar">
+                    <option></option>
+                    <option value="1">Tahun Ajaran 2020 / 2021</option>
+                </select>
+            </div>
             <div class="mt-3">
                 <table id="datatable" class="table table-responsive">
                     <thead>

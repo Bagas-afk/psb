@@ -8,6 +8,13 @@
     <div class="container-fluid">
         <div class="card shadow p-4">
             <h1><strong>Data Penilaian</strong></h1>
+            <div class="form-group">
+                <label>Plih Tahun Ajaran</label>
+                <select class="form-control select" id="tahun_ajaran_pendaftar">
+                    <option></option>
+                    <option value="1">Tahun Ajaran 2020 / 2021</option>
+                </select>
+            </div>
             <div class="mb-3 mt-3">
                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#staticBackdrop">
                     <i class="fas fa-plus"></i> Tambah Penilaian Pendaftar

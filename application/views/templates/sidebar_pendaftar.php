@@ -27,7 +27,19 @@
                     </a>
                 </li>
                 <li class="sidebar-item <?= $selected[2] ?>">
-                    <a class="sidebar-link sidebar-link <?= $active[2] ?>" href="<?= base_url('pendaftar/pengumuman') ?>" aria-expanded="false">
+                    <a class="sidebar-link sidebar-link <?= $active[2] ?>" href="<?= base_url('pendaftar/pembayaran') ?>" aria-expanded="false">
+                        <i data-feather="home" class="feather-icon"></i>
+                        <span class="hide-menu">Pembayaran</span>
+                    </a>
+                </li>
+                <li class="sidebar-item <?= $selected[3] ?>">
+                    <a class="sidebar-link sidebar-link <?= $active[3] ?>" href="<?= base_url('pendaftar/cetak_kartu_ujian') ?>" aria-expanded="false">
+                        <i data-feather="home" class="feather-icon"></i>
+                        <span class="hide-menu">Cetak Kartu Ujian</span>
+                    </a>
+                </li>
+                <li class="sidebar-item <?= $selected[4] ?>">
+                    <a class="sidebar-link sidebar-link <?= $active[4] ?>" href="<?= base_url('pendaftar/pengumuman') ?>" aria-expanded="false">
                         <i data-feather="home" class="feather-icon"></i>
                         <span class="hide-menu">Pengumuman</span>
                     </a>

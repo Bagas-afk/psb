@@ -69,9 +69,9 @@
                 <thead class="bg-dark text-light">
                     <th class="text-center" style="width: 30px;">No</th>
                     <th class="text-center" style="min-width: 250px;">Tahun Ajaran</th>
-                    <th class="text-center" style="min-width: 130px;">Mulai Pendaftaran</th>
-                    <th class="text-center" style="min-width: 130px;">Akhir Pendaftaran</th>
-                    <th class="text-center" style="min-width: 180px;">Pengumuman Kelulusan</th>
+                    <th class="text-center" style="min-width: 130px;">Mulai</th>
+                    <th class="text-center" style="min-width: 130px;">Akhir</th>
+                    <th class="text-center" style="min-width: 180px;">Pengumuman</th>
                     <th class="text-center">Aksi</th>
                 </thead>
                 <tbody>

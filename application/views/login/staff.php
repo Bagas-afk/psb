@@ -32,6 +32,9 @@
                 <div class="lds-pos"></div>
             </div>
         </div>
+        <div class="flash-data-notif" data-flashdata="<?= $this->session->flashdata('notif'); ?>"></div>
+        <div class="flash-data-perintah" data-flashdata="<?= $this->session->flashdata('perintah'); ?>"></div>
+        <div class="flash-data-pesan" data-flashdata="<?= $this->session->flashdata('pesan'); ?>"></div>
         <!-- ============================================================== -->
         <!-- Preloader - style you can find in spinners.css -->
         <!-- ============================================================== -->
@@ -47,21 +50,7 @@
                         </div>
                         <h2 class="mt-3 text-center">Tazkia Insani - Halaman Login Staff</h2>
                         <p class="text-center">Silahkan Login Untuk Mengakses Website.</p>
-                        <?php if ($this->session->flashdata('berhasil')) { ?>
-                            <div class="alert alert-success" role="alert">
-                                <?= $this->session->flashdata('berhasil') ?>
-                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                        <?php } elseif ($this->session->flashdata('gagal')) { ?>
-                            <div class="alert alert-danger" role="alert">
-                                <?= $this->session->flashdata('gagal') ?>
-                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                        <?php } ?>
+
                         <?= form_open('auth/staff', ['method' => 'post']) ?>
                         <div class="form-group">
                             <label class="mb-1" for="inputEmailAddress">Email</label>
@@ -74,7 +63,7 @@
                             <small class="text-danger"><?= form_error('password'); ?></small>
                         </div>
                         <div class="form-group d-flex align-items-center">
-                            <a class="small" href="password.html#">Forgot Password?</a>
+                            <a class="small" href="<?= base_url('auth/staff_password') ?>">Forgot Password?</a>
                         </div>
                         <div>
                             <button type="submit" class="btn btn-dark btn-block">Masuk</button>
@@ -95,6 +84,8 @@
     <!-- Bootstrap tether Core JavaScript -->
     <script src="<?= base_url('/') ?>assets/templates/libs/popper.js/dist/umd/popper.min.js "></script>
     <script src="<?= base_url('/') ?>assets/templates/libs/bootstrap/dist/js/bootstrap.min.js "></script>
+    <script src="<?= base_url('/') ?>assets/sweetalert2/sweetalert2.all.min.js"></script>
+    <script src="<?= base_url('/') ?>assets/js/my_swal.js"></script>
     <!-- ============================================================== -->
     <!-- This page plugin js -->
     <!-- ============================================================== -->

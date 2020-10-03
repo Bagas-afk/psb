@@ -21,17 +21,17 @@
                 <?php } ?>
                 <div class="card shadow">
                     <div class="card-body">
-                        <form id="regForm" action="" method="post">
+                        <form id="regForm" action="<?= base_url('C_Pendaftar/update_data_pendaftar') ?>" method="post">
                             <!-- One "tab" for each step in the form: -->
                             <div class="tab">
-                                <h2 class="text-center">Data Siswa</h2>
+                                <h2 class="text-center">Identitas Peserta Didik</h2>
                                 <div class="form-group">
                                     <label>Nama Lengkap</label>
                                     <input type="text" name="nama" value="<?= $user->nama ?>" class="form-control" readonly>
                                 </div>
                                 <div class="form-group">
                                     <label>Email</label>
-                                    <input type="email" name="email" value="<?= $user->email ?>" class="form-control" readonly>
+                                    <input type="email" name="email" value="<?= $user->email ?>" class="form-control">
                                 </div>
                                 <div class="form-group">
                                     <label>NISN</label>
@@ -39,7 +39,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label>Jenis Kelamin</label>
-                                    <select name="jenis_kelamin" class="form-control select required">
+                                    <select name="jenis_kelamin" class="form-control select">
                                         <?php if ($user->jenis_kelamin == 'L') { ?>
                                             <option value="L" selected>Laki - Laki</option>
                                             <option value="P">Perempuan</option>
@@ -54,7 +54,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label>Nomor Induk Sekolah</label>
-                                    <input type="text" name="nis" value="<?= $user->nis ?>" class="form-control required">
+                                    <input type="text" name="nis" value="<?= $user->nis ?>" class="form-control">
                                 </div>
                                 <div class="form-group">
                                     <label>Nomor Ijazah</label>
@@ -70,19 +70,19 @@
                                 </div>
                                 <div class="form-group">
                                     <label>Nomor Induk Keluarga</label>
-                                    <input type="text" name="nik" value="<?= $user->nik ?>" class="form-control required">
+                                    <input type="text" name="nik" value="<?= $user->nik ?>" class="form-control">
                                 </div>
                                 <div class="form-group">
                                     <label>Tempat Lahir</label>
-                                    <input type="text" name="tempat_lahir" value="<?= $user->tempat_lahir ?>" class="form-control required">
+                                    <input type="text" name="tempat_lahir" value="<?= $user->tempat_lahir ?>" class="form-control">
                                 </div>
                                 <div class="form-group">
                                     <label>Tanggal Lahir</label>
-                                    <input type="date" name="tanggal_lahir" value="<?= date('Y-m-d', strtotime($user->tanggal_lahir)) ?>" class="form-control required">
+                                    <input type="date" name="tanggal_lahir" value="<?= date('Y-m-d', strtotime($user->tanggal_lahir)) ?>" class="form-control">
                                 </div>
                                 <div class="form-group">
                                     <label>Agama</label>
-                                    <select name="agama" class="form-control select required">
+                                    <select name="agama" class="form-control select">
                                         <option value="Islam" <?= $agama[0] ?>>Islam</option>
                                         <option value="Kristen" <?= $agama[1] ?>>Kristen</option>
                                         <option value="Budha" <?= $agama[2] ?>>Budha</option>
@@ -96,27 +96,27 @@
                                 </div>
                                 <div class="form-group">
                                     <label>Alamat</label>
-                                    <input type="text" name="alamat" value="<?= $user->alamat ?>" class="form-control required">
+                                    <input type="text" name="alamat" value="<?= $user->alamat ?>" class="form-control">
                                 </div>
                                 <div class="form-group">
                                     <label>Dusun</label>
-                                    <input type="text" name="dusun" value="<?= $user->dusun ?>" class="form-control required">
+                                    <input type="text" name="dusun" value="<?= $user->dusun ?>" class="form-control">
                                 </div>
                                 <div class="form-group">
                                     <label>Kelurahan</label>
-                                    <input type="text" name="kelurahan" value="<?= $user->kelurahan ?>" class="form-control required">
+                                    <input type="text" name="kelurahan" value="<?= $user->kelurahan ?>" class="form-control">
                                 </div>
                                 <div class="form-group">
                                     <label>Kecamatan</label>
-                                    <input type="text" name="kecamatan" value="<?= $user->kecamatan ?>" class="form-control required">
+                                    <input type="text" name="kecamatan" value="<?= $user->kecamatan ?>" class="form-control">
                                 </div>
                                 <div class="form-group">
                                     <label>Kabupaten / Kota</label>
-                                    <input type="text" name="kota" value="<?= $user->kota ?>" class="form-control required">
+                                    <input type="text" name="kota" value="<?= $user->kota ?>" class="form-control">
                                 </div>
                                 <div class="form-group">
                                     <label>Provinsi</label>
-                                    <input type="text" name="provinsi" value="<?= $user->provinsi ?>" class="form-control required">
+                                    <input type="text" name="provinsi" value="<?= $user->provinsi ?>" class="form-control">
                                 </div>
                                 <div class="form-group">
                                     <label>Transportasi</label>
@@ -145,22 +145,67 @@
                             </div>
 
                             <div class="tab">
-                                <h2 class="text-center">Data Periodik Siswa</h2>
-                                <p><input placeholder="E-mail..." oninput="this.className = ''"></p>
-                                <p><input placeholder="Phone..." oninput="this.className = ''"></p>
+                                <div class="atas mb-3">
+                                    <h2 class="text-center">Catatan Prestasi Peserta Didik</h2>
+                                    <button type="button" onclick="tambahPrestasi()" class="btn btn-primary"><i class="fas fa-plus"></i> Tambah Prestasi</button>
+                                </div>
+                                <div id="field_prestasi"></div>
                             </div>
 
                             <div class="tab">
-                                <h2 class="text-center">Data Periodik Siswa</h2>
-                                <p><input placeholder="dd" oninput="this.className = ''"></p>
-                                <p><input placeholder="mm" oninput="this.className = ''"></p>
-                                <p><input placeholder="yyyy" oninput="this.className = ''"></p>
+                                <h2 class="text-center">Beasiswa Peserta Didik</h2>
+                                <div class="atas mb-3">
+                                    <button type="button" onclick="tambahBeasiswa()" class="btn btn-primary"><i class="fas fa-plus"></i> Tambah Beasiswa</button>
+                                </div>
+                                <div id="field_beasiswa"></div>
                             </div>
 
                             <div class="tab">
-                                <h2 class="text-center">Data Periodik Siswa</h2>
-                                <p><input placeholder="Username..." oninput="this.className = ''"></p>
-                                <p><input placeholder="Password..." oninput="this.className = ''"></p>
+                                <h2 class="text-center">Data Periodik Peserta Didik</h2>
+                                <div class="form-group">
+                                    <label>Tinggi Badan (cm)</label>
+                                    <input type="number" name="tinggi_badan" class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    <label>Jarak (Km)</label>
+                                    <input type="number" name="jarak" class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    <label>Waktu (Jam)</label>
+                                    <input type="number" name="waktu" class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    <label>Jumlah Saudara Kandung</label>
+                                    <input type="number" name="jumlah_saudara" class="form-control">
+                                </div>
+                            </div>
+
+                            <div class="tab">
+                                <h2 class="text-center">Data Pengasuh Peserta Didik</h2>
+                                <div class="form-inline">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" onclick="ayah()" id="ayahCheck">
+                                        <label class="form-check-label">
+                                            Ayah
+                                        </label>
+                                    </div>
+                                    <div class="form-check ml-3 mr-3">
+                                        <input class="form-check-input" type="checkbox" onclick="ibu()" id="ibuCheck">
+                                        <label class="form-check-label">
+                                            Ibu
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" onclick="wali()" id="waliCheck">
+                                        <label class="form-check-label">
+                                            Wali
+                                        </label>
+                                    </div>
+                                </div>
+                                <hr />
+                                <div class="ayahDiv"></div>
+                                <div class="ibuDiv"></div>
+                                <div class="waliDiv"></div>
                             </div>
 
                             <div style="overflow:auto;">
@@ -172,6 +217,7 @@
 
                             <!-- Circles which indicates the steps of the form: -->
                             <div style="text-align:center;margin-top:40px;">
+                                <span class="step"></span>
                                 <span class="step"></span>
                                 <span class="step"></span>
                                 <span class="step"></span>

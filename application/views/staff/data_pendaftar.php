@@ -8,11 +8,17 @@
     <div class="container-fluid">
         <div class="card shadow p-4">
             <h1><strong>Data Pendaftar</strong></h1>
+            <div class="form-group">
+                <label>Plih Tahun Ajaran</label>
+                <select class="form-control select" id="tahun_ajaran_pendaftar">
+                    <option></option>
+                    <option value="1">Tahun Ajaran 2020 / 2021</option>
+                </select>
+            </div>
             <div class="mt-3 mb-3">
                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#staticBackdrop">
                     <i class="fas fa-plus"></i> Tambah Pendaftar
                 </button>
-                <a href="" target="_blank" rel="noopener noreferrer" style="width: 180px;" class="btn btn-secondary"><i class="fas fa-download"></i> Download</a>
                 <!-- Modal Ubah Profile -->
                 <div class="modal fade" id="staticBackdrop" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                     <div class="modal-dialog modal-lg" role="document">
@@ -29,10 +35,6 @@
                                         <div class="form-group">
                                             <label>Nama Lengkap</label>
                                             <input type="text" name="nama_pendaftar" class="form-control">
-                                        </div>
-                                        <div class="form-group">
-                                            <label>Email</label>
-                                            <input type="email" name="email_pendaftar" class="form-control">
                                         </div>
                                         <div class="form-group">
                                             <label>NISN</label>
@@ -61,9 +63,10 @@
                 <thead class="bg-dark text-light">
                     <th class="text-center" style="width: 30px;">No</th>
                     <th style="min-width: 250px;">Nama Lengkap</th>
-                    <th style="min-width: 200px;">Email</th>
+                    <th style="min-width: 300px;">Email</th>
                     <th style="min-width: 130px;">NISN</th>
                     <th style="min-width: 300px;">Alamat</th>
+                    <th style="min-width: 100px;">Pembayaran</th>
                     <th class="text-center" style="min-width: 150px;">Aksi</th>
                 </thead>
                 <tbody>
@@ -78,6 +81,20 @@
                                 <td><?= $data->alamat ?> <?= $data->dusun ?>, Kel. <?= $data->kelurahan ?>, Kec. <?= $data->kecamatan ?>, <?= $data->kota ?>, <?= $data->provinsi ?></td>
                             <?php } else { ?>
                                 <td>Alamat Belum Lengkap</td>
+                            <?php } ?>
+                            <?php $status = 'Processing';
+                            if ($status == 'Verified') { ?>
+                                <td class="bg-success text-center">
+                                    <a class="text-light" data-toggle="modal" data-target="#staticBackdropPembayaran">Verified</a>
+                                </td>
+                            <?php } elseif ($status == 'Processing') { ?>
+                                <td class="bg-warning text-center">
+                                    <a class="text-light" data-toggle="modal" data-target="#staticBackdropPembayaran">Processing</a>
+                                </td>
+                            <?php } else { ?>
+                                <td class="bg-danger text-light text-center">
+                                    Belum Dibayar
+                                </td>
                             <?php } ?>
                             <td class="text-center">
                                 <button class="btn btn-info btn-sm" style="width: 35px;"><i class="fas fa-info"></i></button>

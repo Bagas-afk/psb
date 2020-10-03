@@ -14,10 +14,18 @@ class Pendaftar_Model extends CI_Model
         return $this->db->get('tb_pendaftar');
     }
 
-    function cari_email_pendaftar($email)
+    function cari_nisn_pendaftar($nisn)
     {
-        $this->db->where('email', $email);
+        $this->db->where('nisn', $nisn);
         return $this->db->get('tb_pendaftar');
+    }
+
+    function ganti_password($password, $nisn, $nama)
+    {
+        $this->db->set('password', $password);
+        $this->db->where('nisn', $nisn);
+        $this->db->where('nama', $nama);
+        return $this->db->update('tb_pendaftar');
     }
 
     function simpan_registrasi($data)

@@ -8,6 +8,7 @@ class Auth extends CI_Controller
       parent::__construct();
       $this->load->model('Staff_Model');
       $this->load->model('Pendaftar_Model');
+      $this->load->model('Tahun_Ajaran_Model');
    }
 
    function staff()
@@ -81,21 +82,19 @@ class Auth extends CI_Controller
 
       $config_form_pendaftar = [
          [
-            'field'  => 'email',
-            'label'  => 'Email',
-            'rules'  => 'required|valid_email|trim',
+            'field'  => 'nisn',
+            'label'  => 'NISN',
+            'rules'  => 'required|trim',
             'errors' => [
-               'required'     => 'Email Harus Diisi.',
-               'valid_email'  => 'Email Harus Benar.'
+               'required'     => 'NISN Harus Diisi.'
             ]
          ],
          [
             'field'  => 'password',
             'label'  => 'Password',
-            'rules'  => 'required|min_length[2]',
+            'rules'  => 'required|min_length[8]',
             'errors' => [
-               'required'     => 'Password Harus Diisi.',
-               'min_length'   => 'Password Minimal 8 Karakter'
+               'required'     => 'Password Harus Diisi.'
             ]
          ]
       ];
@@ -107,35 +106,27 @@ class Auth extends CI_Controller
          $this->load->view('login/pendaftar');
       } else {
          // jika berhasil
-         $email = trim($this->input->post('email', TRUE));
+         $nisn = trim($this->input->post('nisn', TRUE));
          $password = trim($this->input->post('password', TRUE));
 
-         $pendaftar = $this->Pendaftar_Model->cari_email_pendaftar($email);
+         $pendaftar = $this->Pendaftar_Model->cari_nisn_pendaftar($nisn);
 
          if ($pendaftar->num_rows() > 0) {
             $pendaftar_data = $pendaftar->row();
-            if ($pendaftar_data->is_active == '1') {
-               if (password_verify($password, $pendaftar_data->password)) {
-                  $data_user = [
-                     'id_user'   => $pendaftar_data->id_pendaftar,
-                     'email'     => $pendaftar_data->email,
-                     'id_role'   => '2',
-                  ];
-                  $this->session->set_userdata($data_user);
-                  redirect('auth/cek_session');
-               } else {
-                  $this->session->set_flashdata('gagal', "Password yang anda masukan salah!");
-                  redirect('auth/pendaftar');
-               }
-            } elseif ($pendaftar_data->is_active == '2') {
-               $this->session->set_flashdata('gagal', "Email Anda Sudah Tidak Bisa Dipakai!");
-               redirect('auth/pendaftar');
-            } elseif ($pendaftar_data->is_active == '0') {
-               $this->session->set_flashdata('gagal', "Email Belum Terverifikasi. Verifikasi Email Anda!");
+            if (password_verify($password, $pendaftar_data->password)) {
+               $data_user = [
+                  'id_user'   => $pendaftar_data->id_pendaftar,
+                  'nisn'      => $pendaftar_data->nisn,
+                  'id_role'   => '2',
+               ];
+               $this->session->set_userdata($data_user);
+               redirect('auth/cek_session');
+            } else {
+               $this->session->set_flashdata('gagal', "Password yang anda masukan salah!");
                redirect('auth/pendaftar');
             }
          } else {
-            $this->session->set_flashdata('gagal', "Email Tidak Terdaftar! Silahkan Mendaftar");
+            $this->session->set_flashdata('gagal', "NISN Tidak Terdaftar! Silahkan Mendaftar");
             redirect('auth/pendaftar');
          }
       }
@@ -169,16 +160,6 @@ class Auth extends CI_Controller
             ]
          ],
          [
-            'field'  => 'email',
-            'label'  => 'Email',
-            'rules'  => 'required|valid_email|trim|is_unique[tb_user.email]',
-            'errors' => [
-               'required'     => 'Email Harus Diisi.',
-               'valid_email'  => 'Email Harus Benar.',
-               'is_unique'    => 'Email Sudah Terdaftar'
-            ]
-         ],
-         [
             'field'  => 'password',
             'label'  => 'Password',
             'rules'  => 'required|min_length[8]|matches[password_confirm]',
@@ -203,53 +184,104 @@ class Auth extends CI_Controller
       } else {
          // jika berhasil
          $nama = trim($this->input->post('nama', TRUE));
-         $email = trim($this->input->post('email', TRUE));
          $nisn = trim($this->input->post('nisn', TRUE));
          $password = password_hash(trim($this->input->post('password', TRUE)), PASSWORD_DEFAULT);
+         $tahun_ajaran = $this->Tahun_Ajaran_Model->cari_tahun_ajaran_terakhir()->row();
 
          $data = [
-            'id_pendaftar' => '',
-            'nama'         => $nama,
-            'email'        => $email,
-            'password'     => $password,
-            'nisn'         => $nisn,
-            'id_role'      => '2',
-            'is_active'    => '0',
-            'foto'         => 'default.jpg',
-            'date_created' => date('Y-m-d H:i:s')
+            'id_pendaftar'    => '',
+            'nama'            => $nama,
+            'password'        => $password,
+            'nisn'            => $nisn,
+            'is_active'       => '0',
+            'id_tahun_ajaran' => $tahun_ajaran->id_tahun_ajaran,
+            'foto'            => 'default.jpg',
+            'date_created'    => date('Y-m-d H:i:s')
          ];
 
          $simpan_registrasi = $this->Pendaftar_Model->simpan_registrasi($data);
-         $data_pendaftar = $this->Pendaftar_Model->cari_email_pendaftar($email)->row();
 
-         $token = [
-            'id_token'     => '',
-            'id_pendaftar' => $data_pendaftar->id_pendaftar,
-            'token'        => '1',
-            'mulai_token'  => date('d-M-Y H:i:s'),
-            'akhir_token'  => date('d-M-Y H:i:s', strtotime('+2 Days', date('d-M-Y H:i:s')))
-         ];
-
-         $simpan_token = $this->Token_Model->simpan_token($token);
-
-         if ($simpan_registrasi && $simpan_token) {
-            $this->session->set_flashdata('berhasil', "Verifikasi Email Terkirim. Segera Lakukan Verifikasi Email Dalam 2 Hari!");
+         if ($simpan_registrasi) {
+            $this->session->set_flashdata('berhasil', "Berhasil Registrasi! Silahkan Login.");
             redirect('auth/pendaftar');
          }
       }
    }
 
+   function account_verification($token)
+   {
+   }
+
    public function cek_session()
    {
       if ($this->session->userdata('id_role') == 1) {
-         $this->session->set_flashdata('gagal', "Tidak Bisa Mengunjungi Halaman Tersebut!");
          redirect('staff');
       } elseif ($this->session->userdata('id_role') == 2) {
-         $this->session->set_flashdata('gagal', "Tidak Bisa Mengunjungi Halaman Tersebut!");
          redirect('pendaftar');
       } else {
-         $this->session->set_flashdata('gagal', "Anda Harus Login Terlebih Dahulu!");
          redirect('home');
+      }
+   }
+
+   function staff_password()
+   {
+      $this->load->view('lupa_password/staff');
+   }
+
+   function lupa_password()
+   {
+      $this->load->view('lupa_password/pendaftar');
+   }
+
+   function staff_password_aksi()
+   {
+      $email = $this->input->post('email', TRUE);
+      $data = $this->Staff_Model->cari_email_staff($email)->row();
+      if ($data) {
+         $tanggal_lahir = str_replace('-', '', $data->tanggal_lahir);
+         $password_default = 'staff#' . substr($tanggal_lahir, 2);
+         $pass_hash = password_hash($password_default, PASSWORD_DEFAULT);
+         if ($this->Staff_Model->ganti_password($pass_hash, $email)) {
+            $this->session->set_flashdata('notif', "Berhasil");
+            $this->session->set_flashdata('perintah', "Ubah Password");
+            $this->session->set_flashdata('pesan', "Password Anda Sekarang Adalah '" . $password_default . "' Silahkan Login dengan Password Baru");
+            redirect('auth/staff');
+         }
+      } else {
+         $this->session->set_flashdata('notif', "Gagal");
+         $this->session->set_flashdata('perintah', "Ubah Password");
+         $this->session->set_flashdata('pesan', "Email Yang Anda Masukan Salah. Silahkan Koreksi Kembali");
+         redirect('auth/staff_password');
+      }
+   }
+
+   function lupa_password_aksi()
+   {
+      $nisn = $this->input->post('nisn', TRUE);
+      $nama = $this->input->post('nama', TRUE);
+      $cari_data = $this->Pendaftar_Model->cari_nisn_pendaftar($nisn);
+      if ($cari_data->num_rows() > 0) {
+         $cari_data_user = $cari_data->row();
+         if ($cari_data_user->nama == $nama) {
+            $password_default = 'pendaftar#' . substr($nisn, 5);
+            $pass_hash = password_hash($password_default, PASSWORD_DEFAULT);
+            if ($this->Pendaftar_Model->ganti_password($pass_hash, $nisn, $nama)) {
+               $this->session->set_flashdata('notif', "Berhasil");
+               $this->session->set_flashdata('perintah', "Ubah Password");
+               $this->session->set_flashdata('pesan', "Password Anda Sekarang Adalah '" . $password_default . "' Silahkan Login dengan Password Baru");
+               redirect('auth/pendaftar');
+            }
+         } else {
+            $this->session->set_flashdata('notif', "Gagal");
+            $this->session->set_flashdata('perintah', "Ubah Password");
+            $this->session->set_flashdata('pesan', "Nama Yang Anda Masukan Tidak Sesuai");
+            redirect('auth/lupa_password');
+         }
+      } else {
+         $this->session->set_flashdata('notif', "Gagal");
+         $this->session->set_flashdata('perintah', "Ubah Password");
+         $this->session->set_flashdata('pesan', "NISN Yang Anda Masukan Salah. Silahkan Koreksi Kembali");
+         redirect('auth/lupa_password');
       }
    }
 
