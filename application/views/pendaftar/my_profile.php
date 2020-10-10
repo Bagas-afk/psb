@@ -12,7 +12,7 @@
                 <form action="" method="post" enctype="multipart/form-data">
                     <div class="form-group">
                         <label>Nama Lengkap</label>
-                        <input type="text" name="nama" value="<?= $user->nama ?>" class="form-control">
+                        <input type="text" name="nama" value="<?= $user->nama_pendaftar ?>" class="form-control">
                     </div>
                     <div class="form-group">
                         <label>NISN</label>
@@ -20,7 +20,7 @@
                     </div>
                     <div class="form-group">
                         <label>Email</label>
-                        <input type="email" name="email" value="<?= $user->email ?>" class="form-control">
+                        <input type="email" name="email" value="<?= $user->email_pendaftar ?>" class="form-control">
                     </div>
                     <div class="form-group">
                         <label>Password</label>

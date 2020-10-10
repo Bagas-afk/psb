@@ -53,7 +53,7 @@
                         <form action="<?= base_url('auth/lupa_password_aksi') ?>" method="post">
                             <div class="form-group">
                                 <label class="mb-1" for="inputName">NISN</label>
-                                <input class="form-control py-4" id="inputName" type="text" name="nisn" placeholder="Masukan NISN Terdaftar" />
+                                <input class="form-control py-4" oninput="this.value = this.value.replace(/[^0-9]/g,'').replace(/(\..*)\./g, '$1')" type="text" name="nisn" placeholder="Masukan NISN Terdaftar" />
                             </div>
                             <div class="form-group">
                                 <label class="mb-1" for="inputEmailAddress">Nama</label>

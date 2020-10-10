@@ -47,18 +47,24 @@
                         <?php } else { ?>
                             <img src="<?= base_url('/') ?>assets/img/profile/<?= $user->foto ?>" width="45px" />
                         <?php } ?>
-                        <span class="ml-2 d-none d-lg-inline-block"><span>Selamat Datang,</span>
-                            <span class="text-dark"><?= ucwords($user->nama) ?></span>
-                            <i data-feather="chevron-down" class="svg-icon"></i>
-                        </span>
+                        <?php if ($this->session->userdata('id_role') == 1) { ?>
+                            <span class="ml-2 d-none d-lg-inline-block"><span>Selamat Datang,</span>
+                                <span class="text-dark"><?= ucwords($user->nama_staff) ?></span>
+                                <i data-feather="chevron-down" class="svg-icon"></i>
+                            </span>
                     </a>
                     <div class="dropdown-menu dropdown-menu-right user-dd animated flipInY">
-                        <?php if ($this->session->userdata('id_role') == 1) { ?>
-                            <a class="dropdown-item" href="<?= base_url('staff/my_profile') ?>">
-                                <i data-feather="user" class="svg-icon mr-2 ml-1"></i>
-                                My Profile
-                            </a>
-                        <?php } else { ?>
+                        <a class="dropdown-item" href="<?= base_url('staff/my_profile') ?>">
+                            <i data-feather="user" class="svg-icon mr-2 ml-1"></i>
+                            My Profile
+                        </a>
+                    <?php } else { ?>
+                        <span class="ml-2 d-none d-lg-inline-block"><span>Selamat Datang,</span>
+                            <span class="text-dark"><?= ucwords($user->nama_pendaftar) ?></span>
+                            <i data-feather="chevron-down" class="svg-icon"></i>
+                        </span>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right user-dd animated flipInY">
                             <a class="dropdown-item" href="<?= base_url('pendaftar/my_profile') ?>">
                                 <i data-feather="user" class="svg-icon mr-2 ml-1"></i>
                                 My Profile
@@ -68,7 +74,7 @@
                             <i data-feather="power" class="svg-icon mr-2 ml-1"></i>
                             Logout
                         </a>
-                    </div>
+                        </div>
                 </li>
                 <!-- ============================================================== -->
                 <!-- User profile and search -->

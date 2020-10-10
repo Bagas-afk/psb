@@ -84,11 +84,15 @@ class Pendaftar extends CI_Controller
         $data['selected'] = ['', '', 'selected', '', ''];
         $data['active'] = ['', '', 'active', '', ''];
         $data['user'] = $this->Pendaftar_Model->cari_data_pendaftar(md5($this->session->userdata('id_user')))->row();
+        if (($data['user']->tempat_lahir && $data['user']->tanggal_lahir && $data['user']->alamat && $data['user']->dusun && $data['user']->kelurahan && $data['user']->kecamatan && $data['user']->kota && $data['user']->provinsi) == '') {
+            $this->session->set_flashdata('notif_perintah', "Lengkapi Data Peserta");
+            $this->session->set_flashdata('notif_pesan', "Data Peserta Belum Lengkap. Silahkan Melengkapi Data Peserta");
+        }
 
         $this->load->view('templates/header', $data);
         $this->load->view('templates/topbar');
         $this->load->view('templates/sidebar_pendaftar');
-        $this->load->view('pendaftar/my_profile');
+        $this->load->view('pendaftar/pembayaran');
         $this->load->view('templates/footer');
     }
 

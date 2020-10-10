@@ -54,7 +54,7 @@
                         <?= form_open('auth/pendaftar', ['method' => 'post']) ?>
                         <div class="form-group">
                             <label class="mb-1" for="inputEmailAddress">NISN</label>
-                            <input class="form-control py-4" id="inputEmailAddress" name="nisn" value="<?= set_value('nisn') ?>" type="text" placeholder="Masukan Email Terdaftar">
+                            <input class="form-control py-4" oninput="this.value = this.value.replace(/[^0-9]/g,'').replace(/(\..*)\./g, '$1')" name="nisn" value="<?= set_value('nisn') ?>" type="text" placeholder="Masukan Email Terdaftar">
                             <small class="text-danger"><?= form_error('nisn'); ?></small>
                         </div>
                         <div class="form-group">

@@ -14,11 +14,11 @@
                 <form action="" method="post" enctype="multipart/form-data">
                     <div class="form-group">
                         <label>Nama Lengkap</label>
-                        <input type="text" class="form-control" name="nama" value="<?= ucwords($user->nama) ?>">
+                        <input type="text" class="form-control" name="nama" value="<?= ucwords($user->nama_staff) ?>">
                     </div>
                     <div class="form-group">
                         <label>Email</label>
-                        <input type="email" class="form-control" name="email" value="<?= $user->email ?>" readonly>
+                        <input type="email" class="form-control" name="email" value="<?= $user->email_staff ?>" readonly>
                     </div>
                     <div class="form-group">
                         <label>Password</label>

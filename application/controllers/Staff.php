@@ -8,6 +8,7 @@ class Staff extends CI_Controller
         parent::__construct();
         $this->load->model('Staff_Model');
         $this->load->model('Pendaftar_Model');
+        $this->load->model('Pembayaran_Model');
         $this->load->model('Tahun_Ajaran_Model');
         $this->load->model('Sekolah_Model');
         if ($this->session->userdata('id_role') !== '1') {
@@ -50,6 +51,8 @@ class Staff extends CI_Controller
         $data['active'] = ['', '', '', 'active', '', '', ''];
         $data['user'] = $this->Staff_Model->cari_email_staff($this->session->userdata('email'))->row();
         $data['pendaftar'] = $this->Pendaftar_Model->tampil_data_pendaftar()->result();
+        // print_r($data['pendaftar']);
+        // die;
 
         $this->load->view('templates/header', $data);
         $this->load->view('templates/topbar');

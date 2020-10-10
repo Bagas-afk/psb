@@ -55,7 +55,7 @@
                         </div>
                         <div class="form-group">
                             <label class="mb-1" for="inputName">NISN</label>
-                            <input class="form-control py-4" id="inputName" type="text" name="nisn" value="<?= set_value('nisn') ?>" placeholder="Masukan NISN Pendaftar" />
+                            <input class="form-control py-4" oninput="this.value = this.value.replace(/[^0-9]/g,'').replace(/(\..*)\./g, '$1')" type="text" name="nisn" value="<?= set_value('nisn') ?>" placeholder="Masukan NISN Pendaftar" />
                             <small class="text-danger"><?php echo form_error('nisn'); ?></small>
                         </div>
                         <div class="form-row">

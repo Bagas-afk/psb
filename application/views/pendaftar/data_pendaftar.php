@@ -27,11 +27,11 @@
                                 <h2 class="text-center">Identitas Peserta Didik</h2>
                                 <div class="form-group">
                                     <label>Nama Lengkap</label>
-                                    <input type="text" name="nama" value="<?= $user->nama ?>" class="form-control" readonly>
+                                    <input type="text" name="nama" value="<?= $user->nama_pendaftar ?>" class="form-control" readonly>
                                 </div>
                                 <div class="form-group">
                                     <label>Email</label>
-                                    <input type="email" name="email" value="<?= $user->email ?>" class="form-control">
+                                    <input type="email" name="email" value="<?= $user->email_pendaftar ?>" class="form-control">
                                 </div>
                                 <div class="form-group">
                                     <label>NISN</label>

@@ -58,7 +58,7 @@ class Auth extends CI_Controller
             if (password_verify($password, $staff_data->password)) {
                $data_user = [
                   'id_user'   => $staff_data->id_staff,
-                  'email'     => $staff_data->email,
+                  'email'     => $staff_data->email_staff,
                   'id_role'   => '1',
                ];
                $this->session->set_userdata($data_user);
@@ -84,8 +84,10 @@ class Auth extends CI_Controller
          [
             'field'  => 'nisn',
             'label'  => 'NISN',
-            'rules'  => 'required|trim',
+            'rules'  => 'required|trim|max_length[10]|min_length[10]',
             'errors' => [
+               'max_length'   => 'NISN Harus 10 Digit Angka',
+               'min_length'   => 'NISN Harus 10 Digit Angka',
                'required'     => 'NISN Harus Diisi.'
             ]
          ],
@@ -152,7 +154,7 @@ class Auth extends CI_Controller
          [
             'field'  => 'nisn',
             'label'  => 'NISN',
-            'rules'  => 'required|trim|max_length[10]',
+            'rules'  => 'required|trim|number|max_length[10]',
             'errors' => [
                'required'     => 'NISN Harus Diisi.',
                'max_length'   => 'NISN Tidak Lebih Dari 10 Karakter'
@@ -190,7 +192,7 @@ class Auth extends CI_Controller
 
          $data = [
             'id_pendaftar'    => '',
-            'nama'            => $nama,
+            'nama_pendaftar'  => $nama,
             'password'        => $password,
             'nisn'            => $nisn,
             'is_active'       => '0',
