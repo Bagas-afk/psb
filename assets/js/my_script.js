@@ -6,6 +6,10 @@ $(document).ready(function () {
 		]
 	})
 
+	$('#password').password()
+
+	$('.year').yearpicker()
+
 	$(".select").select2({
 		theme: 'bootstrap4',
 		placeholder: "-- Silahkan Pilih --",
@@ -15,127 +19,295 @@ $(document).ready(function () {
 	$('#pilih_cetak').change(function () {
 		document.getElementById('div_cetak_laporan').hidden = false
 	})
+
+	$('#tahun_ajaran_pendaftar').change(function () {
+		var id_tahun_ajaran = document.getElementById('tahun_ajaran_pendaftar').value
+		$.ajax({
+			type: 'get',
+			url: '/psb/staff/tampil_pendaftar_tahun_ajaran/' + id_tahun_ajaran,
+			dataType: 'json',
+			success: function (data) {
+				var html = ''
+				data.forEach(data => {
+					html += '<option value="' + data.id_pendaftar + '">' + data.nisn + ' - ' + data.nama_pendaftar + '</option>'
+				})
+				$('#pilihan_pendaftar').html(html)
+			}
+		})
+	})
+
+	$('#pilihan_pendaftar').change(function () {
+		var id_pendaftar = document.getElementById('pilihan_pendaftar').value
+		var tombol = document.getElementById('simpan')
+		$.ajax({
+			type: 'get',
+			url: '/psb/staff/cari_nilai_pendaftar/' + id_pendaftar,
+			dataType: 'json',
+			success: function (data) {
+				var html = ''
+				if (data.length > 0) {
+					Swal.fire({
+						title: 'Gagal',
+						text: 'Data Penilaian Sudah Ada',
+						icon: 'error'
+					})
+					html += ''
+					tombol.disabled = true
+				} else {
+					html += '<div class="form-group">'
+					html += '<label>Pilihan Ganda Benar</label>'
+					html += '<input type="number" class="form-control" name="pilihan_ganda_benar" min="0" max="50" required>'
+					html += '</div>'
+					html += '<div class="form-group">'
+					html += '<label>Nilai Baca Tulis Al-Qur\'an</label>'
+					html += '<input type="number" name="nilai_btq" class="form-control" min="0" max="100" required>'
+					html += '</div>'
+					tombol.disabled = false
+				}
+				$('#penilaian').html(html)
+			}
+		})
+	})
 })
 
 function ayah() {
 	var dataAyah = document.getElementById('ayahCheck')
+	var nama_ayah = document.getElementById('nama_ayah')
+	var divAyah = document.getElementById('ayahForm')
 	var html = ''
 	if (dataAyah.checked) {
-		html += '<div id="ayahForm">'
-		html += '<h2>Data Ayah</h2>'
-		html += '<div class="form-group">'
-		html += '<label>Nama</label>'
-		html += '<input type="text" name="nama[]" class="form-control">'
-		html += '<input type="hidden" name="keterangan[]" value="Ayah" class="form-control">'
-		html += '</div>'
-		html += '<div class="form-group">'
-		html += '<label>Tahun Lahir</label>'
-		html += '<input type="number" name="tahun_lahir[]" class="form-control">'
-		html += '</div>'
-		html += '<div class="form-group">'
-		html += '<label>Berkebutuhan Khusus</label>'
-		html += '<input type="text" name="berkebutuhan_khusus[]" class="form-control">'
-		html += '</div>'
-		html += '<div class="form-group">'
-		html += '<label>Pekerjaan</label>'
-		html += '<input type="text" name="pekerjaan[]" class="form-control">'
-		html += '</div>'
-		html += '<div class="form-group">'
-		html += '<label>Pendidikan</label>'
-		html += '<input type="text" name="pendidikan[]" class="form-control">'
-		html += '</div>'
-		html += '<div class="form-group">'
-		html += '<label>Penghasilan</label>'
-		html += '<input type="text" name="penghasilan[]" class="form-control">'
-		html += '</div>'
-		html += '<hr />'
-		html += '</div>'
-		$('.ayahDiv').html(html)
+		if (nama_ayah.value != '') {
+			divAyah.hidden = false
+		} else {
+			html += '<div id="ayahForm">'
+			html += '<h2>Data Ayah</h2>'
+			html += '<div class="form-group">'
+			html += '<label>Nama</label>'
+			html += '<input type="text" id="nama_ayah" name="nama[]" class="form-control">'
+			html += '<input type="hidden" name="keterangan[]" value="Ayah" class="form-control">'
+			html += '</div>'
+			html += '<div class="form-group">'
+			html += '<label>Tahun Lahir</label>'
+			html += '<input type="number" name="tahun_lahir[]" class="form-control">'
+			html += '</div>'
+			html += '<div class="form-group">'
+			html += '<label>Berkebutuhan Khusus</label>'
+			html += '<input type="text" name="berkebutuhan_khusus[]" class="form-control">'
+			html += '</div>'
+			html += '<div class="form-group">'
+			html += '<label>Pekerjaan</label>'
+			html += '<input type="text" name="pekerjaan[]" class="form-control">'
+			html += '</div>'
+			html += '<div class="form-group">'
+			html += '<label>Pendidikan</label>'
+			html += '<input type="text" name="pendidikan[]" class="form-control">'
+			html += '</div>'
+			html += '<div class="form-group">'
+			html += '<label>Penghasilan</label>'
+			html += '<input type="text" name="penghasilan[]" class="form-control">'
+			html += '</div>'
+			html += '<hr />'
+			html += '</div>'
+			$('.ayahDiv').html(html)
+		}
 	} else {
-		var divAyah = document.getElementById('ayahForm')
-		divAyah.remove()
+		if (nama_ayah.value != '') {
+			divAyah.hidden = true
+		} else {
+			divAyah.remove()
+		}
 	}
 }
 
 function ibu() {
+	var nama_ibu = document.getElementById('nama_ibu')
 	var dataIbu = document.getElementById('ibuCheck')
+	var divIbu = document.getElementById('ibuForm')
 	var html = ''
 	if (dataIbu.checked) {
-		html += '<div id="ibuForm">'
-		html += '<h2>Data Ibu</h2>'
-		html += '<div class="form-group">'
-		html += '<label>Nama</label>'
-		html += '<input type="text" name="nama[]" class="form-control">'
-		html += '<input type="hidden" name="keterangan[]" value="Ibu" class="form-control">'
-		html += '</div>'
-		html += '<div class="form-group">'
-		html += '<label>Tahun Lahir</label>'
-		html += '<input type="number" name="tahun_lahir[]" class="form-control">'
-		html += '</div>'
-		html += '<div class="form-group">'
-		html += '<label>Berkebutuhan Khusus</label>'
-		html += '<input type="text" name="berkebutuhan_khusus[]" class="form-control">'
-		html += '</div>'
-		html += '<div class="form-group">'
-		html += '<label>Pekerjaan</label>'
-		html += '<input type="text" name="pekerjaan[]" class="form-control">'
-		html += '</div>'
-		html += '<div class="form-group">'
-		html += '<label>Pendidikan</label>'
-		html += '<input type="text" name="pendidikan[]" class="form-control">'
-		html += '</div>'
-		html += '<div class="form-group">'
-		html += '<label>Penghasilan</label>'
-		html += '<input type="text" name="penghasilan[]" class="form-control">'
-		html += '</div>'
-		html += '<hr />'
-		html += '</div>'
-		$('.ibuDiv').html(html)
+		if (nama_ibu.value != '') {
+			divIbu.hidden = false
+		} else {
+			html += '<div id="ibuForm">'
+			html += '<h2>Data Ibu</h2>'
+			html += '<div class="form-group">'
+			html += '<label>Nama</label>'
+			html += '<input type="text" id="nama_ibu" name="nama[]" class="form-control">'
+			html += '<input type="hidden" name="keterangan[]" value="Ibu" class="form-control">'
+			html += '</div>'
+			html += '<div class="form-group">'
+			html += '<label>Tahun Lahir</label>'
+			html += '<input type="number" name="tahun_lahir[]" class="form-control">'
+			html += '</div>'
+			html += '<div class="form-group">'
+			html += '<label>Berkebutuhan Khusus</label>'
+			html += '<input type="text" name="berkebutuhan_khusus[]" class="form-control">'
+			html += '</div>'
+			html += '<div class="form-group">'
+			html += '<label>Pekerjaan</label>'
+			html += '<input type="text" name="pekerjaan[]" class="form-control">'
+			html += '</div>'
+			html += '<div class="form-group">'
+			html += '<label>Pendidikan</label>'
+			html += '<input type="text" name="pendidikan[]" class="form-control">'
+			html += '</div>'
+			html += '<div class="form-group">'
+			html += '<label>Penghasilan</label>'
+			html += '<input type="text" name="penghasilan[]" class="form-control">'
+			html += '</div>'
+			html += '<hr />'
+			html += '</div>'
+			$('.ibuDiv').html(html)
+		}
 	} else {
-		var divIbu = document.getElementById('ibuForm')
-		divIbu.remove()
+		if (nama_ibu.value != '') {
+			divIbu.hidden = true
+		} else {
+			divIbu.remove()
+		}
 	}
 
 }
 
 function wali() {
+	var nama_ibu = document.getElementById('nama_ibu')
 	var dataWali = document.getElementById('waliCheck')
+	var divWali = document.getElementById('waliForm')
 	var html = ''
 	if (dataWali.checked) {
-		html += '<div id="waliForm">'
-		html += '<h2>Data Wali</h2>'
-		html += '<div class="form-group">'
-		html += '<label>Nama</label>'
-		html += '<input type="text" name="nama[]" class="form-control">'
-		html += '<input type="hidden" name="keterangan[]" value="Wali" class="form-control">'
-		html += '</div>'
-		html += '<div class="form-group">'
-		html += '<label>Tahun Lahir</label>'
-		html += '<input type="number" name="tahun_lahir[]" class="form-control">'
-		html += '</div>'
-		html += '<div class="form-group">'
-		html += '<label>Berkebutuhan Khusus</label>'
-		html += '<input type="text" name="berkebutuhan_khusus[]" class="form-control">'
-		html += '</div>'
-		html += '<div class="form-group">'
-		html += '<label>Pekerjaan</label>'
-		html += '<input type="text" name="pekerjaan[]" class="form-control">'
-		html += '</div>'
-		html += '<div class="form-group">'
-		html += '<label>Pendidikan</label>'
-		html += '<input type="text" name="pendidikan[]" class="form-control">'
-		html += '</div>'
-		html += '<div class="form-group">'
-		html += '<label>Penghasilan</label>'
-		html += '<input type="text" name="penghasilan[]" class="form-control">'
-		html += '</div>'
-		html += '<hr />'
-		html += '</div>'
-		$('.waliDiv').html(html)
+		if (nama_ibu.value != '') {
+			divIbu.hidden = false
+		} else {
+			html += '<div id="waliForm">'
+			html += '<h2>Data Wali</h2>'
+			html += '<div class="form-group">'
+			html += '<label>Nama</label>'
+			html += '<input type="text" id="nama_wali" name="nama[]" class="form-control">'
+			html += '<input type="hidden" name="keterangan[]" value="Wali" class="form-control">'
+			html += '</div>'
+			html += '<div class="form-group">'
+			html += '<label>Tahun Lahir</label>'
+			html += '<input type="number" name="tahun_lahir[]" class="form-control">'
+			html += '</div>'
+			html += '<div class="form-group">'
+			html += '<label>Berkebutuhan Khusus</label>'
+			html += '<input type="text" name="berkebutuhan_khusus[]" class="form-control">'
+			html += '</div>'
+			html += '<div class="form-group">'
+			html += '<label>Pekerjaan</label>'
+			html += '<input type="text" name="pekerjaan[]" class="form-control">'
+			html += '</div>'
+			html += '<div class="form-group">'
+			html += '<label>Pendidikan</label>'
+			html += '<input type="text" name="pendidikan[]" class="form-control">'
+			html += '</div>'
+			html += '<div class="form-group">'
+			html += '<label>Penghasilan</label>'
+			html += '<input type="text" name="penghasilan[]" class="form-control">'
+			html += '</div>'
+			html += '<hr />'
+			html += '</div>'
+			$('.waliDiv').html(html)
+		}
 	} else {
-		var divWali = document.getElementById('waliForm')
-		divWali.remove()
+		if (nama_wali.value != '') {
+			divWali.hidden = true
+		} else {
+			divWali.remove()
+		}
 	}
+}
+
+function hapusDataPrestasi(isi) {
+	var id_prestasi = $('.prestasi').data('id_prestasi')
+	Swal.fire({
+		title: 'Hapus Data Prestasi',
+		text: 'Apakah Anda Yakin ingin Menghapus Data Prestasi Tersebut?',
+		icon: 'warning',
+		showCancelButton: true,
+		confirmButtonColor: '#3085d6',
+		cancelButtonColor: '#d33',
+		confirmButtonText: 'Ya, Hapus Data!'
+	}).then((result) => {
+		if (result.value) {
+			$.ajax({
+				url: '/psb/staff/hapus_prestasi',
+				type: 'post',
+				data: {
+					id: id_prestasi
+				},
+				success: function (code) {
+					if (code == 1) {
+						Swal.fire({
+							title: 'Berhasil',
+							text: 'Data Prestasi Telah Dihapus',
+							icon: 'success'
+						})
+						var div = document.getElementById(isi)
+						div.remove()
+					} else {
+						Swal.fire({
+							title: 'Gagal',
+							text: 'Data Prestasi Tidak Ada',
+							icon: 'error'
+						})
+					}
+				}
+			})
+		} else {
+			Swal.fire({
+				title: 'Gagal',
+				text: 'Data Prestasi Tidak Dihapus',
+				icon: 'error'
+			})
+		}
+	})
+}
+
+function hapusDataBeasiswa(isi) {
+	var id_beasiswa = $('.beasiswa').data('id_beasiswa')
+	Swal.fire({
+		title: 'Hapus Data',
+		text: 'Apakah Anda Yakin ingin Menghapus Data Beasiswa Tersebut?',
+		icon: 'warning',
+		showCancelButton: true,
+		confirmButtonColor: '#3085d6',
+		cancelButtonColor: '#d33',
+		confirmButtonText: 'Ya, Hapus Data!'
+	}).then((result) => {
+		if (result.value) {
+			$.ajax({
+				url: '/psb/staff/hapus_beasiswa',
+				type: 'post',
+				data: {
+					id: id_beasiswa
+				},
+				success: function (code) {
+					if (code == 1) {
+						Swal.fire({
+							title: 'Berhasil',
+							text: 'Data Beasiswa Telah Dihapus',
+							icon: 'success'
+						})
+						var div = document.getElementById(isi)
+						div.remove()
+					} else {
+						Swal.fire({
+							title: 'Gagal',
+							text: 'Data Beasiswa Tidak Ada',
+							icon: 'error'
+						})
+					}
+				}
+			})
+		} else {
+			Swal.fire({
+				title: 'Gagal',
+				text: 'Data Beasiswa Tidak Dihapus',
+				icon: 'error'
+			})
+		}
+	})
 }
 
 function tambahPrestasi() {
@@ -172,7 +344,7 @@ function tambahPrestasi() {
 	html += '<label>Tahun Prestasi</label>'
 	html += '</div>'
 	html += '<div class="col-10">'
-	html += '<input type="number" name="tahun_prestasi[]" class="form-control w-100" placeholder="contoh : 2019">'
+	html += '<input type="number" name="tahun_prestasi[]" class="year form-control w-100" placeholder="contoh : 2019">'
 	html += '</div>'
 	html += '</div>'
 	html += '<div class="form-inline row mb-2">'
@@ -246,7 +418,7 @@ function hapusBeasiswa(isi) {
 	div.remove()
 }
 
-var currentTab = 0; // Current tab is set to be the first tab (0)
+let currentTab = 0; // Current tab is set to be the first tab (0)
 showTab(currentTab); // Display the current tab
 
 function showTab(n) {
@@ -317,4 +489,54 @@ function fixStepIndicator(n) {
 	}
 	//... and adds the "active" class to the current step:
 	x[n].className += " active";
+}
+
+let gambar = document.getElementById('gambar')
+let hasil = document.getElementById('hasil')
+let preview = document.getElementById('preview')
+let tombol = document.getElementById('tombol')
+gambar.addEventListener('change', function () {
+	if (gambar.value == '') {
+		hasil.hidden = true
+		preview.hidden = true
+		// tombol.disabled = true
+	} else {
+		hasil.hidden = false
+		preview.hidden = false
+		// tombol.disabled = false
+	}
+})
+
+function tampilkanPreview(gambar, idPreview) {
+	// membuat objek gambar
+	var gb = gambar.files;
+
+	// loop untuk merender gambar
+	for (var i = 0; i < gb.length; i++) {
+		// bikin variabel
+		var gbPreview = gb[i];
+		var imageType = /image.*/;
+		var preview = document.getElementById(idPreview);
+		var reader = new FileReader();
+
+		if (gbPreview.type.match(imageType)) {
+			// jika tipe data sesuai
+			preview.file = gbPreview;
+			reader.onload = (function (element) {
+				return function (e) {
+					element.src = e.target.result;
+				};
+			})(preview);
+
+			$('.img-preview').css('display', 'block');
+			// membaca data URL gambar
+			reader.readAsDataURL(gbPreview);
+			preview.style.width = '150px';
+			preview.style.height = '150px';
+
+		} else {
+			// jika tipe data tidak sesuai
+			alert("Type file tidak sesuai. Khusus image.");
+		}
+	}
 }

@@ -97,7 +97,7 @@
                                 </td>
                             <?php } ?>
                             <td class="text-center">
-                                <button class="btn btn-info btn-sm" style="width: 35px;"><i class="fas fa-info"></i></button>
+                                <a href="<?= base_url('staff/detail_pendaftar/' . md5($data->id_pendaftar)) ?>" class="btn btn-info btn-sm" style="width: 35px;"><i class="fas fa-info"></i></a>
                                 <a href="<?= base_url('staff/ubah_pendaftar/' . md5($data->id_pendaftar)) ?>" class="btn btn-warning btn-sm" style="width: 35px;"><i class="fas fa-edit"></i></a>
                                 <button class="btn btn-danger btn-sm" style="width: 35px;"><i class="fas fa-trash"></i></button>
                             </td>
@@ -165,7 +165,7 @@
                                                     </div>
                                                     <?php if ($data->keterangan_pembayaran == 'Non Tunai') { ?>
                                                         <div class="form-group">
-                                                            <label>Bukti Pembayaran</label>
+                                                            <label>Bukti Pembayaran</label> <br />
                                                             <img src="" alt="Bukti Pembayaran - <?= $data->nisn ?>">
                                                         </div>
                                                     <?php } ?>
@@ -176,7 +176,7 @@
                                             </div>
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                                <button type="submit" class="btn btn-success">Simpan Data Pendaftar</button>
+                                                <button type="submit" class="btn btn-success"><i class="fas fa-check"></i> Verifikasi</button>
                                                 </form>
                                             </div>
                                         </div>

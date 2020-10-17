@@ -59,7 +59,7 @@
                         </div>
                         <div class="form-group">
                             <label class="mb-1" for="inputPassword">Password</label>
-                            <input class="form-control py-4" id="inputPassword" type="password" name="password" placeholder="Masukan Password" />
+                            <input class="form-control py-4" type="password" id="password" name="password" placeholder="Masukan Password" />
                             <small class="text-danger"><?= form_error('password'); ?></small>
                         </div>
                         <div class="form-group d-flex align-items-center">
@@ -86,11 +86,13 @@
     <script src="<?= base_url('/') ?>assets/templates/libs/bootstrap/dist/js/bootstrap.min.js "></script>
     <script src="<?= base_url('/') ?>assets/sweetalert2/sweetalert2.all.min.js"></script>
     <script src="<?= base_url('/') ?>assets/js/my_swal.js"></script>
+    <script src="<?= base_url('/') ?>assets/js/bootstrap-show-password.min.js"></script>
     <!-- ============================================================== -->
     <!-- This page plugin js -->
     <!-- ============================================================== -->
     <script>
         $(".preloader ").fadeOut();
+        $('#password').password()
     </script>
 </body>
 

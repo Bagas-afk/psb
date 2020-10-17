@@ -16,6 +16,7 @@
         <title>Pendaftar - <?= $judul ?></title>
     <?php } ?>
     <!-- Custom CSS -->
+    <link href="<?= base_url('/') ?>assets/css/bootstrap.min.css" rel="stylesheet">
     <link href="<?= base_url('/') ?>assets/templates/extra-libs/c3/c3.min.css" rel="stylesheet">
     <link href="<?= base_url('/') ?>assets/templates/libs/chartist/dist/chartist.min.css" rel="stylesheet">
     <link href="<?= base_url('/') ?>assets/templates/extra-libs/jvector/jquery-jvectormap-2.0.2.css" rel="stylesheet" />
@@ -25,6 +26,7 @@
     <link href="<?= base_url('/') ?>assets/select2/css/select2-bootstrap4.css" rel="stylesheet" />
     <!-- Custom CSS -->
     <link href="<?= base_url('/') ?>assets/templates/css/style.min.css" rel="stylesheet">
+    <link href="<?= base_url('/') ?>assets/css/yearpicker.css" rel="stylesheet">
     <!-- My CSS -->
     <link href="<?= base_url('/') ?>assets/css/my_css.css" rel="stylesheet">
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->

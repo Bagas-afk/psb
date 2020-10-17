@@ -24,17 +24,23 @@
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title" id="staticBackdropLabel">Input Nilai</h5>
+                                <h5 class="modal-title" id="staticBackdropLabel">Tambah Data Penilaian</h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
                             <div class="modal-body">
-                                ...
+                                <form action="" method="post">
+                                    <div class="form-group">
+                                        <label>Pilih Pendaftar</label>
+                                        <select name="id_pendaftar" id="pilihan_pendaftar" class="form-control select"></select>
+                                    </div>
+                                    <div id="penilaian"></div>
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                <button type="button" class="btn btn-primary">Understood</button>
+                                <button type="submit" id="simpan" class="btn btn-success" disabled>Simpan Penilaian</button>
+                                </form>
                             </div>
                         </div>
                     </div>

@@ -19,6 +19,8 @@ class Pendaftar extends CI_Controller
         $data['selected'] = ['selected', '', '', '', ''];
         $data['active'] = ['active', '', '', '', ''];
         $data['user'] = $this->Pendaftar_Model->cari_data_pendaftar(md5($this->session->userdata('id_user')))->row();
+        $data['logo_sekolah'] = 'logo_sekolah.png';
+        $data['nama_sekolah'] = strtoupper('smp tazkia insani');
 
         if (($data['user']->tempat_lahir && $data['user']->tanggal_lahir && $data['user']->alamat && $data['user']->dusun && $data['user']->kelurahan && $data['user']->kecamatan && $data['user']->kota && $data['user']->provinsi) == '') {
             $this->session->set_flashdata('notif_perintah', "Lengkapi Data Peserta");
@@ -34,6 +36,7 @@ class Pendaftar extends CI_Controller
 
     function data_pendaftar()
     {
+        error_reporting(0);
         $data['judul'] = "Data Pendaftar";
         $data['selected'] = ['', 'selected', '', '', ''];
         $data['active'] = ['', 'active', '', '', ''];
@@ -42,19 +45,43 @@ class Pendaftar extends CI_Controller
             $this->session->set_flashdata('notif_perintah', "Lengkapi Data Peserta");
             $this->session->set_flashdata('notif_pesan', "Data Peserta Belum Lengkap. Silahkan Melengkapi Data Peserta");
         }
+        $data['beasiswa_pendaftar'] = $this->Pendaftar_Model->tampil_beasiswa_pendaftar(md5($this->session->userdata('id_user')))->result();
+        $data['prestasi_pendaftar'] = $this->Pendaftar_Model->tampil_prestasi_pendaftar(md5($this->session->userdata('id_user')))->result();
+        $data['pengasuh_pendaftar'] = $this->Pendaftar_Model->tampil_pengasuh_pendaftar(md5($this->session->userdata('id_user')))->result();
 
         if ($data['user']->agama == 'Islam') {
-            $data['agama'] = ['selected', '', '', '', '', ''];
-        } elseif ($data['user']->agama == 'Kristen') {
+            $data['agama'] = ['selected', '', '', '', ''];
+        } else if ($data['user']->agama == 'Kristen') {
             $data['agama'] = ['', 'selected', '', '', ''];
-        } elseif ($data['user']->agama == 'Budha') {
+        } else if ($data['user']->agama == 'Budha') {
             $data['agama'] = ['', '', 'selected', '', ''];
-        } elseif ($data['user']->agama == 'Hindu') {
+        } else if ($data['user']->agama == 'Hindu') {
             $data['agama'] = ['', '', '', 'selected', ''];
-        } elseif ($data['user']->agama == 'Lainnya') {
+        } else if ($data['user']->agama == 'Lainnya') {
             $data['agama'] = ['', '', '', '', 'selected'];
         } else {
             $data['agama'] = ['', '', '', '', ''];
+        }
+
+        if ($data['pengasuh_pendaftar'][0]) {
+            $data['ayah'] = $data['pengasuh_pendaftar'][0];
+            $data['checked_ayah'] = 'checked';
+        } else {
+            $data['checked_ayah'] = '';
+        }
+
+        if ($data['pengasuh_pendaftar'][1]) {
+            $data['ibu'] = $data['pengasuh_pendaftar'][1];
+            $data['checked_ibu'] = 'checked';
+        } else {
+            $data['checked_ibu'] = '';
+        }
+
+        if ($data['pengasuh_pendaftar'][2]) {
+            $data['wali'] = $data['pengasuh_pendaftar'][2];
+            $data['checked_wali'] = 'checked';
+        } else {
+            $data['checked_wali'] = '';
         }
 
         $this->load->view('templates/header', $data);
@@ -102,6 +129,9 @@ class Pendaftar extends CI_Controller
         $data['selected'] = ['', '', '', 'selected', ''];
         $data['active'] = ['', '', '', 'active', ''];
         $data['user'] = $this->Pendaftar_Model->cari_data_pendaftar(md5($this->session->userdata('id_user')))->row();
+        $data['logo_sekolah'] = 'logo_sekolah.png';
+        $data['foto'] = 'default.jpg';
+        $data['nama_sekolah'] = strtoupper('smp tazkia insani');
         if (($data['user']->tempat_lahir && $data['user']->tanggal_lahir && $data['user']->alamat && $data['user']->dusun && $data['user']->kelurahan && $data['user']->kecamatan && $data['user']->kota && $data['user']->provinsi) == '') {
             $this->session->set_flashdata('notif_perintah', "Lengkapi Data Peserta");
             $this->session->set_flashdata('notif_pesan', "Data Peserta Belum Lengkap. Silahkan Melengkapi Data Peserta");

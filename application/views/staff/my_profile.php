@@ -22,11 +22,11 @@
                     </div>
                     <div class="form-group">
                         <label>Password</label>
-                        <input type="password" class="form-control" name="password">
+                        <input type="password" class="form-control" id="password" name="password">
                     </div>
                     <div class="form-group">
                         <label>Konfirmasi Password</label>
-                        <input type="password" class="form-control" name="password_confirm">
+                        <input type="password" class="form-control" id="password" name="password_confirm">
                     </div>
                     <div class="form-group">
                         <label>Foto</label> <br />

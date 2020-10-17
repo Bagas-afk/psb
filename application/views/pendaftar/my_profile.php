@@ -24,11 +24,20 @@
                     </div>
                     <div class="form-group">
                         <label>Password</label>
-                        <input type="password" name="password" class="form-control">
+                        <input type="password" name="password" id="password" class="form-control">
                     </div>
                     <div class="form-group">
                         <label>Konfirmasi Password</label>
-                        <input type="password" name="password_confirm" class="form-control">
+                        <input type="password" name="password_confirm" id="password" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label>Foto (Background Merah Ukuran 3x4)</label> <br />
+                        <div>
+                            <img src="<?= base_url('assets/img/profile/') . $user->foto ?>" width="150" class="mb-2">
+                            <p id="hasil" hidden>Preview Profile Update</p>
+                            <img id="preview" class="mb-3 rounded" hidden />
+                        </div>
+                        <input type="file" class="form-control-file" value="" name="foto" id="gambar" accept=".jpg, .png, .jpeg" onchange="tampilkanPreview(this,'preview')">
                     </div>
                     <button type="submit" class="btn btn-block btn-success">Update Data</button>
                 </form>

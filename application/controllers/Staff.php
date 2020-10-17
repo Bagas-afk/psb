@@ -10,6 +10,7 @@ class Staff extends CI_Controller
         $this->load->model('Pendaftar_Model');
         $this->load->model('Pembayaran_Model');
         $this->load->model('Tahun_Ajaran_Model');
+        $this->load->model('Penilaian_Model');
         $this->load->model('Sekolah_Model');
         if ($this->session->userdata('id_role') !== '1') {
             redirect('auth/cek_session');
@@ -22,6 +23,8 @@ class Staff extends CI_Controller
         $data['selected'] = ['selected', '', '', '', '', '', ''];
         $data['active'] = ['active', '', '', '', '', '', ''];
         $data['user'] = $this->Staff_Model->cari_email_staff($this->session->userdata('email'))->row();
+        $data['logo_sekolah'] = "logo_sekolah.png";
+        $data['nama_sekolah'] = strtoupper('smp tazkia insani');
 
         $this->load->view('templates/header', $data);
         $this->load->view('templates/topbar');
@@ -61,20 +64,114 @@ class Staff extends CI_Controller
         $this->load->view('templates/footer');
     }
 
+    function detail_pendaftar($id_pendaftar)
+    {
+        $id_pendaftar = $this->uri->segment(3);
+        $data['judul'] = "Detail Pendaftar";
+        $data['selected'] = ['', '', '', 'selected', '', '', ''];
+        $data['active'] = ['', '', '', 'active', '', '', ''];
+        $data['user'] = $this->Staff_Model->cari_email_staff($this->session->userdata('email'))->row();
+        $data['detail_pendaftar'] = $this->Pendaftar_Model->cari_data_pendaftar($id_pendaftar)->row();
+        $data['beasiswa_pendaftar'] = $this->Pendaftar_Model->tampil_beasiswa_pendaftar($id_pendaftar)->result();
+        $data['prestasi_pendaftar'] = $this->Pendaftar_Model->tampil_prestasi_pendaftar($id_pendaftar)->result();
+        $data['pengasuh_pendaftar'] = $this->Pendaftar_Model->tampil_pengasuh_pendaftar($id_pendaftar)->result();
+        // print_r($data['pendaftar']);
+        // die;
+
+        $this->load->view('templates/header', $data);
+        $this->load->view('templates/topbar');
+        $this->load->view('templates/sidebar_staff');
+        $this->load->view('staff/detail_pendaftar');
+        $this->load->view('templates/footer');
+    }
+
     function ubah_pendaftar($id_pendaftar)
     {
+        error_reporting(0);
         $id_pendaftar = $this->uri->segment(3);
         $data['judul'] = "Ubah Data Pendaftar";
         $data['selected'] = ['', '', '', 'selected', '', '', ''];
         $data['active'] = ['', '', '', 'active', '', '', ''];
         $data['user'] = $this->Staff_Model->cari_email_staff($this->session->userdata('email'))->row();
         $data['data_pendaftar'] = $this->Pendaftar_Model->cari_data_pendaftar($id_pendaftar)->row();
+        $data['beasiswa_pendaftar'] = $this->Pendaftar_Model->tampil_beasiswa_pendaftar($id_pendaftar)->result();
+        $data['prestasi_pendaftar'] = $this->Pendaftar_Model->tampil_prestasi_pendaftar($id_pendaftar)->result();
+        $data['pengasuh_pendaftar'] = $this->Pendaftar_Model->tampil_pengasuh_pendaftar($id_pendaftar)->result();
+
+        if ($data['data_pendaftar']->agama == 'Islam') {
+            $data['agama'] = ['selected', '', '', '', ''];
+        } else if ($data['data_pendaftar']->agama == 'Kristen') {
+            $data['agama'] = ['', 'selected', '', '', ''];
+        } else if ($data['data_pendaftar']->agama == 'Budha') {
+            $data['agama'] = ['', '', 'selected', '', ''];
+        } else if ($data['data_pendaftar']->agama == 'Hindu') {
+            $data['agama'] = ['', '', '', 'selected', ''];
+        } else if ($data['data_pendaftar']->agama == 'Lainnya') {
+            $data['agama'] = ['', '', '', '', 'selected'];
+        } else {
+            $data['agama'] = ['', '', '', '', ''];
+        }
+
+        if ($data['pengasuh_pendaftar'][0]) {
+            $data['ayah'] = $data['pengasuh_pendaftar'][0];
+            $data['checked_ayah'] = 'checked';
+        } else {
+            $data['checked_ayah'] = '';
+        }
+
+        if ($data['pengasuh_pendaftar'][1]) {
+            $data['ibu'] = $data['pengasuh_pendaftar'][1];
+            $data['checked_ibu'] = 'checked';
+        } else {
+            $data['checked_ibu'] = '';
+        }
+
+        if ($data['pengasuh_pendaftar'][2]) {
+            $data['wali'] = $data['pengasuh_pendaftar'][2];
+            $data['checked_wali'] = 'checked';
+        } else {
+            $data['checked_wali'] = '';
+        }
 
         $this->load->view('templates/header', $data);
         $this->load->view('templates/topbar');
         $this->load->view('templates/sidebar_staff');
         $this->load->view('staff/ubah_pendaftar');
         $this->load->view('templates/footer');
+    }
+
+    function tampil_pendaftar_tahun_ajaran($id_tahun_ajaran)
+    {
+        $id_tahun_ajaran = $this->uri->segment(3);
+        $data = $this->Pendaftar_Model->tampil_pendaftar_pertahun($id_tahun_ajaran)->result();
+        echo json_encode($data);
+    }
+
+    function cari_nilai_pendaftar($id_pendaftar)
+    {
+        $id_pendaftar = $this->uri->segment(3);
+        $data = $this->Penilaian_Model->cari_nilai_pendaftar($id_pendaftar)->result();
+        echo json_encode($data);
+    }
+
+    function hapus_prestasi()
+    {
+        $id_prestasi = $this->input->post('id', TRUE);
+        if ($this->Pendaftar_Model->hapus_prestasi($id_prestasi)) {
+            echo 1;
+        } else {
+            echo 0;
+        }
+    }
+
+    function hapus_beasiswa()
+    {
+        $id_beasiswa = $this->input->post('id', TRUE);
+        if ($this->Pendaftar_Model->hapus_beasiswa($id_beasiswa)) {
+            echo 1;
+        } else {
+            echo 0;
+        }
     }
 
     function data_peringkat()

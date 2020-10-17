@@ -7,8 +7,9 @@
     <!-- ============================================================== -->
     <div class="container-fluid">
         <div class="card shadow p-4">
-            <h1><strong>Upload Bukti Pembayaran</strong></h1>
-            <?php if ($this->session->flashdata('notif_perintah') && $this->session->flashdata('notif_pesan')) { ?>
+            <h1 class="mb-3"><strong>Upload Bukti Pembayaran</strong></h1>
+            <a href="#">Detail Pembayaran</a>
+            <!-- <?php if ($this->session->flashdata('notif_perintah') && $this->session->flashdata('notif_pesan')) { ?>
                 <div class="alert alert-info" role="alert">
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
@@ -17,7 +18,25 @@
                     <hr />
                     <p><?= $this->session->flashdata('notif_pesan'); ?>.</p>
                 </div>
-            <?php } ?>
+            <?php } ?> -->
+            <form action="" class="mt-3" enctype="multipart/form-data" method="post">
+                <div class="form-group">
+                    <label>Nama</label>
+                    <input type="text" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label>NISN</label>
+                    <input type="text" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label>Upload Bukti Pembayaran</label> <br />
+                    <div id="hasil" hidden>
+                        <img id="preview" class="mb-3 rounded" hidden />
+                    </div>
+                    <input type="file" class="form-control-file" value="" name="foto" id="gambar" accept=".jpg, .png, .jpeg" onchange="tampilkanPreview(this,'preview')">
+                </div>
+                <button type="submit" class="btn btn-success btn-block">Upload Bukti Pembayaran</button>
+            </form>
         </div>
     </div>
     <!-- ============================================================== -->

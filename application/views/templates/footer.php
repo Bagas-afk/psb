@@ -19,9 +19,9 @@
 <!-- ============================================================== -->
 <!-- All Jquery -->
 <!-- ============================================================== -->
-<script src="<?= base_url('/') ?>assets/templates/libs/jquery/dist/jquery.min.js"></script>
-<script src="<?= base_url('/') ?>assets/templates/libs/popper.js/dist/umd/popper.min.js"></script>
-<script src="<?= base_url('/') ?>assets/templates/libs/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="<?= base_url('/') ?>assets/js/jquery-3.5.1.js"></script>
+<script src="<?= base_url('/') ?>assets/js/popper.js"></script>
+<script src="<?= base_url('/') ?>assets/js/bootstrap.min.js"></script>
 <!-- apps -->
 <!-- apps -->
 <script src="<?= base_url('/') ?>assets/templates/js/app-style-switcher.js"></script>
@@ -42,7 +42,8 @@
 <script src="<?= base_url('/') ?>assets/datatables/datatables.js"></script>
 <script src="<?= base_url('/') ?>assets/sweetalert2/sweetalert2.all.min.js"></script>
 <script src="<?= base_url('/') ?>assets/select2/js/select2.full.min.js"></script>
-<script src="<?= base_url('/') ?>assets/templates/js/main.js"></script>
+<script src="<?= base_url('/') ?>assets/js/yearpicker.js"></script>
+<script src="<?= base_url('/') ?>assets/js/bootstrap-show-password.min.js"></script>
 
 <!-- My JavaScript -->
 <script src="<?= base_url('/') ?>assets/js/my_script.js"></script>

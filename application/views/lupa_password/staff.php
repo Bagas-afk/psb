@@ -53,7 +53,11 @@
                         <form action="<?= base_url('auth/staff_password_aksi') ?>" method="post">
                             <div class="form-group">
                                 <label class="mb-1" for="inputEmailAddress">Email</label>
-                                <input class="form-control py-4" name="email" type="email" placeholder="Masukan Email Terdaftar" />
+                                <input class="form-control py-4" name="email" type="email" required placeholder="Masukan Email Terdaftar" />
+                            </div>
+                            <div class="form-group">
+                                <label class="mb-1" for="inputEmailAddress">Tanggal Lahir</label>
+                                <input class="form-control py-4" name="tanggal_lahir" type="date" required />
                             </div>
                             <div class="form-group mt-3">
                                 <button type="submit" class="btn btn-dark btn-block">Ajukan Ganti Password</button>
