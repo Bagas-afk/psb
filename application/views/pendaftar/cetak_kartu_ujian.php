@@ -8,7 +8,7 @@
     <div class="container-fluid">
         <div class="card shadow p-4">
             <h1><strong>Cetak Kartu Ujian</strong></h1>
-            <?php if (!$this->session->flashdata('notif_perintah') && !$this->session->flashdata('notif_pesan')) { ?>
+            <?php if ($this->session->flashdata('notif_perintah') && $this->session->flashdata('notif_pesan')) { ?>
                 <div class="alert alert-info" role="alert">
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
