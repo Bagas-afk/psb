@@ -19,6 +19,11 @@
                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#staticBackdrop">
                     <i class="fas fa-plus"></i> Tambah Penilaian Pendaftar
                 </button>
+                <div class="float-right">
+                    <button type="button" class="btn btn-success" data-toggle="modal" data-target="#staticBackdrop">
+                        <i class="fas fa-check"></i> Verifikasi Nilai Pendaftar
+                    </button>
+                </div>
                 <!-- Modal Tambah Penilaian -->
                 <div class="modal fade" id="staticBackdrop" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                     <div class="modal-dialog" role="document">

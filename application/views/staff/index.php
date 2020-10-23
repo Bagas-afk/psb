@@ -32,7 +32,7 @@
                     <div class="card shadow">
                         <div class="card-body">
                             <h3>Staff Pendaftaran</h3>
-                            <p>1 Orang</p>
+                            <p><?= $jumlah_staff ?> Orang</p>
                         </div>
                     </div>
                 </div>
@@ -40,7 +40,7 @@
                     <div class="card shadow">
                         <div class="card-body">
                             <h3>Data Pendaftar</h3>
-                            <p>10 Pendaftar</p>
+                            <p><?= $jumlah_pendaftar ?> Pendaftar</p>
                         </div>
                     </div>
                 </div>
@@ -48,7 +48,7 @@
                     <div class="card shadow">
                         <div class="card-body">
                             <h3>Pendaftar Telah Bayar</h3>
-                            <p>5 Pendaftar</p>
+                            <p><?= $jumlah_pendaftar_telah_bayar ?> Pendaftar</p>
                         </div>
                     </div>
                 </div>

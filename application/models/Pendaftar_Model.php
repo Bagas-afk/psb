@@ -4,9 +4,26 @@ class Pendaftar_Model extends CI_Model
 {
     function tampil_data_pendaftar()
     {
-        // $this->db->join('tb_pembayaran', 'tb_pembayaran.id_pendaftar = tb_pendaftar.id_pendaftar', 'left');
-        // $this->db->order_by('id_tahun_ajaran', 'desc');
-        return $this->db->query("SELECT *, tb_pendaftar.id_pendaftar FROM tb_pendaftar LEFT JOIN tb_pembayaran ON tb_pendaftar.id_pendaftar = tb_pembayaran.id_pendaftar LEFT JOIN tb_staff ON tb_staff.id_staff = tb_pembayaran.id_staff ORDER BY id_tahun_ajaran DESC");
+        return $this->db->query("SELECT *, tb_pendaftar.id_pendaftar FROM tb_pendaftar LEFT JOIN tb_pembayaran ON tb_pendaftar.id_pendaftar = tb_pembayaran.id_pendaftar LEFT JOIN tb_staff ON tb_pembayaran.id_staff = tb_staff.id_staff INNER JOIN tb_tahun_ajaran ON tb_tahun_ajaran.id_tahun_ajaran = tb_pendaftar.id_tahun_ajaran ORDER BY tb_pendaftar.id_tahun_ajaran DESC");
+    }
+
+    function tampil_pendaftar_telah_bayar()
+    {
+        $this->db->where('status', 'Processing');
+        $this->db->or_where('status', 'Diterima');
+        return $this->db->query("SELECT *, tb_pendaftar.id_pendaftar FROM tb_pendaftar INNER JOIN tb_pembayaran ON tb_pendaftar.id_pendaftar = tb_pembayaran.id_pendaftar INNER JOIN tb_staff ON tb_staff.id_staff = tb_pembayaran.id_staff");
+    }
+
+    function cari_id($id)
+    {
+        $this->db->where('id_pendaftar', $id);
+        return $this->db->get('tb_pendaftar');
+    }
+
+    function update_profile($pendaftar, $id)
+    {
+        $this->db->where('id_pendaftar', $id);
+        return $this->db->update('tb_pendaftar', $pendaftar);
     }
 
     function tampil_beasiswa_pendaftar($id_pendaftar)
@@ -71,5 +88,41 @@ class Pendaftar_Model extends CI_Model
     {
         $this->db->where('id_tahun_ajaran', $id_tahun_ajaran);
         return $this->db->get('tb_pendaftar');
+    }
+
+    function simpan_prestasi_pendaftar($data)
+    {
+        $this->db->insert('tb_prestasi_pendaftar', $data);
+    }
+
+    function update_prestasi_pendaftar($data, $id_prestasi_pendaftar, $id_pendaftar)
+    {
+        $this->db->where('id_pendaftar', $id_pendaftar);
+        $this->db->where('id_prestasi_pendaftar', $id_prestasi_pendaftar);
+        $this->db->update('tb_prestasi_pendaftar', $data);
+    }
+
+    function simpan_beasiswa_pendaftar($data)
+    {
+        $this->db->insert('tb_beasiswa_pendaftar', $data);
+    }
+
+    function update_beasiswa_pendaftar($data, $id_beasiswa_pendaftar, $id_pendaftar)
+    {
+        $this->db->where('id_pendaftar', $id_pendaftar);
+        $this->db->where('id_beasiswa_pendaftar', $id_beasiswa_pendaftar);
+        $this->db->update('tb_beasiswa_pendaftar', $data);
+    }
+
+    function simpan_pengasuh_pendaftar($data)
+    {
+        $this->db->insert('tb_pengasuh_pendaftar', $data);
+    }
+
+    function update_pengasuh_pendaftar($data, $id_pengasuh_pendaftar, $id_pendaftar)
+    {
+        $this->db->where('id_pendaftar', $id_pendaftar);
+        $this->db->where('id_pengasuh_pendaftar', $id_pengasuh_pendaftar);
+        $this->db->update('tb_pengasuh_pendaftar', $data);
     }
 }

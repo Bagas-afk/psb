@@ -162,7 +162,7 @@
             <div class="row">
                 <div class="col-3"><label>Waktu Ke Sekolah</label></div>
                 <div class="col-9">
-                    <p><?= $detail_pendaftar->waktu ?> Jam</p>
+                    <p><?= $detail_pendaftar->waktu ?> Menit</p>
                 </div>
             </div>
             <div class="row">
@@ -216,7 +216,7 @@
                 <div class="row mb-3">
                     <div class="col-3"><label>Penghasilan</label></div>
                     <div class="col-9">
-                        <p><?= $data->penghasilan > 0 ? 'Rp. ' . number_format($data->penghasilan, 2, ',', '.') : '-' ?></p>
+                        <p><?= $data->penghasilan > 0 ? 'Rp. ' . number_format($data->penghasilan, 0, ',', '.') : '-' ?></p>
                     </div>
                 </div>
             <?php } ?>

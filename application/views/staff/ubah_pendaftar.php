@@ -10,17 +10,18 @@
             <h1 class="mb-3"><strong>Ubah Data Pendaftar</strong></h1>
             <div class="card shadow">
                 <div class="card-body">
-                    <form id="regForm" action="<?= base_url('C_Pendaftar/update_data_pendaftar') ?>" method="post">
+                    <form id="regForm" action="<?= base_url('c_pendaftar/update_data_pendaftar') ?>" enctype="multipart/form-data" method="post">
                         <!-- One "tab" for each step in the form: -->
                         <div class="tab">
                             <h2 class="text-center">Identitas Peserta Didik</h2>
                             <div class="form-group">
                                 <label>Nama Lengkap</label>
-                                <input type="text" name="nama" value="<?= $data_pendaftar->nama_pendaftar ?>" class="form-control" readonly>
+                                <input type="hidden" name="id_pendaftar" value="<?= $data_pendaftar->id_pendaftar ?>" class="form-control" readonly>
+                                <input type="text" name="nama_pendaftar" value="<?= $data_pendaftar->nama_pendaftar ?>" class="form-control" readonly>
                             </div>
                             <div class="form-group">
                                 <label>Email</label>
-                                <input type="email" name="email" value="<?= $data_pendaftar->email_pendaftar ?>" class="form-control">
+                                <input type="email" name="email_pendaftar" value="<?= $data_pendaftar->email_pendaftar ?>" class="form-control">
                             </div>
                             <div class="form-group">
                                 <label>NISN</label>
@@ -67,7 +68,7 @@
                             </div>
                             <div class="form-group">
                                 <label>Tanggal Lahir</label>
-                                <input type="date" name="tanggal_lahir" value="<?= date('Y-m-d', strtotime($data_pendaftar->tanggal_lahir)) ?>" class="form-control">
+                                <input type="date" name="tanggal_lahir_pendaftar" value="<?= date('Y-m-d', strtotime($data_pendaftar->tanggal_lahir)) ?>" class="form-control">
                             </div>
                             <div class="form-group">
                                 <label>Agama</label>
@@ -81,7 +82,7 @@
                             </div>
                             <div class="form-group">
                                 <label>Berkebutuhan Khusus</label>
-                                <input type="text" name="berkebutuhan_khusus" value="<?= $data_pendaftar->berkebutuhan_khusus ?>" class="form-control">
+                                <input type="text" name="berkebutuhan_khusus_pendaftar" value="<?= $data_pendaftar->berkebutuhan_khusus ?>" class="form-control">
                             </div>
                             <div class="form-group">
                                 <label>Alamat</label>
@@ -134,7 +135,7 @@
                             <div class="form-group">
                                 <label>Foto (Background Merah Ukuran 3x4)</label> <br />
                                 <div>
-                                    <img src="<?= base_url('assets/img/profile/') . $data_pendaftar->foto ?>" width="150" class="mb-2">
+                                    <img src="<?= base_url('assets/img/profile/') . $data_pendaftar->foto ?>" width="150px" height="200px" class="mb-2">
                                     <p id="hasil" hidden>Preview Update Foto</p>
                                     <img id="preview" class="mb-3 rounded" hidden />
                                 </div>
@@ -148,14 +149,15 @@
                                 <button type="button" onclick="tambahPrestasi()" class="btn btn-primary"><i class="fas fa-plus"></i> Tambah Prestasi</button>
                             </div>
                             <?php foreach ($prestasi_pendaftar as $data) { ?>
-                                <div class="mb-3 isi_data" id="isi_prestasi">
+                                <div class="mb-3 isi_data" id="isi_prestasi" data-id="<?= $data->id_prestasi_pendaftar ?>">
                                     <hr>
-                                    <h3 class="mb-2">Data Prestasi <sup><a onclick="hapusDataPrestasi('isi_prestasi')" data-id_prestasi="<?= $data->id_prestasi_pendaftar ?>" class="prestasi badge badge-danger text-light"><i class="fas fa-trash"></i> Hapus Prestasi</a></sup></h3>
+                                    <h3 class="mb-2">Data Prestasi <sup><a class="hapus_prestasi badge badge-danger text-light"><i class="fas fa-trash"></i> Hapus Prestasi</a></sup></h3>
                                     <div class="form-inline row mb-2">
                                         <div class="col-2 d-flex justify-content-start">
                                             <label class="text-left">Nama Prestasi</label>
                                         </div>
                                         <div class="col-10">
+                                            <input type="hidden" name="id_prestasi[]" class="form-control w-100" value="<?= $data->id_prestasi_pendaftar ?>">
                                             <input type="text" name="nama_prestasi[]" class="form-control w-100" value="<?= $data->nama_prestasi ?>">
                                         </div>
                                     </div>
@@ -202,14 +204,15 @@
                                 <button type="button" onclick="tambahBeasiswa()" class="btn btn-primary"><i class="fas fa-plus"></i> Tambah Beasiswa</button>
                             </div>
                             <?php foreach ($beasiswa_pendaftar as $data) { ?>
-                                <div class="mb-3" id="isi_beasiswa">
+                                <div class="mb-3" id="isi_beasiswa" data-id="<?= $data->id_beasiswa_pendaftar ?>">
                                     <hr>
-                                    <h3 class="mb-2">Data Beasiswa <sup><a onclick="hapusDataBeasiswa('isi_beasiswa')" data-id_beasiswa="<?= $data->id_beasiswa_pendaftar ?>" class="beasiswa badge badge-danger text-light"><i class="fas fa-trash"></i> Hapus Beasiswa</a></sup></h3>
+                                    <h3 class="mb-2">Data Beasiswa <sup><a class="hapus_beasiswa badge badge-danger text-light"><i class="fas fa-trash"></i> Hapus Beasiswa</a></sup></h3>
                                     <div class="form-inline row mb-2">
                                         <div class="col-2 d-flex justify-content-start">
                                             <label class="text-left">Nama Beasiswa</label>
                                         </div>
                                         <div class="col-10">
+                                            <input type="hidden" name="id_beasiswa[]" class="form-control w-100" value="<?= $data->id_beasiswa_pendaftar ?>">
                                             <input type="text" name="nama_beasiswa[]" class="form-control w-100" value="<?= $data->nama_beasiswa ?>">
                                         </div>
                                     </div>
@@ -234,7 +237,7 @@
                                             <label>Tahun Mulai</label>
                                         </div>
                                         <div class="col-10">
-                                            <input type="number" name="tahun_mulai[]" class="year form-control w-100" placeholder="contoh : 2019" value="<?= $data->tahun_mulai ?>">
+                                            <input type="number" name="tahun_mulai[]" class="form-control w-100" placeholder="contoh : 2019" value="<?= $data->tahun_mulai ?>">
                                         </div>
                                     </div>
                                     <div class="form-inline row mb-2">
@@ -242,7 +245,7 @@
                                             <label>Tahun Selesai</label>
                                         </div>
                                         <div class="col-10">
-                                            <input type="number" name="tahun_selesai[]" class="year form-control w-100" placeholder="contoh : 2019" value="<?= $data->tahun_selesai ?>">
+                                            <input type="number" name="tahun_selesai[]" class="form-control w-100" placeholder="contoh : 2019" value="<?= $data->tahun_selesai ?>">
                                         </div>
                                     </div>
                                 </div>
@@ -261,7 +264,7 @@
                                 <input type="number" name="jarak" class="form-control" value="<?= $data->jarak ?>">
                             </div>
                             <div class="form-group">
-                                <label>Waktu (Jam)</label>
+                                <label>Waktu (Menit)</label>
                                 <input type="number" name="waktu" class="form-control" value="<?= $data->waktu ?>">
                             </div>
                             <div class="form-group">
@@ -298,16 +301,16 @@
                                     <h2>Data Ayah</h2>
                                     <div class="form-group">
                                         <label>Nama</label>
-                                        <input type="text" id="nama_ayah" name="nama[]" class="form-control" value="<?= $ayah->nama ?>">
-                                        <input type="hidden" name="id_pengasuh_pendaftar[]" value="<?= $ayah->id_pengasuh_pendaftar ?>" class="form-control">
+                                        <input type="text" id="nama_ayah" name="nama_pengasuh[]" class="form-control" value="<?= $ayah->nama ?>">
+                                        <input type="hidden" name="id_pengasuh[]" value="<?= $ayah->id_pengasuh_pendaftar ?>" class="form-control">
                                     </div>
                                     <div class="form-group">
                                         <label>Tahun Lahir</label>
-                                        <input type="date" name="tanggal_lahir[]" class="form-control" value="<?= $ayah->tanggal_lahir ?>">
+                                        <input type="date" name="tanggal_lahir_pengasuh[]" class="form-control" value="<?= $ayah->tanggal_lahir ?>">
                                     </div>
                                     <div class="form-group">
                                         <label>Berkebutuhan Khusus</label>
-                                        <input type="text" name="berkebutuhan_khusus[]" class="form-control" value="<?= $ayah->berkebutuhakn_khusus ?>">
+                                        <input type="text" name="berkebutuhan_khusus_pengasuh[]" class="form-control" value="<?= $ayah->berkebutuhan_khusus ?>">
                                     </div>
                                     <div class="form-group">
                                         <label>Pekerjaan</label>
@@ -330,16 +333,16 @@
                                     <h2>Data Ibu</h2>
                                     <div class="form-group">
                                         <label>Nama</label>
-                                        <input type="text" id="nama_ibu" name="nama[]" class="form-control" value="<?= $ibu->nama ?>">
-                                        <input type="hidden" name="id_pengasuh_pendaftar[]" value="<?= $ibu->id_pengasuh_pendaftar ?>" class="form-control">
+                                        <input type="text" id="nama_ibu" name="nama_pengasuh[]" class="form-control" value="<?= $ibu->nama ?>">
+                                        <input type="hidden" name="id_pengasuh[]" value="<?= $ibu->id_pengasuh_pendaftar ?>" class="form-control">
                                     </div>
                                     <div class="form-group">
                                         <label>Tahun Lahir</label>
-                                        <input type="date" name="tanggal_lahir[]" class="form-control" value="<?= $ibu->tanggal_lahir ?>">
+                                        <input type="date" name="tanggal_lahir_pengasuh[]" class="form-control" value="<?= $ibu->tanggal_lahir ?>">
                                     </div>
                                     <div class="form-group">
                                         <label>Berkebutuhan Khusus</label>
-                                        <input type="text" name="berkebutuhan_khusus[]" class="form-control" value="<?= $ibu->berkebutuhakn_khusus ?>">
+                                        <input type="text" name="berkebutuhan_khusus_pengasuh[]" class="form-control" value="<?= $ibu->berkebutuhan_khusus ?>">
                                     </div>
                                     <div class="form-group">
                                         <label>Pekerjaan</label>
@@ -362,16 +365,16 @@
                                     <h2>Data Wali</h2>
                                     <div class="form-group">
                                         <label>Nama</label>
-                                        <input type="text" id="nama_wali" name="nama[]" class="form-control" value="<?= $wali->nama ?>">
-                                        <input type="hidden" name="id_pengasuh_pendaftar[]" value="<?= $wali->id_pengasuh_pendaftar ?>" class="form-control">
+                                        <input type="text" id="nama_wali" name="nama_pengasuh[]" class="form-control" value="<?= $wali->nama ?>">
+                                        <input type="hidden" name="id_pengasuh[]" value="<?= $wali->id_pengasuh_pendaftar ?>" class="form-control">
                                     </div>
                                     <div class="form-group">
                                         <label>Tahun Lahir</label>
-                                        <input type="date" name="tanggal_lahir[]" class="form-control" value="<?= $wali->tanggal_lahir ?>">
+                                        <input type="date" name="tanggal_lahir_pengasuh[]" class="form-control" value="<?= $wali->tanggal_lahir ?>">
                                     </div>
                                     <div class="form-group">
                                         <label>Berkebutuhan Khusus</label>
-                                        <input type="text" name="berkebutuhan_khusus[]" class="form-control" value="<?= $wali->berkebutuhakn_khusus ?>">
+                                        <input type="text" name="berkebutuhan_khusus_pengasuh[]" class="form-control" value="<?= $wali->berkebutuhan_khusus ?>">
                                     </div>
                                     <div class="form-group">
                                         <label>Pekerjaan</label>

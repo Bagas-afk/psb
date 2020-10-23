@@ -23,6 +23,11 @@ class Staff extends CI_Controller
         $data['selected'] = ['selected', '', '', '', '', '', ''];
         $data['active'] = ['active', '', '', '', '', '', ''];
         $data['user'] = $this->Staff_Model->cari_email_staff($this->session->userdata('email'))->row();
+        $data['jumlah_staff'] = $this->Staff_Model->cari_staff_semua()->num_rows();
+        $tahun_ajaran_akhir = $this->Tahun_Ajaran_Model->cari_tahun_ajaran_terakhir()->row();
+        $data['jumlah_pendaftar'] = $this->Pendaftar_Model->tampil_pendaftar_pertahun($tahun_ajaran_akhir->id_tahun_ajaran)->num_rows();
+        $data['jumlah_pendaftar_telah_bayar'] = $this->Pendaftar_Model->tampil_pendaftar_telah_bayar()->num_rows();
+
         $data['logo_sekolah'] = "logo_sekolah.png";
         $data['nama_sekolah'] = strtoupper('smp tazkia insani');
 
@@ -54,6 +59,7 @@ class Staff extends CI_Controller
         $data['active'] = ['', '', '', 'active', '', '', ''];
         $data['user'] = $this->Staff_Model->cari_email_staff($this->session->userdata('email'))->row();
         $data['pendaftar'] = $this->Pendaftar_Model->tampil_data_pendaftar()->result();
+        $data['tahun_ajaran'] = $this->Tahun_Ajaran_Model->tampil_tahun_ajaran()->result();
         // print_r($data['pendaftar']);
         // die;
 
@@ -75,8 +81,6 @@ class Staff extends CI_Controller
         $data['beasiswa_pendaftar'] = $this->Pendaftar_Model->tampil_beasiswa_pendaftar($id_pendaftar)->result();
         $data['prestasi_pendaftar'] = $this->Pendaftar_Model->tampil_prestasi_pendaftar($id_pendaftar)->result();
         $data['pengasuh_pendaftar'] = $this->Pendaftar_Model->tampil_pengasuh_pendaftar($id_pendaftar)->result();
-        // print_r($data['pendaftar']);
-        // die;
 
         $this->load->view('templates/header', $data);
         $this->load->view('templates/topbar');
@@ -156,7 +160,7 @@ class Staff extends CI_Controller
 
     function hapus_prestasi()
     {
-        $id_prestasi = $this->input->post('id', TRUE);
+        $id_prestasi = $this->input->post('id_prestasi', TRUE);
         if ($this->Pendaftar_Model->hapus_prestasi($id_prestasi)) {
             echo 1;
         } else {
@@ -166,10 +170,12 @@ class Staff extends CI_Controller
 
     function hapus_beasiswa()
     {
-        $id_beasiswa = $this->input->post('id', TRUE);
+        $id_beasiswa = $this->input->post('id_beasiswa', TRUE);
         if ($this->Pendaftar_Model->hapus_beasiswa($id_beasiswa)) {
+            // $data = 1;
             echo 1;
         } else {
+            // $data = 0;
             echo 0;
         }
     }
@@ -226,6 +232,11 @@ class Staff extends CI_Controller
         $tahun_awal = substr($data['tahun_ajaran_sebelum']->tahun_ajaran, 0, 4);
         $tahun_akhir = substr($data['tahun_ajaran_sebelum']->tahun_ajaran, 7, 4);
         $data['tahun_ajaran_sekarang'] = ($tahun_awal + 1) . ' / ' . ($tahun_akhir + 1);
+        if (time() < strtotime($data['tahun_ajaran_sebelum']->tanggal_pengumuman)) {
+            $data['disabled'] = 'disabled';
+        } else {
+            $data['disabled'] = '';
+        }
 
         $this->load->view('templates/header', $data);
         $this->load->view('templates/topbar');

@@ -6,7 +6,7 @@ $(document).ready(function () {
 		]
 	})
 
-	$('#password').password()
+	$('.password').password()
 
 	$('.year').yearpicker()
 
@@ -19,6 +19,111 @@ $(document).ready(function () {
 	$('#pilih_cetak').change(function () {
 		document.getElementById('div_cetak_laporan').hidden = false
 	})
+
+	$("body").on("click", ".remove_beasiswa", function () {
+		$(this).parents("#isi_beasiswa").remove();
+	});
+
+	$("body").on("click", ".hapus_beasiswa", function () {
+		var id_beasiswa = $(this).parents("#isi_beasiswa").data('id')
+		Swal.fire({
+			title: 'Hapus Data',
+			text: 'Apakah Anda Yakin ingin Menghapus Data Beasiswa Tersebut?',
+			icon: 'warning',
+			showCancelButton: true,
+			confirmButtonColor: '#3085d6',
+			cancelButtonColor: '#d33',
+			confirmButtonText: 'Ya, Hapus Data!'
+		}).then((result) => {
+			if (result.value) {
+				$.ajax({
+					url: '/psb/staff/hapus_beasiswa',
+					type: 'post',
+					data: {
+						id_beasiswa: id_beasiswa
+					},
+					success: function (code) {
+						if (code != 1) {
+							Swal.fire({
+								title: 'Gagal',
+								text: 'Data Beasiswa Tidak Ada',
+								icon: 'error'
+							})
+						} else {
+							Swal.fire({
+								title: 'Berhasil',
+								text: 'Data Beasiswa Telah Dihapus',
+								icon: 'success'
+							})
+						}
+					}
+				})
+			} else {
+				Swal.fire({
+					title: 'Gagal',
+					text: 'Data Beasiswa Tidak Dihapus',
+					icon: 'error'
+				})
+			}
+
+			if (result.value == true) {
+				$(this).parents("#isi_beasiswa").remove()
+			}
+		})
+	});
+
+	$("body").on("click", ".remove_prestasi", function () {
+		$(this).parents("#isi_prestasi").remove();
+	});
+
+	$("body").on("click", ".hapus_prestasi", function () {
+		var id_prestasi = $(this).parents("#isi_prestasi").data('id')
+		Swal.fire({
+			title: 'Hapus Data Prestasi',
+			text: 'Apakah Anda Yakin ingin Menghapus Data Prestasi Tersebut?',
+			icon: 'warning',
+			showCancelButton: true,
+			confirmButtonColor: '#3085d6',
+			cancelButtonColor: '#d33',
+			confirmButtonText: 'Ya, Hapus Data!'
+		}).then((result) => {
+			if (result.value) {
+				$.ajax({
+					url: '/psb/staff/hapus_prestasi',
+					type: 'post',
+					data: {
+						id_prestasi: id_prestasi
+					},
+					success: function (code) {
+						if (code != '1') {
+							Swal.fire({
+								title: 'Gagal',
+								text: 'Data Prestasi Tidak Ada',
+								icon: 'error'
+							})
+						} else {
+							Swal.fire({
+								title: 'Berhasil',
+								text: 'Data Prestasi Telah Dihapus',
+								icon: 'success'
+							})
+						}
+					}
+				})
+			} else {
+				Swal.fire({
+					title: 'Gagal',
+					text: 'Data Prestasi Tidak Dihapus',
+					icon: 'error'
+				})
+			}
+
+			if (result.value == true) {
+				$(this).parents("#isi_prestasi").remove()
+			}
+
+		})
+	});
 
 	$('#tahun_ajaran_pendaftar').change(function () {
 		var id_tahun_ajaran = document.getElementById('tahun_ajaran_pendaftar').value
@@ -68,6 +173,21 @@ $(document).ready(function () {
 			}
 		})
 	})
+
+
+	$('#tahun_ajaran').change(function () {
+		var id_tahun_ajaran = $('#tahun_ajaran').val()
+		$.ajax({
+			url: '/psb/c_tahun_ajaran/cari_tahun_ajaran/' + id_tahun_ajaran,
+			type: 'get',
+			dataType: 'json',
+			success: function (data) {
+				var table = $('.tabel_pendaftar').DataTable();
+				table.search('Tahun Ajaran ' + data.tahun_ajaran).draw();
+			}
+		})
+
+	})
 })
 
 function ayah() {
@@ -83,16 +203,17 @@ function ayah() {
 			html += '<h2>Data Ayah</h2>'
 			html += '<div class="form-group">'
 			html += '<label>Nama</label>'
-			html += '<input type="text" id="nama_ayah" name="nama[]" class="form-control">'
+			html += '<input type="text" id="nama_ayah" name="nama_pengasuh[]" class="form-control">'
+			html += '<input type="hidden" name="id_pengasuh[]" class="form-control">'
 			html += '<input type="hidden" name="keterangan[]" value="Ayah" class="form-control">'
 			html += '</div>'
 			html += '<div class="form-group">'
 			html += '<label>Tahun Lahir</label>'
-			html += '<input type="number" name="tahun_lahir[]" class="form-control">'
+			html += '<input type="date" name="tanggal_lahir_pengasuh[]" class="form-control">'
 			html += '</div>'
 			html += '<div class="form-group">'
 			html += '<label>Berkebutuhan Khusus</label>'
-			html += '<input type="text" name="berkebutuhan_khusus[]" class="form-control">'
+			html += '<input type="text" name="berkebutuhan_khusus_pengasuh[]" class="form-control">'
 			html += '</div>'
 			html += '<div class="form-group">'
 			html += '<label>Pekerjaan</label>'
@@ -132,16 +253,17 @@ function ibu() {
 			html += '<h2>Data Ibu</h2>'
 			html += '<div class="form-group">'
 			html += '<label>Nama</label>'
-			html += '<input type="text" id="nama_ibu" name="nama[]" class="form-control">'
+			html += '<input type="text" id="nama_ibu" name="nama_pengasuh[]" class="form-control">'
+			html += '<input type="hidden" name="id_pengasuh[]" class="form-control">'
 			html += '<input type="hidden" name="keterangan[]" value="Ibu" class="form-control">'
 			html += '</div>'
 			html += '<div class="form-group">'
 			html += '<label>Tahun Lahir</label>'
-			html += '<input type="number" name="tahun_lahir[]" class="form-control">'
+			html += '<input type="date" name="tanggal_lahir_pengasuh[]" class="form-control">'
 			html += '</div>'
 			html += '<div class="form-group">'
 			html += '<label>Berkebutuhan Khusus</label>'
-			html += '<input type="text" name="berkebutuhan_khusus[]" class="form-control">'
+			html += '<input type="text" name="berkebutuhan_khusus_pengasuh[]" class="form-control">'
 			html += '</div>'
 			html += '<div class="form-group">'
 			html += '<label>Pekerjaan</label>'
@@ -170,28 +292,29 @@ function ibu() {
 }
 
 function wali() {
-	var nama_ibu = document.getElementById('nama_ibu')
+	var nama_wali = document.getElementById('nama_wali')
 	var dataWali = document.getElementById('waliCheck')
 	var divWali = document.getElementById('waliForm')
 	var html = ''
 	if (dataWali.checked) {
-		if (nama_ibu.value != '') {
-			divIbu.hidden = false
+		if (nama_wali.value != '') {
+			divWali.hidden = false
 		} else {
 			html += '<div id="waliForm">'
 			html += '<h2>Data Wali</h2>'
 			html += '<div class="form-group">'
 			html += '<label>Nama</label>'
-			html += '<input type="text" id="nama_wali" name="nama[]" class="form-control">'
+			html += '<input type="hidden" name="id_pengasuh[]" class="form-control">'
+			html += '<input type="text" id="nama_wali" name="nama_pengasuh[]" class="form-control">'
 			html += '<input type="hidden" name="keterangan[]" value="Wali" class="form-control">'
 			html += '</div>'
 			html += '<div class="form-group">'
 			html += '<label>Tahun Lahir</label>'
-			html += '<input type="number" name="tahun_lahir[]" class="form-control">'
+			html += '<input type="date" name="tanggal_lahir_pengasuh[]" class="form-control">'
 			html += '</div>'
 			html += '<div class="form-group">'
 			html += '<label>Berkebutuhan Khusus</label>'
-			html += '<input type="text" name="berkebutuhan_khusus[]" class="form-control">'
+			html += '<input type="text" name="berkebutuhan_khusus_pengasuh[]" class="form-control">'
 			html += '</div>'
 			html += '<div class="form-group">'
 			html += '<label>Pekerjaan</label>'
@@ -218,108 +341,17 @@ function wali() {
 	}
 }
 
-function hapusDataPrestasi(isi) {
-	var id_prestasi = $('.prestasi').data('id_prestasi')
-	Swal.fire({
-		title: 'Hapus Data Prestasi',
-		text: 'Apakah Anda Yakin ingin Menghapus Data Prestasi Tersebut?',
-		icon: 'warning',
-		showCancelButton: true,
-		confirmButtonColor: '#3085d6',
-		cancelButtonColor: '#d33',
-		confirmButtonText: 'Ya, Hapus Data!'
-	}).then((result) => {
-		if (result.value) {
-			$.ajax({
-				url: '/psb/staff/hapus_prestasi',
-				type: 'post',
-				data: {
-					id: id_prestasi
-				},
-				success: function (code) {
-					if (code == 1) {
-						Swal.fire({
-							title: 'Berhasil',
-							text: 'Data Prestasi Telah Dihapus',
-							icon: 'success'
-						})
-						var div = document.getElementById(isi)
-						div.remove()
-					} else {
-						Swal.fire({
-							title: 'Gagal',
-							text: 'Data Prestasi Tidak Ada',
-							icon: 'error'
-						})
-					}
-				}
-			})
-		} else {
-			Swal.fire({
-				title: 'Gagal',
-				text: 'Data Prestasi Tidak Dihapus',
-				icon: 'error'
-			})
-		}
-	})
-}
-
-function hapusDataBeasiswa(isi) {
-	var id_beasiswa = $('.beasiswa').data('id_beasiswa')
-	Swal.fire({
-		title: 'Hapus Data',
-		text: 'Apakah Anda Yakin ingin Menghapus Data Beasiswa Tersebut?',
-		icon: 'warning',
-		showCancelButton: true,
-		confirmButtonColor: '#3085d6',
-		cancelButtonColor: '#d33',
-		confirmButtonText: 'Ya, Hapus Data!'
-	}).then((result) => {
-		if (result.value) {
-			$.ajax({
-				url: '/psb/staff/hapus_beasiswa',
-				type: 'post',
-				data: {
-					id: id_beasiswa
-				},
-				success: function (code) {
-					if (code == 1) {
-						Swal.fire({
-							title: 'Berhasil',
-							text: 'Data Beasiswa Telah Dihapus',
-							icon: 'success'
-						})
-						var div = document.getElementById(isi)
-						div.remove()
-					} else {
-						Swal.fire({
-							title: 'Gagal',
-							text: 'Data Beasiswa Tidak Ada',
-							icon: 'error'
-						})
-					}
-				}
-			})
-		} else {
-			Swal.fire({
-				title: 'Gagal',
-				text: 'Data Beasiswa Tidak Dihapus',
-				icon: 'error'
-			})
-		}
-	})
-}
-
 function tambahPrestasi() {
 	var html = ''
-	html += '<div class="mb-3 isi_data" id="isi_prestasi">'
+	html += '<div class="mb-3" id="isi_prestasi">'
 	html += '<hr>'
-	html += '<h3 class="mb-2">Data Prestasi <sup><a onclick="hapusPrestasi(\'isi_prestasi\')" class="badge badge-danger text-light"><i class="fas fa-trash"></i> Hapus Form Prestasi</a></sup></h3>'
+	html += '<h3 class="mb-2">Data Prestasi <sup><a class="badge badge-danger remove_prestasi text-light"><i class="fas fa-trash"></i> Hapus Form Prestasi</a></sup></h3>'
 	html += '<div class="form-inline row mb-2">'
 	html += '<div class="col-2 d-flex justify-content-start">'
 	html += '<label class="text-left">Nama Prestasi</label>'
 	html += '</div>'
 	html += '<div class="col-10">'
+	html += '<input type="hidden" name="id_prestasi[]" class="form-control w-100">'
 	html += '<input type="text" name="nama_prestasi[]" class="form-control w-100">'
 	html += '</div>'
 	html += '</div>'
@@ -363,12 +395,13 @@ function tambahBeasiswa() {
 	var html = ''
 	html += '<div class="mb-3" id="isi_beasiswa">'
 	html += '<hr>'
-	html += '<h3 class="mb-2">Data Beasiswa <sup><a onclick="hapusBeasiswa(\'isi_beasiswa\')" class="badge badge-danger text-light"><i class="fas fa-trash"></i> Hapus Form Prestasi</a></sup></h3>'
+	html += '<h3 class="mb-2">Data Beasiswa <sup><a class="badge badge-danger remove_beasiswa text-light"><i class="fas fa-trash"></i> Hapus Form Prestasi</a></sup></h3>'
 	html += '<div class="form-inline row mb-2">'
 	html += '<div class="col-2 d-flex justify-content-start">'
 	html += '<label class="text-left">Nama Beasiswa</label>'
 	html += '</div>'
 	html += '<div class="col-10">'
+	html += '<input type="hidden" name="id_beasiswa[]" class="form-control w-100">'
 	html += '<input type="text" name="nama_beasiswa[]" class="form-control w-100">'
 	html += '</div>'
 	html += '</div>'
@@ -408,14 +441,85 @@ function tambahBeasiswa() {
 	$('#field_beasiswa').append(html)
 }
 
-function hapusPrestasi(isi) {
-	var div = document.getElementById(isi)
-	div.remove()
+let gambar = document.getElementById('gambar')
+let hasil = document.getElementById('hasil')
+let preview = document.getElementById('preview')
+gambar.addEventListener('change', function () {
+	if (gambar.value == '') {
+		hasil.hidden = true
+		preview.hidden = true
+	} else {
+		hasil.hidden = false
+		preview.hidden = false
+	}
+})
+
+function tampilkanPreview(gambar, idPreview) {
+	// membuat objek gambar
+	var gb = gambar.files;
+
+	// loop untuk merender gambar
+	for (var i = 0; i < gb.length; i++) {
+		// bikin variabel
+		var gbPreview = gb[i];
+		var imageType = /image.*/;
+		var preview = document.getElementById(idPreview);
+		var reader = new FileReader();
+
+		if (gbPreview.type.match(imageType)) {
+			// jika tipe data sesuai
+			preview.file = gbPreview;
+			reader.onload = (function (element) {
+				return function (e) {
+					element.src = e.target.result;
+				};
+			})(preview);
+
+			$('.img-preview').css('display', 'block');
+			// membaca data URL gambar
+			reader.readAsDataURL(gbPreview);
+			preview.style.width = '150px';
+			preview.style.height = '200px';
+
+		} else {
+			// jika tipe data tidak sesuai
+			alert("Type file tidak sesuai. Khusus image.");
+		}
+	}
 }
 
-function hapusBeasiswa(isi) {
-	var div = document.getElementById(isi)
-	div.remove()
+function tampilkanPreviewStandard(gambar, idPreview) {
+	// membuat objek gambar
+	var gb = gambar.files;
+
+	// loop untuk merender gambar
+	for (var i = 0; i < gb.length; i++) {
+		// bikin variabel
+		var gbPreview = gb[i];
+		var imageType = /image.*/;
+		var preview = document.getElementById(idPreview);
+		var reader = new FileReader();
+
+		if (gbPreview.type.match(imageType)) {
+			// jika tipe data sesuai
+			preview.file = gbPreview;
+			reader.onload = (function (element) {
+				return function (e) {
+					element.src = e.target.result;
+				};
+			})(preview);
+
+			$('.img-preview').css('display', 'block');
+			// membaca data URL gambar
+			reader.readAsDataURL(gbPreview);
+			preview.style.width = '200px';
+			preview.style.height = '200px';
+
+		} else {
+			// jika tipe data tidak sesuai
+			alert("Type file tidak sesuai. Khusus image.");
+		}
+	}
 }
 
 let currentTab = 0; // Current tab is set to be the first tab (0)
@@ -489,54 +593,4 @@ function fixStepIndicator(n) {
 	}
 	//... and adds the "active" class to the current step:
 	x[n].className += " active";
-}
-
-let gambar = document.getElementById('gambar')
-let hasil = document.getElementById('hasil')
-let preview = document.getElementById('preview')
-let tombol = document.getElementById('tombol')
-gambar.addEventListener('change', function () {
-	if (gambar.value == '') {
-		hasil.hidden = true
-		preview.hidden = true
-		// tombol.disabled = true
-	} else {
-		hasil.hidden = false
-		preview.hidden = false
-		// tombol.disabled = false
-	}
-})
-
-function tampilkanPreview(gambar, idPreview) {
-	// membuat objek gambar
-	var gb = gambar.files;
-
-	// loop untuk merender gambar
-	for (var i = 0; i < gb.length; i++) {
-		// bikin variabel
-		var gbPreview = gb[i];
-		var imageType = /image.*/;
-		var preview = document.getElementById(idPreview);
-		var reader = new FileReader();
-
-		if (gbPreview.type.match(imageType)) {
-			// jika tipe data sesuai
-			preview.file = gbPreview;
-			reader.onload = (function (element) {
-				return function (e) {
-					element.src = e.target.result;
-				};
-			})(preview);
-
-			$('.img-preview').css('display', 'block');
-			// membaca data URL gambar
-			reader.readAsDataURL(gbPreview);
-			preview.style.width = '150px';
-			preview.style.height = '150px';
-
-		} else {
-			// jika tipe data tidak sesuai
-			alert("Type file tidak sesuai. Khusus image.");
-		}
-	}
 }

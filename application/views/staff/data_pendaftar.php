@@ -10,9 +10,11 @@
             <h1><strong>Data Pendaftar</strong></h1>
             <div class="form-group">
                 <label>Plih Tahun Ajaran</label>
-                <select class="form-control select" id="tahun_ajaran_pendaftar">
+                <select class="form-control select" id="tahun_ajaran">
                     <option></option>
-                    <option value="1">Tahun Ajaran 2020 / 2021</option>
+                    <?php foreach ($tahun_ajaran as $data) { ?>
+                        <option value="<?= $data->id_tahun_ajaran ?>">Tahun Ajaran <?= $data->tahun_ajaran ?></option>
+                    <?php } ?>
                 </select>
             </div>
             <div class="mt-3 mb-3">
@@ -42,11 +44,11 @@
                                         </div>
                                         <div class="form-group">
                                             <label>Password</label>
-                                            <input type="password" name="password" class="form-control">
+                                            <input type="password" name="password" class="form-control password">
                                         </div>
                                         <div class="form-group">
                                             <label>Konfirmasi Password</label>
-                                            <input type="password" name="password_confirm" class="form-control">
+                                            <input type="password" name="password_confirm" class="form-control password">
                                         </div>
                                 </div>
                                 <div class="modal-footer">
@@ -59,9 +61,10 @@
                     </div>
                 </div>
             </div>
-            <table id="datatable" class="table table-responsive">
+            <table id="datatable" class="table table-responsive tabel_pendaftar">
                 <thead class="bg-dark text-light">
                     <th class="text-center" style="width: 30px;">No</th>
+                    <th style="min-width: 250px;">Tahun Ajaran</th>
                     <th style="min-width: 250px;">Nama Lengkap</th>
                     <th style="min-width: 300px;">Email</th>
                     <th style="min-width: 130px;">NISN</th>
@@ -69,11 +72,12 @@
                     <th style="min-width: 100px;">Pembayaran</th>
                     <th class="text-center" style="min-width: 150px;">Aksi</th>
                 </thead>
-                <tbody>
+                <tbody id="data_pendaftar">
                     <?php $no = 1;
                     foreach ($pendaftar as $data) { ?>
                         <tr>
                             <td class="text-center"><?= $no++ ?>.</td>
+                            <td>Tahun Ajaran <?= $data->tahun_ajaran ?></td>
                             <td><?= $data->nama_pendaftar ?></td>
                             <td><?= $data->email_pendaftar ?></td>
                             <td><?= $data->nisn ?></td>
@@ -82,18 +86,22 @@
                             <?php } else { ?>
                                 <td>Alamat Belum Lengkap</td>
                             <?php } ?>
-                            <?php $status = $data->status;
-                            if ($status == 'Verified') { ?>
+                            <?php $status = $data->status_pembayaran;
+                            if ($status == 'Diterima') { ?>
                                 <td class="bg-success text-center">
-                                    <a class="text-light" data-toggle="modal" data-target="#staticBackdropVerified<?= $data->nisn ?>">Verified</a>
+                                    <a class="text-light" data-toggle="modal" data-target="#staticBackdropVerified<?= $data->nisn ?>">Diterima</a>
                                 </td>
                             <?php } elseif ($status == 'Processing') { ?>
                                 <td class="bg-warning text-center">
-                                    <a class="text-light" data-toggle="modal" data-target="#staticBackdropProcessing<?= $data->nisn ?>">Processing</a>
+                                    <a class="text-light" data-toggle="modal" data-target="#staticBackdropProcessingTolak<?= $data->nisn ?>">Processing</a>
+                                </td>
+                            <?php } elseif ($status == 'Ditolak') { ?>
+                                <td class="bg-danger text-center">
+                                    <a class="text-light" data-toggle="modal" data-target="#staticBackdropProcessingTolak<?= $data->nisn ?>">Ditolak</a>
                                 </td>
                             <?php } else { ?>
-                                <td class="bg-danger text-light text-center">
-                                    Belum Dibayar
+                                <td class="bg-secondary text-light text-center">
+                                    <a class="text-light" data-toggle="modal" data-target="#staticBackdropBelumDibayar<?= $data->nisn ?>">Belum Dibayar</a>
                                 </td>
                             <?php } ?>
                             <td class="text-center">
@@ -102,14 +110,14 @@
                                 <button class="btn btn-danger btn-sm" style="width: 35px;"><i class="fas fa-trash"></i></button>
                             </td>
                         </tr>
-                        <?php if ($status == 'Verified') { ?>
+                        <?php if ($status == 'Diterima') { ?>
                             <!-- Modal Pembayaran Verifikasi -->
                             <div class="modal fade" id="staticBackdropVerified<?= $data->nisn ?>" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                                 <div class="modal-dialog modal-lg" role="document">
                                     <div class="modal-content">
                                         <div class="container">
                                             <div class="modal-header">
-                                                <h3 class="modal-title" id="staticBackdropLabel">Pembayaran Verified</h3>
+                                                <h3 class="modal-title" id="staticBackdropLabel">Pembayaran Terverifikasi</h3>
                                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                     <span aria-hidden="true">&times;</span>
                                                 </button>
@@ -120,18 +128,18 @@
                                                     <input type="text" name="nama_pendaftar" value="<?= $data->nama_pendaftar ?>" class="form-control" readonly>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label>NISN</label>
-                                                    <input type="text" name="nisn" value="<?= $data->nisn ?>" readonly oninput="this.value = this.value.replace(/[^0-9]/g,'').replace(/(\..*)\./g, '$1')" class="form-control">
+                                                    <label>No. Registrasi</label>
+                                                    <input type="text" name="no_reg" value="<?= $data->no_reg ?>" readonly oninput="this.value = this.value.replace(/[^0-9]/g,'').replace(/(\..*)\./g, '$1')" class="form-control">
                                                 </div>
-                                                <?php if ($data->keterangan == 'Non Tunai') { ?>
+                                                <?php if ($data->keterangan_pembayaran == 'Non Tunai') { ?>
                                                     <div class="form-group">
                                                         <label>Bukti Pembayaran</label>
-                                                        <img src="" alt="Bukti Pembayaran - <?= $data->nisn ?>">
+                                                        <img src="<?= base_url('assets/img/bukti_pembayaran/') . $data->bukti_upload ?>" alt="Bukti Pembayaran - <?= $data->nisn ?>" class="w-100">
                                                     </div>
                                                 <?php } ?>
                                                 <div class="form-group">
                                                     <label>Verified By</label>
-                                                    <input type="text" name="verifiedby" value="<?= $data->nama_staff ?>" class="form-control">
+                                                    <input type="text" name="verifiedby" readonly value="<?= $data->nama_staff ?>" class="form-control">
                                                 </div>
                                             </div>
                                             <div class="modal-footer">
@@ -141,9 +149,9 @@
                                     </div>
                                 </div>
                             </div>
-                        <?php } else { ?>
-                            <!-- Modal Pembayaran Processing -->
-                            <div class="modal fade" id="staticBackdropProcessing<?= $data->nisn ?>" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                        <?php } else if ($status == 'Processing' || $status == 'Ditolak') { ?>
+                            <!-- Modal Pembayaran Processing Dan Ditolak -->
+                            <div class="modal fade" id="staticBackdropProcessingTolak<?= $data->nisn ?>" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                                 <div class="modal-dialog modal-lg" role="document">
                                     <div class="modal-content">
                                         <div class="container">
@@ -154,10 +162,11 @@
                                                 </button>
                                             </div>
                                             <div class="modal-body">
-                                                <form action="<?= base_url('c_pendaftar/simpan_pendaftar') ?>" method="post">
+                                                <form action="<?= base_url('c_pembayaran/verifikasi_pembayaran') ?>" method="post">
                                                     <div class="form-group">
                                                         <label>Nama Pendaftar</label>
                                                         <input type="text" name="nama_pendaftar" value="<?= $data->nama_pendaftar ?>" class="form-control" readonly>
+                                                        <input type="hidden" name="id_pendaftar" value="<?= $data->id_pendaftar ?>" class="form-control" readonly>
                                                     </div>
                                                     <div class="form-group">
                                                         <label>NISN</label>
@@ -166,16 +175,48 @@
                                                     <?php if ($data->keterangan_pembayaran == 'Non Tunai') { ?>
                                                         <div class="form-group">
                                                             <label>Bukti Pembayaran</label> <br />
-                                                            <img src="" alt="Bukti Pembayaran - <?= $data->nisn ?>">
+                                                            <img src="<?= base_url('assets/img/bukti_pembayaran/') . $data->bukti_upload ?>" alt="Bukti Pembayaran - <?= $data->nisn ?>" class="w-100">
                                                         </div>
                                                     <?php } ?>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <a href="<?= base_url('c_pembayaran/tolak_pembayaran/') . md5($data->id_pendaftar) ?>" class="btn btn-danger"><i class="fas fa-times"></i> Tolak</a>
+                                                <button type="submit" class="btn btn-success"><i class="fas fa-check"></i> Verifikasi</button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        <?php } else { ?>
+                            <!-- Modal Pembayaran Processing -->
+                            <div class="modal fade" id="staticBackdropBelumDibayar<?= $data->nisn ?>" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                <div class="modal-dialog modal-lg" role="document">
+                                    <div class="modal-content">
+                                        <div class="container">
+                                            <div class="modal-header">
+                                                <h3 class="modal-title" id="staticBackdropLabel">Verifikasi Pembayaran</h3>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <form action="<?= base_url('c_pembayaran/verifikasi_pembayaran') ?>" method="post">
                                                     <div class="form-group">
-                                                        <label>Verified By</label>
-                                                        <input type="text" name="verifiedby" value="<?= $data->nama_staff ?>" class="form-control">
+                                                        <label>Nama Pendaftar</label>
+                                                        <input type="hidden" name="id_pendaftar" value="<?= $data->id_pendaftar ?>" class="form-control" readonly>
+                                                        <input type="text" name="nama_pendaftar" value="<?= $data->nama_pendaftar ?>" class="form-control" readonly>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>NISN</label>
+                                                        <select name="status_pembayaran" class="form-control select">
+                                                            <option value=" ">Belum Dibayar</option>
+                                                            <option value="Diterima">Sudah Dibayar</option>
+                                                        </select>
                                                     </div>
                                             </div>
                                             <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fas fa-close"></i> Close</button>
                                                 <button type="submit" class="btn btn-success"><i class="fas fa-check"></i> Verifikasi</button>
                                                 </form>
                                             </div>

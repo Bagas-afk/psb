@@ -45,18 +45,20 @@
                                                         </div>
                                                         <div class="form-group">
                                                             <label>Kepala Sekolah</label>
-                                                            <input type="text" name="kepala_sekolah" class="form-control" value="<?= $sekolah->deskripsi_sekolah ?>">
+                                                            <input type="text" name="kepala_sekolah" class="form-control" value="<?= $sekolah->kepala_sekolah ?>">
                                                         </div>
                                                         <div class="form-group">
                                                             <label>Sambutan Kepala Sekolah</label>
-                                                            <textarea name="sambutan_kepala_sekolah" rows="5" class="form-control"><?= $sekolah->deskripsi_sekolah ?></textarea>
+                                                            <textarea name="sambutan_kepala_sekolah" rows="5" class="form-control"><?= $sekolah->sambutan_kepala_sekolah ?></textarea>
                                                         </div>
                                                         <div class="form-group">
-                                                            <label>Logo Sekolah</label>
-                                                            <div class="mb-3 mt-2">
-                                                                <img src="<?= base_url('/assets/img/sekolah/' . $sekolah->logo_sekolah) ?>" alt="Logo Sekolah" width="180px">
+                                                            <label>Logo Sekolah</label> <br />
+                                                            <div>
+                                                                <img src="<?= base_url('assets/img/sekolah/' . $sekolah->logo_sekolah) ?>" class="mb-2" alt="Logo Sekolah" width="180px">
+                                                                <p id="hasil" hidden>Preview Update Foto</p>
+                                                                <img id="preview" class="mb-3 rounded" hidden />
                                                             </div>
-                                                            <input type="file" name="logo_sekolah" class="form-control-file">
+                                                            <input type="file" class="form-control-file" name="logo_sekolah" id="gambar" accept=".jpg, .png, .jpeg" onchange="tampilkanPreviewStandard(this,'preview')">
                                                         </div>
                                                 </div>
                                                 <div class="modal-footer">

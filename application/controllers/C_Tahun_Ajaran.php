@@ -62,4 +62,10 @@ class C_Tahun_Ajaran extends CI_Controller
             redirect('staff/tahun_ajaran');
         }
     }
+
+    function cari_tahun_ajaran($id_tahun_ajaran)
+    {
+        $data = $this->Tahun_Ajaran_Model->cari_tahun_ajaran($id_tahun_ajaran)->row();
+        echo json_encode($data);
+    }
 }

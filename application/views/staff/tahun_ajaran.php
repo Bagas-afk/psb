@@ -30,20 +30,20 @@
                                     </div>
                                     <div class="form-group">
                                         <label>Tanggal Pembukaan Pendaftaran</label>
-                                        <input type="date" class="form-control" name="tanggal_pembukaan" min="<?= date('Y-m-d', strtotime('+3 month', strtotime(date('Y-m-d', strtotime($tahun_ajaran_sebelum->tanggal_pengumuman))))) ?>">
+                                        <input type="date" class="form-control" <?= $disabled ?> name="tanggal_pembukaan" min="<?= date('Y-m-d', strtotime('+3 month', strtotime(date('Y-m-d', strtotime($tahun_ajaran_sebelum->tanggal_pengumuman))))) ?>">
                                     </div>
                                     <div class="form-group">
                                         <label>Tanggal Penutupan Pendaftaran</label>
-                                        <input type="date" class="form-control" name="tanggal_penutupan" min="<?= date('Y-m-d', strtotime('+4 month', strtotime(date('Y-m-d', strtotime($tahun_ajaran_sebelum->tanggal_pengumuman))))) ?>">
+                                        <input type="date" class="form-control" <?= $disabled ?> name="tanggal_penutupan" min="<?= date('Y-m-d', strtotime('+4 month', strtotime(date('Y-m-d', strtotime($tahun_ajaran_sebelum->tanggal_pengumuman))))) ?>">
                                     </div>
                                     <div class="form-group">
                                         <label>Tanggal Pengumuman Kelulusan</label>
-                                        <input type="date" class="form-control" name="tanggal_pengumuman" min="<?= date('Y-m-d', strtotime('+5 month', strtotime(date('Y-m-d', strtotime($tahun_ajaran_sebelum->tanggal_pengumuman))))) ?>">
+                                        <input type="date" class="form-control" <?= $disabled ?> name="tanggal_pengumuman" min="<?= date('Y-m-d', strtotime('+5 month', strtotime(date('Y-m-d', strtotime($tahun_ajaran_sebelum->tanggal_pengumuman))))) ?>">
                                     </div>
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                <button type="submit" class="btn btn-success">Simpan Data</button>
+                                <button type="submit" class="btn btn-success" <?= $disabled ?>>Simpan Data</button>
                                 </form>
                             </div>
                         </div>
