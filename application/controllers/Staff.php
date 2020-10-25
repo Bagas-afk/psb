@@ -199,6 +199,8 @@ class Staff extends CI_Controller
         $data['selected'] = ['', '', '', '', 'selected', '', ''];
         $data['active'] = ['', '', '', '', 'active', '', ''];
         $data['user'] = $this->Staff_Model->cari_email_staff($this->session->userdata('email'))->row();
+        $data['tahun_ajaran'] = $this->Tahun_Ajaran_Model->tampil_tahun_ajaran()->result();
+        $data['tampil_nilai'] = $this->Penilaian_Model->tampil_data_nilai()->result();
 
         $this->load->view('templates/header', $data);
         $this->load->view('templates/topbar');
@@ -251,6 +253,8 @@ class Staff extends CI_Controller
         $data['selected'] = ['', '', '', '', '', 'selected', ''];
         $data['active'] = ['', '', '', '', '', 'active', ''];
         $data['user'] = $this->Staff_Model->cari_email_staff($this->session->userdata('email'))->row();
+        $data['tahun_ajaran'] = $this->Tahun_Ajaran_Model->tampil_tahun_ajaran()->result();
+        $data['tampil_kelulusan'] = $this->Penilaian_Model->tampil_kelulusan()->result();
 
         $this->load->view('templates/header', $data);
         $this->load->view('templates/topbar');

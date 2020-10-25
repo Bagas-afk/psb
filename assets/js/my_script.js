@@ -139,6 +139,8 @@ $(document).ready(function () {
 				$('#pilihan_pendaftar').html(html)
 			}
 		})
+
+		document.getElementById('verifikasi_nilai').href = '/psb/c_penilaian/verifikasi_penilaian/' + md5(id_tahun_ajaran)
 	})
 
 	$('#pilihan_pendaftar').change(function () {
@@ -183,6 +185,34 @@ $(document).ready(function () {
 			dataType: 'json',
 			success: function (data) {
 				var table = $('.tabel_pendaftar').DataTable();
+				table.search('Tahun Ajaran ' + data.tahun_ajaran).draw();
+			}
+		})
+
+	})
+
+	$('#tahun_ajaran_pendaftar').change(function () {
+		var id_tahun_ajaran = $('#tahun_ajaran_pendaftar').val()
+		$.ajax({
+			url: '/psb/c_tahun_ajaran/cari_tahun_ajaran/' + id_tahun_ajaran,
+			type: 'get',
+			dataType: 'json',
+			success: function (data) {
+				var table = $('.tabel_nilai').DataTable();
+				table.search('Tahun Ajaran ' + data.tahun_ajaran).draw();
+			}
+		})
+
+	})
+
+	$('#tahun_ajaran_kelulusan').change(function () {
+		var id_tahun_ajaran = $('#tahun_ajaran_kelulusan').val()
+		$.ajax({
+			url: '/psb/c_tahun_ajaran/cari_tahun_ajaran/' + id_tahun_ajaran,
+			type: 'get',
+			dataType: 'json',
+			success: function (data) {
+				var table = $('.tabel_kelulusan').DataTable();
 				table.search('Tahun Ajaran ' + data.tahun_ajaran).draw();
 			}
 		})

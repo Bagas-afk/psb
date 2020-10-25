@@ -44,6 +44,7 @@
 <script src="<?= base_url('/') ?>assets/select2/js/select2.full.min.js"></script>
 <script src="<?= base_url('/') ?>assets/js/yearpicker.js"></script>
 <script src="<?= base_url('/') ?>assets/js/bootstrap-show-password.min.js"></script>
+<script src="<?= base_url('/') ?>assets/js/md5.min.js"></script>
 
 <!-- My JavaScript -->
 <script src="<?= base_url('/') ?>assets/js/my_script.js"></script>

@@ -195,7 +195,6 @@ class Auth extends CI_Controller
             'nama_pendaftar'  => $nama,
             'password'        => $password,
             'nisn'            => $nisn,
-            'is_active'       => '0',
             'id_tahun_ajaran' => $tahun_ajaran->id_tahun_ajaran,
             'foto'            => 'default.jpg',
             'date_created'    => date('Y-m-d H:i:s')
@@ -210,7 +209,7 @@ class Auth extends CI_Controller
       }
    }
 
-   function account_verification($token)
+   function email_verification($token)
    {
    }
 
@@ -238,16 +237,24 @@ class Auth extends CI_Controller
    function staff_password_aksi()
    {
       $email = $this->input->post('email', TRUE);
+      $tanggal_lahir = $this->input->post('tanggal_lahir', TRUE);
       $data = $this->Staff_Model->cari_email_staff($email)->row();
       if ($data) {
-         $tanggal_lahir = str_replace('-', '', $data->tanggal_lahir);
-         $password_default = 'staff#' . substr($tanggal_lahir, 2);
-         $pass_hash = password_hash($password_default, PASSWORD_DEFAULT);
-         if ($this->Staff_Model->ganti_password($pass_hash, $email)) {
-            $this->session->set_flashdata('notif', "Berhasil");
+         if ($data->tanggal_lahir == $tanggal_lahir) {
+            $tanggal_lahir = str_replace('-', '', $data->tanggal_lahir);
+            $password_default = 'staff#' . substr($tanggal_lahir, 2);
+            $pass_hash = password_hash($password_default, PASSWORD_DEFAULT);
+            if ($this->Staff_Model->ganti_password($pass_hash, $email)) {
+               $this->session->set_flashdata('notif', "Berhasil");
+               $this->session->set_flashdata('perintah', "Ubah Password");
+               $this->session->set_flashdata('pesan', "Password Anda Sekarang Adalah '" . $password_default . "' Silahkan Login dengan Password Baru");
+               redirect('auth/staff');
+            }
+         } else {
+            $this->session->set_flashdata('notif', "Gagal");
             $this->session->set_flashdata('perintah', "Ubah Password");
-            $this->session->set_flashdata('pesan', "Password Anda Sekarang Adalah '" . $password_default . "' Silahkan Login dengan Password Baru");
-            redirect('auth/staff');
+            $this->session->set_flashdata('pesan', "Email dan Tanggal Lahir Tidak Valid. Silahkan Koreksi Kembali");
+            redirect('auth/staff_password');
          }
       } else {
          $this->session->set_flashdata('notif', "Gagal");

@@ -7,6 +7,7 @@ class C_Pendaftar extends CI_Controller
     {
         parent::__construct();
         $this->load->model('Pendaftar_Model');
+        $this->load->model('Tahun_Ajaran_Model');
     }
 
     function update_data_pendaftar()
@@ -120,6 +121,7 @@ class C_Pendaftar extends CI_Controller
             }
             $index_pengasuh++;
         }
+
         if ($this->Pendaftar_Model->update_profile($pendaftar, $id_pendaftar)) {
             $this->session->set_flashdata('notif', "Berhasil");
             $this->session->set_flashdata('perintah', "Ubah Data Pendaftar");
@@ -135,6 +137,39 @@ class C_Pendaftar extends CI_Controller
         } else {
             redirect('pendaftar/data_pendaftar');
         }
+    }
+
+    function simpan_pendaftar()
+    {
+        $password = $this->input->post('password', TRUE);
+        $password_confirm = $this->input->post('password_confirm', TRUE);
+        if ($password == $password_confirm) {
+            $tahun_ajaran = $this->Tahun_Ajaran_Model->cari_tahun_ajaran_terakhir()->row();
+            $data = [
+                'id_pendaftar'    => '',
+                'nama_pendaftar'  => $this->input->post('nama_pendaftar', TRUE),
+                'password'        => password_hash($password, PASSWORD_DEFAULT),
+                'nisn'            => $this->input->post('nisn', TRUE),
+                'id_tahun_ajaran' => $tahun_ajaran->id_tahun_ajaran,
+                'foto'            => 'default.jpg',
+                'date_created'    => date('Y-m-d H:i:s')
+            ];
+            if ($this->Pendaftar_Model->simpan_registrasi($data)) {
+                $this->session->set_flashdata('notif', "Berhasil");
+                $this->session->set_flashdata('perintah', "Simpan Data Pendaftar");
+                $this->session->set_flashdata('pesan', "Data Pendaftar Berhasil Disimpan.");
+            } else {
+                $this->session->set_flashdata('notif', "Gagal");
+                $this->session->set_flashdata('perintah', "Simpan Data Pendaftar");
+                $this->session->set_flashdata('pesan', "Data Pendaftar Gagal Disimpan.");
+            }
+        } else {
+            $this->session->set_flashdata('notif', "Gagal");
+            $this->session->set_flashdata('perintah', "Simpan Data Pendaftar");
+            $this->session->set_flashdata('pesan', "Data Pendaftar Gagal Disimpan. Password Harus Sama");
+        }
+
+        redirect('staff/data_pendaftar');
     }
 
     function upload_gambar_pendaftar($nama)

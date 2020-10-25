@@ -31,4 +31,11 @@ class Tahun_Ajaran_Model extends CI_Model
         $this->db->where('id_tahun_ajaran', $id_tahun_ajaran);
         return $this->db->get('tb_tahun_ajaran');
     }
+
+    function jumlah_pendaftar_lulus($id_tahun_ajaran)
+    {
+        $this->db->select('jumlah_pendaftar_lulus');
+        $this->db->where('md5(id_tahun_ajaran)', $id_tahun_ajaran);
+        return $this->db->get('tb_tahun_ajaran');
+    }
 }

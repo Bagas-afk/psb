@@ -132,9 +132,26 @@ class Pendaftar extends CI_Controller
         $data['logo_sekolah'] = 'logo_sekolah.png';
         $data['foto'] = 'default.jpg';
         $data['nama_sekolah'] = strtoupper('smp tazkia insani');
+
+        $pembayaran = 'Diterima';
+        if ($pembayaran == 'Belum Dibayar') {
+            $this->session->set_flashdata('notif_perintah', "Belum Melakukan Pembayaran");
+            $this->session->set_flashdata('notif_pesan', "Harap melakukan pembayaran dahulu. Terima kasih");
+            $this->session->set_flashdata('notif_color', "info");
+        } else if ($pembayaran == 'Processing') {
+            $this->session->set_flashdata('notif_perintah', "Pembayaran Sedang Diverifikasi");
+            $this->session->set_flashdata('notif_pesan', "Harap menunggu proses pengecekan terhadap pembayaran. Terima Kasih");
+            $this->session->set_flashdata('notif_color', "warning");
+        } else if ($pembayaran == 'Ditolak') {
+            $this->session->set_flashdata('notif_perintah', "Pembayaran Tidak Diverifikasi");
+            $this->session->set_flashdata('notif_pesan', "Harap mengupload ulang bukti pembayaran. Terima Kasih");
+            $this->session->set_flashdata('notif_color', "danger");
+        }
+
         if (($data['user']->tempat_lahir && $data['user']->tanggal_lahir && $data['user']->alamat && $data['user']->dusun && $data['user']->kelurahan && $data['user']->kecamatan && $data['user']->kota && $data['user']->provinsi) == '') {
             $this->session->set_flashdata('notif_perintah', "Lengkapi Data Peserta");
             $this->session->set_flashdata('notif_pesan', "Data Peserta Belum Lengkap. Silahkan Melengkapi Data Peserta");
+            $this->session->set_flashdata('notif_color', "info");
         }
 
         $this->load->view('templates/header', $data);

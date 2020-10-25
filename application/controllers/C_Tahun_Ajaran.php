@@ -19,10 +19,14 @@ class C_Tahun_Ajaran extends CI_Controller
             'tahun_ajaran'                  => $this->input->post('tahun_ajaran', TRUE),
             'tanggal_pembukaan_pendaftaran' => $this->input->post('tanggal_pembukaan', TRUE),
             'tanggal_penutup_pendaftaran'   => $this->input->post('tanggal_penutupan', TRUE),
-            'tanggal_pengumuman'            => $this->input->post('tanggal_pengumuman', TRUE)
+            'tanggal_pengumuman'            => $this->input->post('tanggal_pengumuman', TRUE),
+            'jumlah_pilihan_ganda'          => $this->input->post('jumlah_pilihan_ganda', TRUE),
+            'bobot_nilai_pilihan_ganda'     => $this->input->post('bobot_nilai_pilihan_ganda', TRUE),
+            'bobot_nilai_btq'               => $this->input->post('bobot_nilai_btq', TRUE),
+            'jumlah_pendaftar_lulus'        => $this->input->post('jumlah_pendaftar_lulus', TRUE)
         ];
 
-        $simpan_tahun_ajaran = true;
+        $simpan_tahun_ajaran = $this->Tahun_Ajaran_Model->simpan_tahun_ajaran($data);
         if ($simpan_tahun_ajaran) {
             $this->session->set_flashdata('notif', "Berhasil");
             $this->session->set_flashdata('perintah', "Ubah Tahun Ajaran");
@@ -46,10 +50,14 @@ class C_Tahun_Ajaran extends CI_Controller
             'tahun_ajaran'                  => $this->input->post('tahun_ajaran', TRUE),
             'tanggal_pembukaan_pendaftaran' => $this->input->post('tanggal_pembukaan', TRUE),
             'tanggal_penutup_pendaftaran'   => $this->input->post('tanggal_penutupan', TRUE),
-            'tanggal_pengumuman'            => $this->input->post('tanggal_pengumuman', TRUE)
+            'tanggal_pengumuman'            => $this->input->post('tanggal_pengumuman', TRUE),
+            'jumlah_pilihan_ganda'          => $this->input->post('jumlah_pilihan_ganda', TRUE),
+            'bobot_nilai_pilihan_ganda'     => $this->input->post('bobot_nilai_pilihan_ganda', TRUE),
+            'bobot_nilai_btq'               => $this->input->post('bobot_nilai_btq', TRUE),
+            'jumlah_pendaftar_lulus'        => $this->input->post('jumlah_pendaftar_lulus', TRUE)
         ];
 
-        $update_tahun_ajaran = $this->Tahun_Ajaran_Model->update_tahun_ajaran($data, $id_tahun_ajaran);;
+        $update_tahun_ajaran = $this->Tahun_Ajaran_Model->update_tahun_ajaran($data, $id_tahun_ajaran);
         if ($update_tahun_ajaran) {
             $this->session->set_flashdata('notif', "Berhasil");
             $this->session->set_flashdata('perintah', "Ubah Tahun Ajaran");

@@ -36,19 +36,19 @@
                                     <form action="<?= base_url('c_pendaftar/simpan_pendaftar') ?>" method="post">
                                         <div class="form-group">
                                             <label>Nama Lengkap</label>
-                                            <input type="text" name="nama_pendaftar" class="form-control">
+                                            <input type="text" name="nama_pendaftar" class="form-control" required>
                                         </div>
                                         <div class="form-group">
                                             <label>NISN</label>
-                                            <input type="text" name="nisn" oninput="this.value = this.value.replace(/[^0-9]/g,'').replace(/(\..*)\./g, '$1')" class="form-control">
+                                            <input type="text" name="nisn" oninput="this.value = this.value.replace(/[^0-9]/g,'').replace(/(\..*)\./g, '$1')" class="form-control" required>
                                         </div>
                                         <div class="form-group">
                                             <label>Password</label>
-                                            <input type="password" name="password" class="form-control password">
+                                            <input type="password" name="password" class="form-control password" required>
                                         </div>
                                         <div class="form-group">
                                             <label>Konfirmasi Password</label>
-                                            <input type="password" name="password_confirm" class="form-control password">
+                                            <input type="password" name="password_confirm" class="form-control password" required>
                                         </div>
                                 </div>
                                 <div class="modal-footer">
