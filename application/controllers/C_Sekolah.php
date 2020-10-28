@@ -21,7 +21,7 @@ class C_Sekolah extends CI_Controller
 					'deskripsi_sekolah'			=> $this->input->post('deskripsi_sekolah', TRUE),
 					'kepala_sekolah'			=> $this->input->post('kepala_sekolah', TRUE),
 					'sambutan_kepala_sekolah'	=> $this->input->post('sambutan_kepala_sekolah', TRUE),
-					'foto_kepala_sekolah'		=> $this->upload_gambar($this->input->post('foto_kepala_sekolah', TRUE)),
+					'foto_kepala_sekolah'		=> $this->upload_foto($this->input->post('foto_kepala_sekolah', TRUE)),
 					'logo_sekolah'				=> $this->upload_gambar($this->input->post('logo_sekolah', TRUE))
 				];
 			} else {
@@ -41,7 +41,7 @@ class C_Sekolah extends CI_Controller
 					'alamat_sekolah'			=> $this->input->post('alamat_sekolah', TRUE),
 					'deskripsi_sekolah'			=> $this->input->post('deskripsi_sekolah', TRUE),
 					'kepala_sekolah'			=> $this->input->post('kepala_sekolah', TRUE),
-					'foto_kepala_sekolah'		=> $this->upload_gambar($this->input->post('foto_kepala_sekolah', TRUE)),
+					'foto_kepala_sekolah'		=> $this->upload_foto($this->input->post('foto_kepala_sekolah', TRUE)),
 					'sambutan_kepala_sekolah'	=> $this->input->post('sambutan_kepala_sekolah', TRUE)
 				];
 			} else {
@@ -95,6 +95,29 @@ class C_Sekolah extends CI_Controller
 		$this->load->library('upload', $config);
 
 		if ($this->upload->do_upload('logo_sekolah')) {
+			$config['image_library'] = 'gd2';
+			$config['width'] = "200px";
+			$config['height'] = "200px";
+			$config['maintain_ratio'] = FALSE;
+			$this->load->library('image_lib', $config);
+			$this->image_lib->resize();
+			return $this->upload->data('file_name');
+		} else {
+			return $this->upload->display_errors();
+		}
+	}
+
+	function upload_foto($nama)
+	{
+		$config['upload_path']          = './assets/img/sekolah/';
+		$config['allowed_types']        = 'jpg|png|jpeg';
+		$config['file_name']            = $nama;
+		$config['encrypt_name']         = TRUE;
+		$config['overwrite']            = TRUE;
+
+		$this->load->library('upload', $config);
+
+		if ($this->upload->do_upload('foto_kepala_sekolah')) {
 			$config['image_library'] = 'gd2';
 			$config['width'] = "200px";
 			$config['height'] = "200px";

@@ -54,7 +54,7 @@
                                                         <div class="form-group">
                                                             <label>Logo Sekolah</label> <br />
                                                             <div>
-                                                                <img src="<?= base_url('assets/img/sekolah/' . $sekolah->logo_sekolah) ?>" class="mb-2" alt="Logo Sekolah" width="180px">
+                                                                <img src="<?= base_url('assets/img/sekolah/' . $sekolah->logo_sekolah) ?>" class="mb-2" alt="Logo Sekolah" width="180px" height="180px">
                                                                 <p id="hasil" hidden>Preview Update Foto</p>
                                                                 <img id="preview" class="mb-3 rounded" hidden />
                                                             </div>
@@ -62,7 +62,7 @@
                                                         </div>
                                                         <div class="form-group">
                                                             <label>Foto Kepala Sekolah</label> <br />
-                                                            <img src="<?= base_url('assets/img/sekolah/' . $sekolah->foto_kepala_sekolah) ?>" class="mb-2" alt="Foto Kepala Sekolah" width="180px"> <br />
+                                                            <img src="<?= base_url('assets/img/sekolah/' . $sekolah->foto_kepala_sekolah) ?>" class="mb-2" alt="Foto Kepala Sekolah" width="180px" height="240px"> <br />
                                                             <img id="preview_kepala_sekolah" class="mb-3 rounded" />
                                                             <input type="file" class="form-control-file" name="foto_kepala_sekolah" id="gambar" accept=".jpg, .png, .jpeg" onchange="tampilkanPreview(this,'preview_kepala_sekolah')">
                                                         </div>
