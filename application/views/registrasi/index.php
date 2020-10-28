@@ -43,19 +43,19 @@
                 <div class="card shadow-lg border-0 rounded-lg mt-5">
                     <div class="card-body">
                         <div class="text-center">
-                            <img src="<?= base_url('/') ?>assets/templates/images/logo.png" width="250px" height="230px" alt="wrapkit">
+                            <img src="<?= base_url('/') ?>assets/img/sekolah/<?= $logo_sekolah ?>" width="250px" height="230px" alt="wrapkit">
                         </div>
                         <h2 class="mt-3 text-center">Form Pendaftaran</h2>
                         <p class="text-center">Silahkan Isi Form Pendaftaran.</p>
                         <?= form_open('auth/registrasi', ['method' => 'post']) ?>
                         <div class="form-group">
                             <label class="mb-1" for="inputName">Nama Lengkap</label>
-                            <input class="form-control py-4" id="inputName" type="text" name="nama" value="<?= set_value('nama') ?>" placeholder="Masukan Nama Lengkap" />
+                            <input class="form-control py-4" id="inputName" maxlength="50" type="text" name="nama" value="<?= set_value('nama') ?>" placeholder="Masukan Nama Lengkap" />
                             <small class="text-danger"><?php echo form_error('nama'); ?></small>
                         </div>
                         <div class="form-group">
                             <label class="mb-1" for="inputName">NISN</label>
-                            <input class="form-control py-4" oninput="this.value = this.value.replace(/[^0-9]/g,'').replace(/(\..*)\./g, '$1')" type="text" name="nisn" value="<?= set_value('nisn') ?>" placeholder="Masukan NISN Pendaftar" />
+                            <input class="form-control py-4" maxlength="10" oninput="this.value = this.value.replace(/[^0-9]/g,'').replace(/(\..*)\./g, '$1')" type="text" name="nisn" value="<?= set_value('nisn') ?>" placeholder="Masukan NISN Pendaftar" />
                             <small class="text-danger"><?php echo form_error('nisn'); ?></small>
                         </div>
                         <div class="form-row">

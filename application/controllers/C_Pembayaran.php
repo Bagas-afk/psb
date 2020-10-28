@@ -27,6 +27,18 @@ class C_Pembayaran extends CI_Controller
             redirect('pendaftar/pembayaran');
         }
 
+        if ($data['bukti_upload']) {
+            $gambar = $this->Pendaftar_Model->cari_data_pendaftar(md5($id_pendaftar))->row();
+            $nama_gambar = $gambar->bukti_upload;
+            if ($nama_gambar != '') {
+                $this->delete_bukti($nama_gambar);
+            }
+        }
+
+        if ($gambar->bukti_upload != '') {
+            $this->delete_bukti($gambar->bukti_upload);
+        }
+
         if ($this->Pembayaran_Model->pembayaran($data, md5($id_pendaftar))) {
             $this->session->set_flashdata('notif', "Berhasil");
             $this->session->set_flashdata('perintah', "Upload Bukti Pembayaran");
@@ -112,7 +124,6 @@ class C_Pembayaran extends CI_Controller
         $config['upload_path']          = './assets/img/bukti_pembayaran/';
         $config['allowed_types']        = 'jpg|png|jpeg';
         $config['file_name']            = $nama;
-        $config['max_size']             = 2048;
         $config['encrypt_name']         = TRUE;
         $config['overwrite']            = TRUE;
 
@@ -129,5 +140,10 @@ class C_Pembayaran extends CI_Controller
         } else {
             return $this->upload->display_errors();
         }
+    }
+
+    function delete_bukti($nama_gambar)
+    {
+        unlink('assets/img/bukti_pembayaran/' . $nama_gambar);
     }
 }

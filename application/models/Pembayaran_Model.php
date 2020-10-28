@@ -8,6 +8,12 @@ class Pembayaran_Model extends CI_Model
         return $this->db->get('tb_pendaftar');
     }
 
+    function cari_noreg_pendaftar($id)
+    {
+        $this->db->where('md5(id_pendaftar)', $id);
+        return $this->db->get('tb_pembayaran');
+    }
+
     function pembayaran($data, $id_pendaftar)
     {
         return $this->db->update('tb_pendaftar', $data, ['md5(id_pendaftar)' => $id_pendaftar]);

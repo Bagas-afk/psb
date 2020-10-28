@@ -14,7 +14,7 @@
                 <img src="<?= base_url('assets/img/sekolah/') . $logo_sekolah ?>" width="70px" height="70px">
             </td>
             <td style="padding-left: 10px;">
-                <h3 style="margin-left: 10px; letter-spacing: 1.1px;">SMP TAZKIA INSANI</h3>
+                <h3 style="margin-left: 10px; letter-spacing: 1.1px;"><?= $nama_sekolah ?></h3>
                 <p style="margin-left: 10px;">PENERIMAAN SISWA BARU</p>
             </td>
         </tr>
@@ -28,24 +28,24 @@
         </tr>
         <tr>
             <td rowspan="6" style="width: 180px;" align="center" valign="center"><img style="border: 1px solid;" src="<?= base_url('assets/img/profile/') . $foto ?>" width="150px" height="200px"></td>
-            <td style="width: 70px;" valign="center">Nama</td>
-            <td style="width: 5px;" align="center">:</td>
-            <td valign="center">Muhammad Ilham Fhadilah</td>
+            <td style="width: 100px;" valign="center">Nama</td>
+            <td style="width: 5px;" align="center" valign="center">:</td>
+            <td valign="center"><?= $user->nama_pendaftar ?></td>
         </tr>
         <tr>
             <td valign="center">NISN</td>
             <td align="center" valign="center">:</td>
-            <td valign="center">9989132727</td>
+            <td valign="center"><?= $user->nisn ?></td>
         </tr>
         <tr>
-            <td valign="center">NIK</td>
+            <td valign="center">No. Registrasi</td>
             <td valign="center" align="center">:</td>
-            <td valign="center">3674010801990005</td>
+            <td valign="center"><?= $no_reg->no_reg ?></td>
         </tr>
         <tr>
             <td valign="center">Alamat</td>
             <td valign="center" align="center" valign="center">:</td>
-            <td valign="center" style="text-align: justify;">Kp. Setu Rt. 02 / 01 Kel. Buaran, Kec. Serpong, Tangerang Selatan, Banten</td>
+            <td valign="center" style="text-align: justify;"><?= $user->alamat ?> <?= $user->dusun ?>, Kel. <?= $user->kelurahan ?>, Kec. <?= $user->kecamatan ?>, <?= $user->kota ?>, <?= $user->provinsi ?></td>
         </tr>
         <tr>
             <td>

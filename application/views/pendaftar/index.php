@@ -8,7 +8,7 @@
     <div class="container-fluid">
         <div class="card shadow p-4">
             <h1 class="mb-3"><strong>Dashboard</strong></h1>
-            <!-- <?php if ($this->session->flashdata('notif_perintah') && $this->session->flashdata('notif_pesan')) { ?>
+            <?php if ($this->session->flashdata('notif_perintah') && $this->session->flashdata('notif_pesan')) { ?>
                 <div class="alert alert-info" role="alert">
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
@@ -17,10 +17,10 @@
                     <hr />
                     <p><?= $this->session->flashdata('notif_pesan'); ?>.</p>
                 </div>
-            <?php } ?> -->
+            <?php } ?>
             <div class="card shadow pb-5">
                 <div class="d-flex justify-content-center mb-3">
-                    <img src="<?= base_url('assets/img/sekolah/') . $logo_sekolah ?>" class="w-25">
+                    <img src="<?= base_url('assets/img/sekolah/') . $logo_sekolah ?>" style="width: 250px; height: 250px;" class="mt-3">
                 </div>
                 <div class="d-flex justify-content-center">
                     <h2><?= $nama_sekolah ?></h2>

@@ -21,7 +21,7 @@
                             </div>
                             <div class="form-group">
                                 <label>Email</label>
-                                <input type="email" name="email_pendaftar" value="<?= $user->email_pendaftar ?>" class="form-control">
+                                <input type="email" name="email_pendaftar" maxlength="50" value="<?= $user->email_pendaftar ?>" class="form-control">
                             </div>
                             <div class="form-group">
                                 <label>NISN</label>
@@ -44,27 +44,27 @@
                             </div>
                             <div class="form-group">
                                 <label>Nomor Induk Sekolah</label>
-                                <input type="text" name="nis" value="<?= $user->nis ?>" class="form-control">
+                                <input type="text" name="nis" maxlength="15" value="<?= $user->nis ?>" class="form-control">
                             </div>
                             <div class="form-group">
                                 <label>Nomor Ijazah</label>
-                                <input type="text" name="no_ijazah" value="<?= $user->no_ijazah ?>" class="form-control">
+                                <input type="text" name="no_ijazah" maxlength="15" value="<?= $user->no_ijazah ?>" class="form-control">
                             </div>
                             <div class="form-group">
                                 <label>Nomor SKHUN</label>
-                                <input type="text" name="no_skhun" value="<?= $user->no_skhun ?>" class="form-control">
+                                <input type="text" name="no_skhun" maxlength="15" value="<?= $user->no_skhun ?>" class="form-control">
                             </div>
                             <div class="form-group">
                                 <label>Nomor Ujian Nasional</label>
-                                <input type="text" name="no_un" value="<?= $user->no_un ?>" class="form-control">
+                                <input type="text" name="no_un" maxlength="21" value="<?= $user->no_un ?>" class="form-control">
                             </div>
                             <div class="form-group">
                                 <label>Nomor Induk Keluarga</label>
-                                <input type="text" name="nik" value="<?= $user->nik ?>" class="form-control">
+                                <input type="text" name="nik" maxlength="16" value="<?= $user->nik ?>" class="form-control">
                             </div>
                             <div class="form-group">
                                 <label>Tempat Lahir</label>
-                                <input type="text" name="tempat_lahir" value="<?= $user->tempat_lahir ?>" class="form-control">
+                                <input type="text" name="tempat_lahir" maxlength="30" value="<?= $user->tempat_lahir ?>" class="form-control">
                             </div>
                             <div class="form-group">
                                 <label>Tanggal Lahir</label>
@@ -82,7 +82,15 @@
                             </div>
                             <div class="form-group">
                                 <label>Berkebutuhan Khusus</label>
-                                <input type="text" name="berkebutuhan_khusus_pendaftar" value="<?= $user->berkebutuhan_khusus ?>" class="form-control">
+                                <select name="berkebutuhan_khusus_pendaftar" class="form-control select">
+                                    <?php if ($user->berkebutuhan_khusus == 'Ya') { ?>
+                                        <option value="Ya" selected>Ya</option>
+                                        <option value="Tidak">Tidak</option>
+                                    <?php } else { ?>
+                                        <option value="Ya">Ya</option>
+                                        <option value="Tidak" selected>Tidak</option>
+                                    <?php } ?>
+                                </select>
                             </div>
                             <div class="form-group">
                                 <label>Alamat</label>
@@ -94,19 +102,19 @@
                             </div>
                             <div class="form-group">
                                 <label>Kelurahan</label>
-                                <input type="text" name="kelurahan" value="<?= $user->kelurahan ?>" class="form-control">
+                                <input type="text" name="kelurahan" maxlength="30" value="<?= $user->kelurahan ?>" class="form-control">
                             </div>
                             <div class="form-group">
                                 <label>Kecamatan</label>
-                                <input type="text" name="kecamatan" value="<?= $user->kecamatan ?>" class="form-control">
+                                <input type="text" name="kecamatan" maxlength="30" value="<?= $user->kecamatan ?>" class="form-control">
                             </div>
                             <div class="form-group">
                                 <label>Kabupaten / Kota</label>
-                                <input type="text" name="kota" value="<?= $user->kota ?>" class="form-control">
+                                <input type="text" name="kota" maxlength="30" value="<?= $user->kota ?>" class="form-control">
                             </div>
                             <div class="form-group">
                                 <label>Provinsi</label>
-                                <input type="text" name="provinsi" value="<?= $user->provinsi ?>" class="form-control">
+                                <input type="text" name="provinsi" maxlength="30" value="<?= $user->provinsi ?>" class="form-control">
                             </div>
                             <div class="form-group">
                                 <label>Transportasi</label>
@@ -118,19 +126,27 @@
                             </div>
                             <div class="form-group">
                                 <label>Nomor Telepon</label>
-                                <input type="text" name="no_telp" value="<?= $user->no_telp ?>" class="form-control">
+                                <input type="number" name="no_telp" maxlength="13" value="<?= $user->no_telp ?>" class="form-control">
                             </div>
                             <div class="form-group">
                                 <label>Nomor Handphone</label>
-                                <input type="text" name="no_hp" value="<?= $user->no_hp ?>" class="form-control">
+                                <input type="number" name="no_hp" maxlength="13" value="<?= $user->no_hp ?>" class="form-control">
                             </div>
                             <div class="form-group">
                                 <label>KPS</label>
-                                <input type="text" name="kps" value="<?= $user->kps ?>" class="form-control">
+                                <select name="kps" class="form-control select">
+                                    <?php if ($user->kps == 'Y') { ?>
+                                        <option value="Y" selected>Ya</option>
+                                        <option value="N">Tidak</option>
+                                    <?php } else { ?>
+                                        <option value="Y">Ya</option>
+                                        <option value="N" selected>Tidak</option>
+                                    <?php } ?>
+                                </select>
                             </div>
                             <div class="form-group">
                                 <label>Nomor KPS</label>
-                                <input type="text" name="no_kps" value="<?= $user->no_kps ?>" class="form-control">
+                                <input type="number" name="no_kps" maxlength="16" value="<?= $user->no_kps ?>" class="form-control">
                             </div>
                             <div class="form-group">
                                 <label>Foto (Background Merah Ukuran 3x4)</label> <br />

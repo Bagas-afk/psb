@@ -31,7 +31,7 @@
                                             <img src="<?= base_url('assets/img/sekolah/') . $logo_sekolah ?>" width="70px" height="70px">
                                         </td>
                                         <td class="pt-3">
-                                            <h3 class="ml-3" style="letter-spacing: 0.75px;">SMP TAZKIA INSANI</h3>
+                                            <h3 class="ml-3" style="letter-spacing: 0.75px;"><?= $nama_sekolah ?></h3>
                                             <p class="ml-3">PENERIMAAN SISWA BARU</p>
                                         </td>
                                     </tr>
@@ -47,25 +47,25 @@
                                         <td rowspan="6" style="min-width: 150px;"><img src="<?= base_url('assets/img/profile/') . $foto ?>" width="150px" height="200px"></td>
                                         <td style="min-width: 70px;">Nama</td>
                                         <td>:</td>
-                                        <td>Muhammad Ilham Fhadilah</td>
+                                        <td><?= $user->nama_pendaftar ?></td>
                                     </tr>
                                     <tr>
                                         <td>NISN</td>
                                         <td>:</td>
-                                        <td>9989132727</td>
+                                        <td><?= $user->nisn ?></td>
                                     </tr>
                                     <tr>
-                                        <td>NIK</td>
+                                        <td>No. Registrasi</td>
                                         <td>:</td>
-                                        <td>3674010801990005</td>
+                                        <td><?= $no_reg->no_reg ?></td>
                                     </tr>
                                     <tr>
                                         <td>Alamat</td>
                                         <td>:</td>
-                                        <td>Kp. Setu Rt. 02 / 01 Kel. Buaran, Kec. Serpong, Tangerang Selatan, Banten</td>
+                                        <td><?= $user->alamat ?> <?= $user->dusun ?>, Kel. <?= $user->kelurahan ?>, Kec. <?= $user->kecamatan ?>, <?= $user->kota ?>, <?= $user->provinsi ?></td>
                                     </tr>
                                     <tr>
-                                        <td>&nbsp;</td>
+                                        <td class="text-light">a</td>
                                     </tr>
                                     <tr>
                                         <td colspan="3" style="border-style: solid; padding: 7px;">

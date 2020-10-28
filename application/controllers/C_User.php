@@ -132,7 +132,6 @@ class C_User extends CI_Controller
 		$config['upload_path']          = './assets/img/profile/';
 		$config['allowed_types']        = 'jpg|png|jpeg';
 		$config['file_name']            = $nama;
-		$config['max_size']             = 2048;
 		$config['encrypt_name']         = TRUE;
 		$config['overwrite']            = TRUE;
 
@@ -156,7 +155,6 @@ class C_User extends CI_Controller
 		$config['upload_path']          = './assets/img/profile/';
 		$config['allowed_types']        = 'jpg|png|jpeg';
 		$config['file_name']            = $nama;
-		$config['max_size']             = 2048;
 		$config['encrypt_name']         = TRUE;
 		$config['overwrite']            = TRUE;
 

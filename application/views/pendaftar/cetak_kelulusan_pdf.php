@@ -5,62 +5,90 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?= $judul ?></title>
+    <link rel="stylesheet" href="<?= base_url('/assets/css/bootstrap.min.css') ?>">
 </head>
 
 <body>
     <table style="width: 100%;">
         <tr>
-            <td width="90px" align="center">
-                <img src="<?= base_url('assets/img/sekolah/') . $logo_sekolah ?>" width="70px" height="70px">
+            <td style="width: 151px;" valign="center" align="center">
+                <img src="<?= base_url('/assets/img/sekolah/') . $logo_sekolah ?>" width="150px" alt="">
             </td>
-            <td style="padding-left: 10px;">
-                <h3 style="margin-left: 10px; letter-spacing: 1.1px;">SMP TAZKIA INSANI</h3>
-                <p style="margin-left: 10px;">PENERIMAAN SISWA BARU</p>
+            <td valign="center">
+                <div class="text-center">
+                    <p class="font-weight-bold mt-2" style="line-height: 1.2em; font-size: 11pt;">Pendidikan Anak Usia Dini (PAUD)</p>
+                    <p class="mt-n3 font-weight-bolder" style="font-size: 20pt; line-height: 1.2em;">MELATI</p>
+                    <p class="mt-n3 font-weight-bold" style="line-height: 1.2em; font-size: 11pt;">Izin Opersional : No. 421.1/Kep.6676.1-Dindik</p>
+                    <p class="mt-n3 font-weight-bold" style="line-height: 1em; font-size: 11pt;">NPSN : 69911270</p>
+                    <p class="mt-n3" style="font-size: 10pt; line-height: 2em;">Jl. Sumatra RT.004/RW.02 No. 4 Kel. Jombang</p>
+                    <p class="mt-n3" style="font-size: 10pt; line-height: 1em;">Kec. Ciputat - Kota Tangerang Selatan - Banten 15414 Hp. 0813 9803 4098</p>
+                </div>
             </td>
         </tr>
     </table>
     <hr>
-    <table style="width: 99%;">
+    <table style="width: 95%;">
         <tr>
             <td colspan="4" style="text-align: center;">
-                <h3><u>KARTU TANDA PESERTA UJIAN</u></h3>
+                <h4><u>KARTU TANDA BUKTI KELULUSAN</u></h4>
             </td>
         </tr>
-        <tr>
-            <td rowspan="6" style="width: 180px;" align="center" valign="center"><img style="border: 1px solid;" src="<?= base_url('assets/img/profile/') . $foto ?>" width="150px" height="200px"></td>
-            <td style="width: 70px;" valign="center">Nama</td>
-            <td style="width: 5px;" align="center">:</td>
-            <td valign="center">Muhammad Ilham Fhadilah</td>
+        <tr class="mt-3">
+            <td rowspan="10" style="width: 180px;" align="center" valign="center"><img style="border: 1px solid;" src="<?= base_url('assets/img/profile/') . $foto ?>" width="150px" height="200px"></td>
+            <td style="width: 125px;" valign="center">Nama</td>
+            <td style="width: 5px;" align="center" valign="center">:</td>
+            <td valign="center"><?= $user->nama_pendaftar ?></td>
         </tr>
         <tr>
             <td valign="center">NISN</td>
             <td align="center" valign="center">:</td>
-            <td valign="center">9989132727</td>
+            <td valign="center"><?= $user->nisn ?></td>
         </tr>
         <tr>
-            <td valign="center">NIK</td>
+            <td valign="center">No. Registrasi</td>
             <td valign="center" align="center">:</td>
             <td valign="center">3674010801990005</td>
         </tr>
         <tr>
             <td valign="center">Alamat</td>
-            <td valign="center" align="center" valign="center">:</td>
-            <td valign="center" style="text-align: justify;">Kp. Setu Rt. 02 / 01 Kel. Buaran, Kec. Serpong, Tangerang Selatan, Banten</td>
+            <td valign="center" align="center">:</td>
+            <td valign="center" style="text-align: justify;"><?= $user->alamat ?> <?= $user->dusun ?>, Kel. <?= $user->kelurahan ?>, Kec. <?= $user->kecamatan ?>, <?= $user->kota ?>, <?= $user->provinsi ?></td>
         </tr>
         <tr>
-            <td>
-                <p style="color: white;">a</p>
-            </td>
+            <td valign="center">No. Ijazah</td>
+            <td valign="center" align="center">:</td>
+            <td valign="center"><?= $user->no_ijazah ?></td>
         </tr>
         <tr>
-            <td colspan="3" style="border-style: solid; padding: 7px;" valign="center">
-                Catatan : <br />
-                1. Peserta Membawa Alat Tulis dan Memakai Seragam Sekolah Masing - Masing <br />
-                2. Peserta Wajib Datang 30 Menit Sebelum Ujian Dilaksanakan
-            </td>
+            <td valign="center">No. SKHUN</td>
+            <td valign="center" align="center">:</td>
+            <td valign="center"><?= $user->no_skhun ?></td>
+        </tr>
+        <tr>
+            <td valign="center">Tempat Lahir</td>
+            <td valign="center" align="center">:</td>
+            <td valign="center"><?= $user->tempat_lahir ?></td>
+        </tr>
+        <tr>
+            <td valign="center">Tanggal Lahir</td>
+            <td valign="center" align="center">:</td>
+            <td valign="center"><?= date('d F Y', strtotime($user->tanggal_lahir)) ?></td>
+        </tr>
+        <tr>
+            <td valign="center">Status Kelulusan</td>
+            <td valign="center" align="center">:</td>
+            <td valign="center"><?= $penilaian->keterangan_kelulusan ?></td>
         </tr>
     </table>
-    <div style="border-bottom:3px  dashed #000; text-align: center; font-size: 12pt; margin-top: 4em;">Gunting Disini</div>
+    <div style="width: 97%;">
+        <div class="text-right" style="margin-top: 130px;">
+            <p>Gunung Sindur, <?= date('d F Y') ?></p>
+        </div>
+        <div class="text-right" style="margin-top: 80px;">
+            <p class="mr-5">( <?= $kepala_sekolah ?> )</p>
+        </div>
+    </div>
+
 </body>
 
 </html>

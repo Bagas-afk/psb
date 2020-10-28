@@ -14,29 +14,60 @@ class C_Sekolah extends CI_Controller
 	{
 		$id_sekolah = $this->input->post('id_sekolah', TRUE);
 		if ($_FILES['logo_sekolah']['name']) {
-			$data = [
-				'nama_sekolah'				=> $this->input->post('nama_sekolah', TRUE),
-				'alamat_sekolah'			=> $this->input->post('alamat_sekolah', TRUE),
-				'deskripsi_sekolah'			=> $this->input->post('deskripsi_sekolah', TRUE),
-				'kepala_sekolah'			=> $this->input->post('kepala_sekolah', TRUE),
-				'sambutan_kepala_sekolah'	=> $this->input->post('sambutan_kepala_sekolah', TRUE),
-				'logo_sekolah'				=> $this->upload_logo($this->input->post('logo_sekolah', TRUE))
-			];
+			if ($_FILES['foto_kepala_sekolah']['name']) {
+				$data = [
+					'nama_sekolah'				=> $this->input->post('nama_sekolah', TRUE),
+					'alamat_sekolah'			=> $this->input->post('alamat_sekolah', TRUE),
+					'deskripsi_sekolah'			=> $this->input->post('deskripsi_sekolah', TRUE),
+					'kepala_sekolah'			=> $this->input->post('kepala_sekolah', TRUE),
+					'sambutan_kepala_sekolah'	=> $this->input->post('sambutan_kepala_sekolah', TRUE),
+					'foto_kepala_sekolah'		=> $this->upload_gambar($this->input->post('foto_kepala_sekolah', TRUE)),
+					'logo_sekolah'				=> $this->upload_gambar($this->input->post('logo_sekolah', TRUE))
+				];
+			} else {
+				$data = [
+					'nama_sekolah'				=> $this->input->post('nama_sekolah', TRUE),
+					'alamat_sekolah'			=> $this->input->post('alamat_sekolah', TRUE),
+					'deskripsi_sekolah'			=> $this->input->post('deskripsi_sekolah', TRUE),
+					'kepala_sekolah'			=> $this->input->post('kepala_sekolah', TRUE),
+					'sambutan_kepala_sekolah'	=> $this->input->post('sambutan_kepala_sekolah', TRUE),
+					'logo_sekolah'				=> $this->upload_gambar($this->input->post('logo_sekolah', TRUE))
+				];
+			}
 		} else {
-			$data = [
-				'nama_sekolah'				=> $this->input->post('nama_sekolah', TRUE),
-				'alamat_sekolah'			=> $this->input->post('alamat_sekolah', TRUE),
-				'deskripsi_sekolah'			=> $this->input->post('deskripsi_sekolah', TRUE),
-				'kepala_sekolah'			=> $this->input->post('kepala_sekolah', TRUE),
-				'sambutan_kepala_sekolah'	=> $this->input->post('sambutan_kepala_sekolah', TRUE)
-			];
+			if ($_FILES['foto_kepala_sekolah']['name']) {
+				$data = [
+					'nama_sekolah'				=> $this->input->post('nama_sekolah', TRUE),
+					'alamat_sekolah'			=> $this->input->post('alamat_sekolah', TRUE),
+					'deskripsi_sekolah'			=> $this->input->post('deskripsi_sekolah', TRUE),
+					'kepala_sekolah'			=> $this->input->post('kepala_sekolah', TRUE),
+					'foto_kepala_sekolah'		=> $this->upload_gambar($this->input->post('foto_kepala_sekolah', TRUE)),
+					'sambutan_kepala_sekolah'	=> $this->input->post('sambutan_kepala_sekolah', TRUE)
+				];
+			} else {
+				$data = [
+					'nama_sekolah'				=> $this->input->post('nama_sekolah', TRUE),
+					'alamat_sekolah'			=> $this->input->post('alamat_sekolah', TRUE),
+					'deskripsi_sekolah'			=> $this->input->post('deskripsi_sekolah', TRUE),
+					'kepala_sekolah'			=> $this->input->post('kepala_sekolah', TRUE),
+					'sambutan_kepala_sekolah'	=> $this->input->post('sambutan_kepala_sekolah', TRUE)
+				];
+			}
 		}
 
 		if ($data['logo_sekolah']) {
 			$udata = $this->Sekolah_Model->cari_id_sekolah($id_sekolah)->row();
 			$nama_gambar = $udata->logo_sekolah;
-			if ($nama_gambar != 'logo_sekolah.png') {
-				$this->hapus_logo($nama_gambar);
+			if ($nama_gambar != '') {
+				$this->hapus_gambar($nama_gambar);
+			}
+		}
+
+		if ($data['foto_kepala_sekolah']) {
+			$udata = $this->Sekolah_Model->cari_id_sekolah($id_sekolah)->row();
+			$nama_gambar = $udata->foto_kepala_sekolah;
+			if ($nama_gambar != '') {
+				$this->hapus_gambar($nama_gambar);
 			}
 		}
 
@@ -53,12 +84,11 @@ class C_Sekolah extends CI_Controller
 		}
 	}
 
-	function upload_logo($nama)
+	function upload_gambar($nama)
 	{
 		$config['upload_path']          = './assets/img/sekolah/';
 		$config['allowed_types']        = 'jpg|png|jpeg';
 		$config['file_name']            = $nama;
-		$config['max_size']             = 2048;
 		$config['encrypt_name']         = TRUE;
 		$config['overwrite']            = TRUE;
 
@@ -77,7 +107,7 @@ class C_Sekolah extends CI_Controller
 		}
 	}
 
-	function hapus_logo($nama)
+	function hapus_gambar($nama)
 	{
 		unlink('assets/img/sekolah/' . $nama);
 	}

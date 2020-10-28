@@ -46,15 +46,15 @@
                 <div class="card shadow-lg border-0 rounded-lg mt-5">
                     <div class="card-body">
                         <div class="d-flex justify-content-center">
-                            <img src="<?= base_url('/') ?>assets/templates/images/logo.png" width="250px" height="230px" alt="wrapkit">
+                            <img src="<?= base_url('/') ?>assets/img/sekolah/<?= $logo_sekolah ?>" width="250px" height="230px" alt="wrapkit">
                         </div>
-                        <h2 class="mt-3 text-center">Tazkia Insani - Halaman Login Pendaftar</h2>
+                        <h2 class="mt-3 text-center">Halaman Login Pendaftar</h2>
                         <p class="text-center">Silahkan Login Untuk Mengakses Website.</p>
 
                         <?= form_open('auth/pendaftar', ['method' => 'post']) ?>
                         <div class="form-group">
                             <label class="mb-1" for="inputEmailAddress">NISN</label>
-                            <input class="form-control py-4" oninput="this.value = this.value.replace(/[^0-9]/g,'').replace(/(\..*)\./g, '$1')" name="nisn" value="<?= set_value('nisn') ?>" type="text" placeholder="Masukan Email Terdaftar">
+                            <input class="form-control py-4" maxlength="10" oninput="this.value = this.value.replace(/[^0-9]/g,'').replace(/(\..*)\./g, '$1')" name="nisn" value="<?= set_value('nisn') ?>" type="text" placeholder="Masukan Email Terdaftar">
                             <small class="text-danger"><?= form_error('nisn'); ?></small>
                         </div>
                         <div class="form-group">

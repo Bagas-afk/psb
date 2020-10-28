@@ -45,7 +45,7 @@
                         <?php if ($user->foto == 'default.jpg') { ?>
                             <i class="fas fa-user fa-2x"></i>
                         <?php } else { ?>
-                            <img src="<?= base_url('/') ?>assets/img/profile/<?= $user->foto ?>" width="45px" />
+                            <img src="<?= base_url('/') ?>assets/img/profile/<?= $user->foto ?>" width="45px" height="45px" />
                         <?php } ?>
                         <?php if ($this->session->userdata('id_role') == 1) { ?>
                             <span class="ml-2 d-none d-lg-inline-block"><span>Selamat Datang,</span>

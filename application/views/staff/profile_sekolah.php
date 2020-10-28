@@ -32,7 +32,7 @@
                                                     <form action="<?= base_url('c_sekolah/ubah_profile_sekolah') ?>" enctype="multipart/form-data" method="post">
                                                         <div class="form-group">
                                                             <label>Nama Sekolah</label>
-                                                            <input type="text" name="nama_sekolah" class="form-control" value="<?= $sekolah->nama_sekolah ?>">
+                                                            <input type="text" name="nama_sekolah" maxlength="50" class="form-control" value="<?= $sekolah->nama_sekolah ?>" required>
                                                             <input type="hidden" name="id_sekolah" class="form-control" value="<?= $sekolah->id_sekolah ?>" readonly>
                                                         </div>
                                                         <div class="form-group">
@@ -45,7 +45,7 @@
                                                         </div>
                                                         <div class="form-group">
                                                             <label>Kepala Sekolah</label>
-                                                            <input type="text" name="kepala_sekolah" class="form-control" value="<?= $sekolah->kepala_sekolah ?>">
+                                                            <input type="text" name="kepala_sekolah" maxlength="50" class="form-control" value="<?= $sekolah->kepala_sekolah ?>" required>
                                                         </div>
                                                         <div class="form-group">
                                                             <label>Sambutan Kepala Sekolah</label>
@@ -60,10 +60,16 @@
                                                             </div>
                                                             <input type="file" class="form-control-file" name="logo_sekolah" id="gambar" accept=".jpg, .png, .jpeg" onchange="tampilkanPreviewStandard(this,'preview')">
                                                         </div>
+                                                        <div class="form-group">
+                                                            <label>Foto Kepala Sekolah</label> <br />
+                                                            <img src="<?= base_url('assets/img/sekolah/' . $sekolah->foto_kepala_sekolah) ?>" class="mb-2" alt="Foto Kepala Sekolah" width="180px"> <br />
+                                                            <img id="preview_kepala_sekolah" class="mb-3 rounded" />
+                                                            <input type="file" class="form-control-file" name="foto_kepala_sekolah" id="gambar" accept=".jpg, .png, .jpeg" onchange="tampilkanPreview(this,'preview_kepala_sekolah')">
+                                                        </div>
                                                 </div>
                                                 <div class="modal-footer">
                                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                                    <button type="submit" class="btn btn-success">Ubah Data</button>
+                                                    <button type="submit" class="btn btn-success">Ubah Data Sekolah</button>
                                                     </form>
                                                 </div>
                                             </div>
@@ -95,7 +101,7 @@
                     </div>
                 </div>
                 <div class="col-5 text-center my-auto">
-                    <img src="<?= base_url('/assets/img/sekolah/' . $sekolah->logo_sekolah) ?>" width="60%" height="80%">
+                    <img src="<?= base_url('/assets/img/sekolah/' . $sekolah->logo_sekolah) ?>" width="80%" height="80%">
                 </div>
             </div>
         </div>

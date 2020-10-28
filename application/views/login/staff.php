@@ -46,15 +46,15 @@
                 <div class="card shadow-lg border-0 rounded-lg mt-5">
                     <div class="card-body">
                         <div class="d-flex justify-content-center">
-                            <img src="<?= base_url('/') ?>assets/templates/images/logo.png" width="250px" height="230px" alt="wrapkit">
+                            <img src="<?= base_url('/') ?>assets/img/sekolah/<?= $logo_sekolah ?>" width="250px" height="230px" alt="wrapkit">
                         </div>
-                        <h2 class="mt-3 text-center">Tazkia Insani - Halaman Login Staff</h2>
+                        <h2 class="mt-3 text-center">Halaman Login Staff</h2>
                         <p class="text-center">Silahkan Login Untuk Mengakses Website.</p>
 
                         <?= form_open('auth/staff', ['method' => 'post']) ?>
                         <div class="form-group">
                             <label class="mb-1" for="inputEmailAddress">Email</label>
-                            <input class="form-control py-4" id="inputEmailAddress" name="email" value="<?= set_value('email') ?>" type="text" placeholder="Masukan Email Terdaftar">
+                            <input class="form-control py-4" id="inputEmailAddress" name="email" maxlength="50" value="<?= set_value('email') ?>" type="text" placeholder="Masukan Email Terdaftar">
                             <small class="text-danger"><?= form_error('email'); ?></small>
                         </div>
                         <div class="form-group">

@@ -10,7 +10,7 @@
             <h1 class="mb-3"><strong>Dashboard</strong></h1>
             <div class="card shadow pb-5">
                 <div class="d-flex justify-content-center mb-3">
-                    <img src="<?= base_url('assets/img/sekolah/') . $logo_sekolah ?>" class="w-25">
+                    <img src="<?= base_url('assets/img/sekolah/') . $logo_sekolah ?>" style="width: 250px; height: 250px;" class="mt-3">
                 </div>
                 <div class="d-flex justify-content-center">
                     <h2><?= $nama_sekolah ?></h2>

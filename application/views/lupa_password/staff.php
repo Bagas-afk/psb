@@ -46,14 +46,14 @@
                 <div class="card shadow-lg border-0 rounded-lg mt-5">
                     <div class="card-body">
                         <div class="text-center">
-                            <img src="<?= base_url('/') ?>assets/templates/images/logo.png" width="250px" height="230px" alt="wrapkit">
+                            <img src="<?= base_url('/') ?>assets/img/sekolah/<?= $logo_sekolah ?>" width="250px" height="250px" alt="wrapkit">
                         </div>
                         <h2 class="mt-3 text-center">Form Pengajuan Lupa Password</h2>
                         <p class="text-center">Silahkan Isi Form Pengajuan Lupa Password.</p>
                         <form action="<?= base_url('auth/staff_password_aksi') ?>" method="post">
                             <div class="form-group">
                                 <label class="mb-1" for="inputEmailAddress">Email</label>
-                                <input class="form-control py-4" name="email" type="email" required placeholder="Masukan Email Terdaftar" />
+                                <input class="form-control py-4" name="email" maxlength="50" type="email" required placeholder="Masukan Email Terdaftar" />
                             </div>
                             <div class="form-group">
                                 <label class="mb-1" for="inputEmailAddress">Tanggal Lahir</label>

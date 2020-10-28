@@ -9,6 +9,7 @@ class Auth extends CI_Controller
       $this->load->model('Staff_Model');
       $this->load->model('Pendaftar_Model');
       $this->load->model('Tahun_Ajaran_Model');
+      $this->load->model('Sekolah_Model');
    }
 
    function staff()
@@ -42,7 +43,10 @@ class Auth extends CI_Controller
 
       if ($this->form_validation->run() == FALSE) {
          // jika gagal
-         $this->load->view('login/staff');
+         $sekolah = $this->Sekolah_Model->tampil_data_sekolah()->row();
+         $data['logo_sekolah'] = $sekolah->logo_sekolah;
+         $data['nama_sekolah'] = strtoupper($sekolah->nama_sekolah);
+         $this->load->view('login/staff', $data);
       } else {
          // jika berhasil
          $email = trim($this->input->post('email', TRUE));
@@ -64,11 +68,15 @@ class Auth extends CI_Controller
                $this->session->set_userdata($data_user);
                redirect('auth/cek_session');
             } else {
-               $this->session->set_flashdata('gagal', "Password yang anda masukan salah!");
+               $this->session->set_flashdata('notif', "Gagal");
+               $this->session->set_flashdata('perintah', "Gagal Login");
+               $this->session->set_flashdata('pesan', "Password Yang Anda Masukan Salah. Silahkan Cek Kembali!");
                redirect('auth/staff');
             }
          } else {
-            $this->session->set_flashdata('gagal', "Email Tidak Terdaftar!");
+            $this->session->set_flashdata('notif', "Gagal");
+            $this->session->set_flashdata('perintah', "Gagal Login");
+            $this->session->set_flashdata('pesan', "Email Tidak Terdaftar. Silahkan Cek Kembali!");
             redirect('auth/staff');
          }
       }
@@ -105,7 +113,10 @@ class Auth extends CI_Controller
 
       if ($this->form_validation->run() == FALSE) {
          // jika gagal
-         $this->load->view('login/pendaftar');
+         $sekolah = $this->Sekolah_Model->tampil_data_sekolah()->row();
+         $data['logo_sekolah'] = $sekolah->logo_sekolah;
+         $data['nama_sekolah'] = strtoupper($sekolah->nama_sekolah);
+         $this->load->view('login/pendaftar', $data);
       } else {
          // jika berhasil
          $nisn = trim($this->input->post('nisn', TRUE));
@@ -124,11 +135,15 @@ class Auth extends CI_Controller
                $this->session->set_userdata($data_user);
                redirect('auth/cek_session');
             } else {
-               $this->session->set_flashdata('gagal', "Password yang anda masukan salah!");
+               $this->session->set_flashdata('notif', "Gagal");
+               $this->session->set_flashdata('perintah', "Ubah Password");
+               $this->session->set_flashdata('pesan', "Password yang anda masukan salah!");
                redirect('auth/pendaftar');
             }
          } else {
-            $this->session->set_flashdata('gagal', "NISN Tidak Terdaftar! Silahkan Mendaftar");
+            $this->session->set_flashdata('notif', "Gagal");
+            $this->session->set_flashdata('perintah', "Ubah Password");
+            $this->session->set_flashdata('pesan', "NISN Tidak Terdaftar! Silahkan Mendaftar");
             redirect('auth/pendaftar');
          }
       }
@@ -182,7 +197,10 @@ class Auth extends CI_Controller
 
       if ($this->form_validation->run() == FALSE) {
          // jika gagal
-         $this->load->view('registrasi/index');
+         $sekolah = $this->Sekolah_Model->tampil_data_sekolah()->row();
+         $data['logo_sekolah'] = $sekolah->logo_sekolah;
+         $data['nama_sekolah'] = strtoupper($sekolah->nama_sekolah);
+         $this->load->view('registrasi/index', $data);
       } else {
          // jika berhasil
          $nama = trim($this->input->post('nama', TRUE));
@@ -203,14 +221,16 @@ class Auth extends CI_Controller
          $simpan_registrasi = $this->Pendaftar_Model->simpan_registrasi($data);
 
          if ($simpan_registrasi) {
-            $this->session->set_flashdata('berhasil', "Berhasil Registrasi! Silahkan Login.");
-            redirect('auth/pendaftar');
+            $this->session->set_flashdata('notif', "Berhasil");
+            $this->session->set_flashdata('perintah', "Registrasi Berhasil");
+            $this->session->set_flashdata('Pesan', "Berhasil Registrasi! Silahkan Login.");
+         } else {
+            $this->session->set_flashdata('notif', "Gagal");
+            $this->session->set_flashdata('perintah', "Gagal Registrasi");
+            $this->session->set_flashdata('Pesan', "Registrasi Gagal! Silahkan Cek Data Kembali.");
          }
+         redirect('auth/pendaftar');
       }
-   }
-
-   function email_verification($token)
-   {
    }
 
    public function cek_session()
@@ -220,18 +240,27 @@ class Auth extends CI_Controller
       } elseif ($this->session->userdata('id_role') == 2) {
          redirect('pendaftar');
       } else {
-         redirect('home');
+         $this->session->set_flashdata('notif', "Gagal");
+         $this->session->set_flashdata('perintah', "Gagal Login");
+         $this->session->set_flashdata('pesan', "Harus Login Terlebih Dahulu. Silahkan Login!");
+         redirect('');
       }
    }
 
    function staff_password()
    {
-      $this->load->view('lupa_password/staff');
+      $sekolah = $this->Sekolah_Model->tampil_data_sekolah()->row();
+      $data['logo_sekolah'] = $sekolah->logo_sekolah;
+      $data['nama_sekolah'] = strtoupper($sekolah->nama_sekolah);
+      $this->load->view('lupa_password/staff', $data);
    }
 
    function lupa_password()
    {
-      $this->load->view('lupa_password/pendaftar');
+      $sekolah = $this->Sekolah_Model->tampil_data_sekolah()->row();
+      $data['logo_sekolah'] = $sekolah->logo_sekolah;
+      $data['nama_sekolah'] = strtoupper($sekolah->nama_sekolah);
+      $this->load->view('lupa_password/pendaftar', $data);
    }
 
    function staff_password_aksi()
@@ -259,7 +288,7 @@ class Auth extends CI_Controller
       } else {
          $this->session->set_flashdata('notif', "Gagal");
          $this->session->set_flashdata('perintah', "Ubah Password");
-         $this->session->set_flashdata('pesan', "Email Yang Anda Masukan Salah. Silahkan Koreksi Kembali");
+         $this->session->set_flashdata('pesan', "Email Yang Anda Masukan Tidak Terdaftar. Silahkan Koreksi Kembali");
          redirect('auth/staff_password');
       }
    }
@@ -271,7 +300,7 @@ class Auth extends CI_Controller
       $cari_data = $this->Pendaftar_Model->cari_nisn_pendaftar($nisn);
       if ($cari_data->num_rows() > 0) {
          $cari_data_user = $cari_data->row();
-         if ($cari_data_user->nama == $nama) {
+         if ($cari_data_user->nama_pendaftar == $nama) {
             $password_default = 'pendaftar#' . substr($nisn, 5);
             $pass_hash = password_hash($password_default, PASSWORD_DEFAULT);
             if ($this->Pendaftar_Model->ganti_password($pass_hash, $nisn, $nama)) {
@@ -305,7 +334,9 @@ class Auth extends CI_Controller
       ];
 
       $this->session->unset_userdata($data_user);
-      $this->session->set_flashdata('berhasil', 'Selamat! Anda Berhasil Logout.');
-      redirect('home');
+      $this->session->set_flashdata('notif', "Berhasil");
+      $this->session->set_flashdata('perintah', "Berhasil Logout");
+      $this->session->set_flashdata('pesan', "Selamat Anda Berhasil Melakukan Logout.");
+      redirect('');
    }
 }

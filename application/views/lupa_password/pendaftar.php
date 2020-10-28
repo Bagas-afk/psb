@@ -46,18 +46,18 @@
                 <div class="card shadow-lg border-0 rounded-lg mt-5">
                     <div class="card-body">
                         <div class="text-center">
-                            <img src="<?= base_url('/') ?>assets/templates/images/logo.png" width="250px" height="230px" alt="wrapkit">
+                            <img src="<?= base_url('/') ?>assets/img/sekolah/<?= $logo_sekolah ?>" width="250px" height="250px" alt="wrapkit">
                         </div>
                         <h2 class="mt-3 text-center">Form Pengajuan Lupa Password</h2>
                         <p class="text-center">Silahkan Isi Form Pengajuan Lupa Password.</p>
                         <form action="<?= base_url('auth/lupa_password_aksi') ?>" method="post">
                             <div class="form-group">
                                 <label class="mb-1" for="inputName">NISN</label>
-                                <input class="form-control py-4" oninput="this.value = this.value.replace(/[^0-9]/g,'').replace(/(\..*)\./g, '$1')" type="text" name="nisn" placeholder="Masukan NISN Terdaftar" />
+                                <input class="form-control py-4" maxlength="10" oninput="this.value = this.value.replace(/[^0-9]/g,'').replace(/(\..*)\./g, '$1')" type="text" name="nisn" placeholder="Masukan NISN Terdaftar" />
                             </div>
                             <div class="form-group">
                                 <label class="mb-1" for="inputEmailAddress">Nama</label>
-                                <input class="form-control py-4" name="nama" type="text" placeholder="Masukan Nama Yang Sesuai" />
+                                <input class="form-control py-4" maxlength="50" name="nama" type="text" placeholder="Masukan Nama Yang Sesuai" />
                             </div>
                             <div class="form-group mt-3">
                                 <button type="submit" class="btn btn-dark btn-block">Ajukan Ganti Password</button>

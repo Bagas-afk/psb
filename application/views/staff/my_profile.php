@@ -14,7 +14,7 @@
                 <form action="<?= base_url('c_user/update_my') ?>" method="post" enctype="multipart/form-data">
                     <div class="form-group">
                         <label>Nama Lengkap</label>
-                        <input type="text" class="form-control" name="nama" value="<?= ucwords($user->nama_staff) ?>">
+                        <input type="text" class="form-control" name="nama" value="<?= ucwords($user->nama_staff) ?>" readonly>
                     </div>
                     <div class="form-group">
                         <label>Email</label>

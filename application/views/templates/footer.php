@@ -23,7 +23,6 @@
 <script src="<?= base_url('/') ?>assets/js/popper.js"></script>
 <script src="<?= base_url('/') ?>assets/js/bootstrap.min.js"></script>
 <!-- apps -->
-<!-- apps -->
 <script src="<?= base_url('/') ?>assets/templates/js/app-style-switcher.js"></script>
 <script src="<?= base_url('/') ?>assets/templates/js/feather.min.js"></script>
 <script src="<?= base_url('/') ?>assets/templates/libs/perfect-scrollbar/dist/perfect-scrollbar.jquery.min.js"></script>

@@ -7,7 +7,10 @@ class Pendaftar extends CI_Controller
     {
         parent::__construct();
         $this->load->model('Pendaftar_Model');
+        $this->load->model('Penilaian_Model');
         $this->load->model('Tahun_Ajaran_Model');
+        $this->load->model('Sekolah_Model');
+        $this->load->model('Pembayaran_Model');
         if ($this->session->userdata('id_role') !== '2') {
             redirect('auth/cek_session');
         }
@@ -19,8 +22,9 @@ class Pendaftar extends CI_Controller
         $data['selected'] = ['selected', '', '', '', ''];
         $data['active'] = ['active', '', '', '', ''];
         $data['user'] = $this->Pendaftar_Model->cari_data_pendaftar(md5($this->session->userdata('id_user')))->row();
-        $data['logo_sekolah'] = 'logo_sekolah.png';
-        $data['nama_sekolah'] = strtoupper('smp tazkia insani');
+        $sekolah = $this->Sekolah_Model->tampil_data_sekolah()->row();
+        $data['logo_sekolah'] = $sekolah->logo_sekolah;
+        $data['nama_sekolah'] = strtoupper($sekolah->nama_sekolah);
 
         if (($data['user']->tempat_lahir && $data['user']->tanggal_lahir && $data['user']->alamat && $data['user']->dusun && $data['user']->kelurahan && $data['user']->kecamatan && $data['user']->kota && $data['user']->provinsi) == '') {
             $this->session->set_flashdata('notif_perintah', "Lengkapi Data Peserta");
@@ -115,6 +119,7 @@ class Pendaftar extends CI_Controller
             $this->session->set_flashdata('notif_perintah', "Lengkapi Data Peserta");
             $this->session->set_flashdata('notif_pesan', "Data Peserta Belum Lengkap. Silahkan Melengkapi Data Peserta");
         }
+        $data['detail_pembayaran'] = $this->Pembayaran_Model->cari_pembayaran_pendaftar(md5($this->session->userdata('id_user')))->row();
 
         $this->load->view('templates/header', $data);
         $this->load->view('templates/topbar');
@@ -129,20 +134,21 @@ class Pendaftar extends CI_Controller
         $data['selected'] = ['', '', '', 'selected', ''];
         $data['active'] = ['', '', '', 'active', ''];
         $data['user'] = $this->Pendaftar_Model->cari_data_pendaftar(md5($this->session->userdata('id_user')))->row();
-        $data['logo_sekolah'] = 'logo_sekolah.png';
-        $data['foto'] = 'default.jpg';
-        $data['nama_sekolah'] = strtoupper('smp tazkia insani');
+        $sekolah = $this->Sekolah_Model->tampil_data_sekolah()->row();
+        $data['logo_sekolah'] = $sekolah->logo_sekolah;
+        $data['foto'] = $data['user']->foto;
+        $data['nama_sekolah'] = strtoupper($sekolah->nama_sekolah);
+        $data['no_reg'] = $this->Pembayaran_Model->cari_noreg_pendaftar(md5($this->session->userdata('id_user')))->row();
 
-        $pembayaran = 'Diterima';
-        if ($pembayaran == 'Belum Dibayar') {
+        if ($data['user']->status_pembayaran == 'Belum Dibayar') {
             $this->session->set_flashdata('notif_perintah', "Belum Melakukan Pembayaran");
-            $this->session->set_flashdata('notif_pesan', "Harap melakukan pembayaran dahulu. Terima kasih");
+            $this->session->set_flashdata('notif_pesan', "Harap melakukan pembayaran terlebih dahulu. Terima kasih");
             $this->session->set_flashdata('notif_color', "info");
-        } else if ($pembayaran == 'Processing') {
+        } else if ($data['user']->status_pembayaran == 'Processing') {
             $this->session->set_flashdata('notif_perintah', "Pembayaran Sedang Diverifikasi");
             $this->session->set_flashdata('notif_pesan', "Harap menunggu proses pengecekan terhadap pembayaran. Terima Kasih");
             $this->session->set_flashdata('notif_color', "warning");
-        } else if ($pembayaran == 'Ditolak') {
+        } else if ($data['user']->status_pembayaran == 'Ditolak') {
             $this->session->set_flashdata('notif_perintah', "Pembayaran Tidak Diverifikasi");
             $this->session->set_flashdata('notif_pesan', "Harap mengupload ulang bukti pembayaran. Terima Kasih");
             $this->session->set_flashdata('notif_color', "danger");
@@ -171,7 +177,30 @@ class Pendaftar extends CI_Controller
         if (($data['user']->tempat_lahir && $data['user']->tanggal_lahir && $data['user']->alamat && $data['user']->dusun && $data['user']->kelurahan && $data['user']->kecamatan && $data['user']->kota && $data['user']->provinsi) == '') {
             $this->session->set_flashdata('notif_perintah', "Lengkapi Data Peserta");
             $this->session->set_flashdata('notif_pesan', "Data Peserta Belum Lengkap. Silahkan Melengkapi Data Peserta");
+            $this->session->set_flashdata('notif_color', "info");
         }
+        if ($data['user']->status_pembayaran == 'Belum Dibayar') {
+            $this->session->set_flashdata('notif_perintah', "Belum Melakukan Pembayaran");
+            $this->session->set_flashdata('notif_pesan', "Harap melakukan pembayaran terlebih dahulu. Terima kasih");
+            $this->session->set_flashdata('notif_color', "info");
+        } else if ($data['user']->status_pembayaran == 'Processing') {
+            $this->session->set_flashdata('notif_perintah', "Pembayaran Sedang Diverifikasi");
+            $this->session->set_flashdata('notif_pesan', "Harap menunggu proses pengecekan terhadap pembayaran. Terima Kasih");
+            $this->session->set_flashdata('notif_color', "warning");
+        } else if ($data['user']->status_pembayaran == 'Ditolak') {
+            $this->session->set_flashdata('notif_perintah', "Pembayaran Tidak Diverifikasi");
+            $this->session->set_flashdata('notif_pesan', "Harap mengupload ulang bukti pembayaran. Terima Kasih");
+            $this->session->set_flashdata('notif_color', "danger");
+        }
+
+        if (($data['user']->tempat_lahir && $data['user']->tanggal_lahir && $data['user']->alamat && $data['user']->dusun && $data['user']->kelurahan && $data['user']->kecamatan && $data['user']->kota && $data['user']->provinsi) == '') {
+            $this->session->set_flashdata('notif_perintah', "Lengkapi Data Peserta");
+            $this->session->set_flashdata('notif_pesan', "Data Peserta Belum Lengkap. Silahkan Melengkapi Data Peserta");
+            $this->session->set_flashdata('notif_color', "info");
+        }
+
+        $data['penilaian'] = $this->Penilaian_Model->cari_nilai_pendaftar($this->session->userdata('id_user'))->row();
+        $data['tahun_ajaran'] = $this->Tahun_Ajaran_Model->jumlah_pendaftar_lulus($data['user']->id_tahun_ajaran)->row();
 
         $this->load->view('templates/header', $data);
         $this->load->view('templates/topbar');

@@ -21,7 +21,7 @@
                             </div>
                             <div class="form-group">
                                 <label>Email</label>
-                                <input type="email" name="email_pendaftar" value="<?= $data_pendaftar->email_pendaftar ?>" class="form-control">
+                                <input type="email" name="email_pendaftar" maxlength="50" value="<?= $data_pendaftar->email_pendaftar ?>" class="form-control">
                             </div>
                             <div class="form-group">
                                 <label>NISN</label>
@@ -44,27 +44,27 @@
                             </div>
                             <div class="form-group">
                                 <label>Nomor Induk Sekolah</label>
-                                <input type="text" name="nis" value="<?= $data_pendaftar->nis ?>" class="form-control">
+                                <input type="text" name="nis" maxlength="15" value="<?= $data_pendaftar->nis ?>" class="form-control">
                             </div>
                             <div class="form-group">
                                 <label>Nomor Ijazah</label>
-                                <input type="text" name="no_ijazah" value="<?= $data_pendaftar->no_ijazah ?>" class="form-control">
+                                <input type="text" name="no_ijazah" maxlength="15" value="<?= $data_pendaftar->no_ijazah ?>" class="form-control">
                             </div>
                             <div class="form-group">
                                 <label>Nomor SKHUN</label>
-                                <input type="text" name="no_skhun" value="<?= $data_pendaftar->no_skhun ?>" class="form-control">
+                                <input type="text" name="no_skhun" maxlength="15" value="<?= $data_pendaftar->no_skhun ?>" class="form-control">
                             </div>
                             <div class="form-group">
                                 <label>Nomor Ujian Nasional</label>
-                                <input type="text" name="no_un" value="<?= $data_pendaftar->no_un ?>" class="form-control">
+                                <input type="text" name="no_un" maxlength="21" value="<?= $data_pendaftar->no_un ?>" class="form-control">
                             </div>
                             <div class="form-group">
                                 <label>Nomor Induk Keluarga</label>
-                                <input type="text" name="nik" value="<?= $data_pendaftar->nik ?>" class="form-control">
+                                <input type="text" name="nik" maxlength="16" value="<?= $data_pendaftar->nik ?>" class="form-control">
                             </div>
                             <div class="form-group">
                                 <label>Tempat Lahir</label>
-                                <input type="text" name="tempat_lahir" value="<?= $data_pendaftar->tempat_lahir ?>" class="form-control">
+                                <input type="text" name="tempat_lahir" maxlength="30" value="<?= $data_pendaftar->tempat_lahir ?>" class="form-control">
                             </div>
                             <div class="form-group">
                                 <label>Tanggal Lahir</label>
@@ -82,7 +82,15 @@
                             </div>
                             <div class="form-group">
                                 <label>Berkebutuhan Khusus</label>
-                                <input type="text" name="berkebutuhan_khusus_pendaftar" value="<?= $data_pendaftar->berkebutuhan_khusus ?>" class="form-control">
+                                <select name="berkebutuhan_khusus_pendaftar" class="form-control select">
+                                    <?php if ($data_pendaftar->berkebutuhan_khusus == 'Ya') { ?>
+                                        <option value="Ya" selected>Ya</option>
+                                        <option value="Tidak">Tidak</option>
+                                    <?php } else { ?>
+                                        <option value="Ya">Ya</option>
+                                        <option value="Tidak" selected>Tidak</option>
+                                    <?php } ?>
+                                </select>
                             </div>
                             <div class="form-group">
                                 <label>Alamat</label>
@@ -94,19 +102,19 @@
                             </div>
                             <div class="form-group">
                                 <label>Kelurahan</label>
-                                <input type="text" name="kelurahan" value="<?= $data_pendaftar->kelurahan ?>" class="form-control">
+                                <input type="text" name="kelurahan" maxlength="30" value="<?= $data_pendaftar->kelurahan ?>" class="form-control">
                             </div>
                             <div class="form-group">
                                 <label>Kecamatan</label>
-                                <input type="text" name="kecamatan" value="<?= $data_pendaftar->kecamatan ?>" class="form-control">
+                                <input type="text" name="kecamatan" maxlength="30" value="<?= $data_pendaftar->kecamatan ?>" class="form-control">
                             </div>
                             <div class="form-group">
                                 <label>Kabupaten / Kota</label>
-                                <input type="text" name="kota" value="<?= $data_pendaftar->kota ?>" class="form-control">
+                                <input type="text" name="kota" maxlength="30" value="<?= $data_pendaftar->kota ?>" class="form-control">
                             </div>
                             <div class="form-group">
                                 <label>Provinsi</label>
-                                <input type="text" name="provinsi" value="<?= $data_pendaftar->provinsi ?>" class="form-control">
+                                <input type="text" name="provinsi" maxlength="30" value="<?= $data_pendaftar->provinsi ?>" class="form-control">
                             </div>
                             <div class="form-group">
                                 <label>Transportasi</label>
@@ -118,19 +126,27 @@
                             </div>
                             <div class="form-group">
                                 <label>Nomor Telepon</label>
-                                <input type="text" name="no_telp" value="<?= $data_pendaftar->no_telp ?>" class="form-control">
+                                <input type="number" name="no_telp" maxlength="13" value="<?= $data_pendaftar->no_telp ?>" class="form-control">
                             </div>
                             <div class="form-group">
                                 <label>Nomor Handphone</label>
-                                <input type="text" name="no_hp" value="<?= $data_pendaftar->no_hp ?>" class="form-control">
+                                <input type="number" name="no_hp" maxlength="13" value="<?= $data_pendaftar->no_hp ?>" class="form-control">
                             </div>
                             <div class="form-group">
                                 <label>KPS</label>
-                                <input type="text" name="kps" value="<?= $data_pendaftar->kps ?>" class="form-control">
+                                <select name="kps" class="form-control select">
+                                    <?php if ($data_pendaftar->kps == 'Y') { ?>
+                                        <option value="Y" selected>Ya</option>
+                                        <option value="N">Tidak</option>
+                                    <?php } else { ?>
+                                        <option value="Y">Ya</option>
+                                        <option value="N" selected>Tidak</option>
+                                    <?php } ?>
+                                </select>
                             </div>
                             <div class="form-group">
                                 <label>Nomor KPS</label>
-                                <input type="text" name="no_kps" value="<?= $data_pendaftar->no_kps ?>" class="form-control">
+                                <input type="number" name="no_kps" maxlength="16" value="<?= $data_pendaftar->no_kps ?>" class="form-control">
                             </div>
                             <div class="form-group">
                                 <label>Foto (Background Merah Ukuran 3x4)</label> <br />

@@ -9,8 +9,8 @@ class Pendaftar_Model extends CI_Model
 
     function tampil_pendaftar_telah_bayar()
     {
-        $this->db->where('status', 'Processing');
-        $this->db->or_where('status', 'Diterima');
+        $this->db->where('status_pembayaran', 'Processing');
+        $this->db->or_where('status_pembayaran', 'Diterima');
         return $this->db->query("SELECT *, tb_pendaftar.id_pendaftar FROM tb_pendaftar INNER JOIN tb_pembayaran ON tb_pendaftar.id_pendaftar = tb_pembayaran.id_pendaftar INNER JOIN tb_staff ON tb_staff.id_staff = tb_pembayaran.id_staff");
     }
 
@@ -63,7 +63,7 @@ class Pendaftar_Model extends CI_Model
     {
         $this->db->set('password', $password);
         $this->db->where('nisn', $nisn);
-        $this->db->where('nama', $nama);
+        $this->db->where('nama_pendaftar', $nama);
         return $this->db->update('tb_pendaftar');
     }
 
@@ -86,6 +86,7 @@ class Pendaftar_Model extends CI_Model
 
     function tampil_pendaftar_pertahun($id_tahun_ajaran)
     {
+        $this->db->where('status_pembayaran', 'Diterima');
         $this->db->where('id_tahun_ajaran', $id_tahun_ajaran);
         return $this->db->get('tb_pendaftar');
     }

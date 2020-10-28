@@ -12,15 +12,15 @@
                 <form action="<?= base_url('c_user/update_my') ?>" method="post" enctype="multipart/form-data">
                     <div class="form-group">
                         <label>Nama Lengkap</label>
-                        <input type="text" name="nama" value="<?= $user->nama_pendaftar ?>" class="form-control">
+                        <input type="text" name="nama" value="<?= $user->nama_pendaftar ?>" class="form-control" readonly>
                     </div>
                     <div class="form-group">
                         <label>NISN</label>
-                        <input type="text" name="nisn" value="<?= $user->nisn ?>" class="form-control">
+                        <input type="text" name="nisn" value="<?= $user->nisn ?>" class="form-control" readonly>
                     </div>
                     <div class="form-group">
                         <label>Email</label>
-                        <input type="email" name="email" value="<?= $user->email_pendaftar ?>" class="form-control">
+                        <input type="email" name="email" maxlength="50" value="<?= $user->email_pendaftar ?>" class="form-control">
                     </div>
                     <div class="form-group">
                         <label>Password</label>

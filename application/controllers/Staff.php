@@ -22,14 +22,14 @@ class Staff extends CI_Controller
         $data['judul'] = "Dashboard";
         $data['selected'] = ['selected', '', '', '', '', '', ''];
         $data['active'] = ['active', '', '', '', '', '', ''];
+        $sekolah = $this->Sekolah_Model->tampil_data_sekolah()->row();
         $data['user'] = $this->Staff_Model->cari_email_staff($this->session->userdata('email'))->row();
         $data['jumlah_staff'] = $this->Staff_Model->cari_staff_semua()->num_rows();
         $tahun_ajaran_akhir = $this->Tahun_Ajaran_Model->cari_tahun_ajaran_terakhir()->row();
         $data['jumlah_pendaftar'] = $this->Pendaftar_Model->tampil_pendaftar_pertahun($tahun_ajaran_akhir->id_tahun_ajaran)->num_rows();
         $data['jumlah_pendaftar_telah_bayar'] = $this->Pendaftar_Model->tampil_pendaftar_telah_bayar()->num_rows();
-
-        $data['logo_sekolah'] = "logo_sekolah.png";
-        $data['nama_sekolah'] = strtoupper('smp tazkia insani');
+        $data['logo_sekolah'] = $sekolah->logo_sekolah;
+        $data['nama_sekolah'] = strtoupper($sekolah->nama_sekolah);
 
         $this->load->view('templates/header', $data);
         $this->load->view('templates/topbar');

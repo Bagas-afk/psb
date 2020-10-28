@@ -55,8 +55,16 @@ class C_Pendaftar extends CI_Controller
         ];
 
         if ($_FILES['foto']['name']) {
-            $foto = ['foto'                  => $this->upload_gambar_pendaftar($this->input->post('foto', TRUE))];
+            $foto = ['foto' => $this->upload_gambar_pendaftar($this->input->post('foto', TRUE))];
             $pendaftar = array_merge($pendaftar, $foto);
+        }
+
+        if ($pendaftar['foto']) {
+            $udata = $this->Pendaftar_Model->cari_id($this->session->userdata('id_user'))->row();
+            $nama_gambar = $udata->foto;
+            if ($nama_gambar != 'default.jpg') {
+                $this->hapus_profile($nama_gambar);
+            }
         }
 
         $this->Pendaftar_Model->update_profile($pendaftar, $id_pendaftar);
@@ -177,7 +185,6 @@ class C_Pendaftar extends CI_Controller
         $config['upload_path']          = './assets/img/profile/';
         $config['allowed_types']        = 'jpg|png|jpeg';
         $config['file_name']            = $nama;
-        $config['max_size']             = 2048;
         $config['encrypt_name']         = TRUE;
         $config['overwrite']            = TRUE;
 
@@ -194,5 +201,10 @@ class C_Pendaftar extends CI_Controller
         } else {
             return $this->upload->display_errors();
         }
+    }
+
+    function hapus_profile($nama)
+    {
+        unlink('assets/img/profile/' . $nama);
     }
 }

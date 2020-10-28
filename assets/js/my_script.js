@@ -471,9 +471,9 @@ function tambahBeasiswa() {
 	$('#field_beasiswa').append(html)
 }
 
+let preview = document.getElementById('preview')
 let gambar = document.getElementById('gambar')
 let hasil = document.getElementById('hasil')
-let preview = document.getElementById('preview')
 gambar.addEventListener('change', function () {
 	if (gambar.value == '') {
 		hasil.hidden = true
