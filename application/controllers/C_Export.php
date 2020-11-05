@@ -7,6 +7,7 @@ class C_Export extends CI_Controller
     {
         parent::__construct();
         $this->load->model('Pendaftar_Model');
+        $this->load->model('Tahun_Ajaran_Model');
         $this->load->model('Penilaian_Model');
         $this->load->model('Sekolah_Model');
         $this->load->model('Pembayaran_Model');
@@ -41,5 +42,19 @@ class C_Export extends CI_Controller
         $this->load->library('pdf');
         $this->pdf->filename = "Bukti Kelulusan - Nama - " . time() . ".pdf";
         $this->pdf->cetak('pendaftar/cetak_kelulusan_pdf', $data, 'A4', 'potrait');
+    }
+
+    function cetak_laporan_kelulusan($id_tahun_ajaran)
+    {
+        $sekolah = $this->Sekolah_Model->tampil_data_sekolah()->row();
+        $data['logo_sekolah'] = $sekolah->logo_sekolah;
+        $data['kepala_sekolah'] = $sekolah->kepala_sekolah;
+        $data['alamat_sekolah'] = $sekolah->alamat_sekolah;
+        $data['nama_sekolah'] = strtoupper($sekolah->nama_sekolah);
+        $data['tahun_ajaran'] = $this->Tahun_Ajaran_Model->data_tahun_ajaran($id_tahun_ajaran)->row();
+        $data['judul'] = 'Laporan Kelulusan - Tahun Ajaran ' . str_replace('/', '-', $data['tahun_ajaran']->tahun_ajaran);
+        $data['cetak'] = $this->Pendaftar_Model->cetak_laporan_kelulusan($id_tahun_ajaran)->result();
+
+        $this->load->view('staff/cetak_xls', $data);
     }
 }

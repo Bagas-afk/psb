@@ -17,7 +17,36 @@ $(document).ready(function () {
 	});
 
 	$('#pilih_cetak').change(function () {
+		var id_tahun_ajaran = document.getElementById('pilih_cetak').value
+		console.log(id_tahun_ajaran)
+		$.ajax({
+			type: 'get',
+			url: '/psb/c_pendaftar/tampil_siswa_laporan/' + id_tahun_ajaran,
+			dataType: 'json',
+			success: function (result) {
+				var html = ''
+				var no = 1
+				if (result != '') {
+					result.forEach(data => {
+						html += '<tr>'
+						html += '<td class="text-center">' + no++ + '.</td>'
+						html += '<td>Tahun Ajaran ' + data.tahun_ajaran + '</td>'
+						html += '<td class="text-center">' + data.nisn + '</td>'
+						html += '<td>' + data.nama_pendaftar + '</td>'
+						html += '<td class="text-center">' + data.score_penilaian + '</td>'
+						html += '<td class="text-center">' + data.keterangan_kelulusan + '</td>'
+						html += '</tr>'
+					})
+				} else {
+					html += '<tr>'
+					html += '<td class="text-center" colspan="6">Data Penilaian Belum Lengkap</td>'
+					html += '</tr>'
+				}
+				$('#isi_table_cetak_laporan').html(html)
+			}
+		})
 		document.getElementById('div_cetak_laporan').hidden = false
+		document.getElementById('tombol_cetak').href = '/psb/c_export/cetak_laporan_kelulusan/' + md5(id_tahun_ajaran)
 	})
 
 	$("body").on("click", ".remove_beasiswa", function () {

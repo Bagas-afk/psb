@@ -12,12 +12,25 @@ class C_Pendaftar extends CI_Controller
         $this->load->model('Tahun_Ajaran_Model');
     }
 
+    function tampil_siswa_laporan($id_tahun_ajaran)
+    {
+        $data = $this->Pendaftar_Model->tampil_cetak($id_tahun_ajaran)->result();
+        echo json_encode($data);
+    }
+
     function hapus_pendaftar($id_pendaftar)
     {
         $cari_pembayaran_pendaftar = $this->Pembayaran_Model->cari_pembayaran_pendaftar($id_pendaftar)->row();
         $cari_nilai_pendaftar = $this->Penilaian_Model->cari_nilai($id_pendaftar)->row();
         if (($cari_pembayaran_pendaftar->status_pembayaran == '' || $cari_pembayaran_pendaftar->status_pembayaran == 'Belum Dibayar') && ($cari_nilai_pendaftar->score_penilaian == '' || $cari_nilai_pendaftar->score_penilaian == '0')) {
             // Berhasil
+            $gambar = $this->Pendaftar_Model->cari_data_pendaftar($id_pendaftar)->row();
+            if ($gambar->bukti_upload != '') {
+                $this->hapus_bukti_upload($gambar->bukti_upload);
+            }
+            if ($gambar->foto != 'default.png') {
+                $this->hapus_profile($gambar->foto);
+            }
             $this->Pendaftar_Model->hapus_pendaftar($id_pendaftar);
             $this->session->set_flashdata('notif', "Berhasil");
             $this->session->set_flashdata('perintah', "Hapus Data Pendaftar");
@@ -230,5 +243,10 @@ class C_Pendaftar extends CI_Controller
     function hapus_profile($nama)
     {
         unlink('assets/img/profile/' . $nama);
+    }
+
+    function hapus_bukti_upload($nama)
+    {
+        unlink('assets/img/bukti_pembayaran/' . $nama);
     }
 }

@@ -2,9 +2,20 @@
 
 class Pendaftar_Model extends CI_Model
 {
+    function cetak_laporan_kelulusan($id_tahun_ajaran)
+    {
+        return $this->db->query("SELECT nama_pendaftar, email_pendaftar, jenis_kelamin, nisn, nis, no_ijazah, no_skhun, no_un, nik, tempat_lahir, tanggal_lahir, agama, berkebutuhan_khusus, alamat, dusun, kelurahan, kecamatan, kota, provinsi, jenis_tinggal, no_telp, no_hp, kps, no_kps, tinggi_badan, jarak, waktu, jumlah_saudara_kandung, status_pembayaran, keterangan_pembayaran, jumlah_pilihan_ganda, pilihan_ganda_benar, nilai_btq, score_penilaian, keterangan_kelulusan, no_reg FROM tb_pendaftar INNER JOIN tb_tahun_ajaran ON tb_tahun_ajaran.id_tahun_ajaran = tb_pendaftar.id_tahun_ajaran INNER JOIN tb_penilaian ON tb_penilaian.id_pendaftar = tb_pendaftar.id_pendaftar INNER JOIN tb_pembayaran ON tb_pembayaran.id_pendaftar = tb_pendaftar.id_pendaftar WHERE md5(tb_tahun_ajaran.id_tahun_ajaran) = '$id_tahun_ajaran'");
+    }
+
     function tampil_data_pendaftar()
     {
         return $this->db->query("SELECT *, tb_pendaftar.id_pendaftar FROM tb_pendaftar LEFT JOIN tb_pembayaran ON tb_pendaftar.id_pendaftar = tb_pembayaran.id_pendaftar LEFT JOIN tb_staff ON tb_pembayaran.id_staff = tb_staff.id_staff INNER JOIN tb_tahun_ajaran ON tb_tahun_ajaran.id_tahun_ajaran = tb_pendaftar.id_tahun_ajaran ORDER BY tb_pendaftar.id_tahun_ajaran DESC");
+    }
+
+    function tampil_cetak($id_tahun_ajaran)
+    {
+        // $this->db->where('tb_pendaftar.id_tahun_ajaran', $id_tahun_ajaran);
+        return $this->db->query("SELECT tahun_ajaran, nisn, nama_pendaftar, score_penilaian, keterangan_kelulusan FROM tb_pendaftar INNER JOIN tb_tahun_ajaran ON tb_pendaftar.id_tahun_ajaran = tb_tahun_ajaran.id_tahun_ajaran INNER JOIN tb_penilaian ON tb_pendaftar.id_pendaftar = tb_penilaian.id_pendaftar WHERE tb_pendaftar.id_tahun_ajaran = '$id_tahun_ajaran'");
     }
 
     function tampil_pendaftar_telah_bayar()
