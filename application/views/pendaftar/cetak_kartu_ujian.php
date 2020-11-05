@@ -8,7 +8,7 @@
     <div class="container-fluid">
         <div class="card shadow p-4">
             <h1><strong>Cetak Kartu Ujian</strong></h1>
-            <?php if ($this->session->flashdata('notif_perintah') && $this->session->flashdata('notif_pesan')) { ?>
+            <?php if ($this->session->flashdata('notif_perintah')) { ?>
                 <div class="alert alert-<?= $this->session->flashdata('notif_color') ?>" role="alert">
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
@@ -21,7 +21,7 @@
                 <div class="card shadow">
                     <div class="card-body">
                         <div class="d-flex justify-content-end mb-3">
-                            <a href="<?= base_url('c_export/cetak_kartu_ujian') ?>" class="btn btn-secondary">Download</a>
+                            <a href="<?= base_url('c_export/cetak_kartu_ujian') ?>" target="_blank" class="btn btn-secondary">Download</a>
                         </div>
                         <div class="card shadow p-3">
                             <div>

@@ -21,8 +21,6 @@ class C_Tahun_Ajaran extends CI_Controller
             'tanggal_penutup_pendaftaran'   => $this->input->post('tanggal_penutupan', TRUE),
             'tanggal_pengumuman'            => $this->input->post('tanggal_pengumuman', TRUE),
             'jumlah_pilihan_ganda'          => $this->input->post('jumlah_pilihan_ganda', TRUE),
-            'bobot_nilai_pilihan_ganda'     => $this->input->post('bobot_nilai_pilihan_ganda', TRUE),
-            'bobot_nilai_btq'               => $this->input->post('bobot_nilai_btq', TRUE),
             'jumlah_pendaftar_lulus'        => $this->input->post('jumlah_pendaftar_lulus', TRUE)
         ];
 
@@ -52,8 +50,6 @@ class C_Tahun_Ajaran extends CI_Controller
             'tanggal_penutup_pendaftaran'   => $this->input->post('tanggal_penutupan', TRUE),
             'tanggal_pengumuman'            => $this->input->post('tanggal_pengumuman', TRUE),
             'jumlah_pilihan_ganda'          => $this->input->post('jumlah_pilihan_ganda', TRUE),
-            'bobot_nilai_pilihan_ganda'     => $this->input->post('bobot_nilai_pilihan_ganda', TRUE),
-            'bobot_nilai_btq'               => $this->input->post('bobot_nilai_btq', TRUE),
             'jumlah_pendaftar_lulus'        => $this->input->post('jumlah_pendaftar_lulus', TRUE)
         ];
 

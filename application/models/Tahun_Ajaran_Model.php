@@ -15,6 +15,12 @@ class Tahun_Ajaran_Model extends CI_Model
         return $this->db->get('tb_tahun_ajaran');
     }
 
+    function data_tahun_ajaran($id_tahun_ajaran)
+    {
+        $this->db->where('md5(id_tahun_ajaran)', $id_tahun_ajaran);
+        return $this->db->get('tb_tahun_ajaran');
+    }
+
     function simpan_tahun_ajaran($data)
     {
         return $this->db->insert('tb_tahun_ajaran', $data);

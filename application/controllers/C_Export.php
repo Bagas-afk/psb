@@ -33,6 +33,7 @@ class C_Export extends CI_Controller
         $sekolah = $this->Sekolah_Model->tampil_data_sekolah()->row();
         $data['logo_sekolah'] = $sekolah->logo_sekolah;
         $data['kepala_sekolah'] = $sekolah->kepala_sekolah;
+        $data['alamat_sekolah'] = $sekolah->alamat_sekolah;
         $data['foto'] = $data['user']->foto;
         $data['nama_sekolah'] = strtoupper($sekolah->nama_sekolah);
         $data['no_reg'] = $this->Pembayaran_Model->cari_noreg_pendaftar(md5($this->session->userdata('id_user')))->row();

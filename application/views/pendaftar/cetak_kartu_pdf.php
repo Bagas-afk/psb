@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?= $judul ?></title>
+    <link rel="stylesheet" href="<?= base_url('/assets/css/bootstrap.min.css') ?>">
 </head>
 
 <body>
@@ -28,7 +29,7 @@
         </tr>
         <tr>
             <td rowspan="6" style="width: 180px;" align="center" valign="center"><img style="border: 1px solid;" src="<?= base_url('assets/img/profile/') . $foto ?>" width="150px" height="200px"></td>
-            <td style="width: 100px;" valign="center">Nama</td>
+            <td style="width: 120px;" valign="center">Nama</td>
             <td style="width: 5px;" align="center" valign="center">:</td>
             <td valign="center"><?= $user->nama_pendaftar ?></td>
         </tr>
@@ -60,7 +61,11 @@
             </td>
         </tr>
     </table>
-    <div style="border-bottom:3px  dashed #000; text-align: center; font-size: 12pt; margin-top: 4em;">Gunting Disini</div>
+    <div style="margin-top: 80px;">
+        <p class="text-right" style="margin-right: 63px;">Pengawas</p>
+        <p class="text-right" style="margin-top: 80px;">(_____________________)</p>
+    </div>
+    <!-- <div style="border-bottom:3px  dashed #000; text-align: center; font-size: 12pt; margin-top: 4em;">Gunting Disini</div> -->
 </body>
 
 </html>

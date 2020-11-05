@@ -43,9 +43,9 @@
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="javascript:void(0)" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <?php if ($user->foto == 'default.jpg') { ?>
-                            <i class="fas fa-user fa-2x"></i>
+                            <i class="fas fa-user fa-2x rounded-circle"></i>
                         <?php } else { ?>
-                            <img src="<?= base_url('/') ?>assets/img/profile/<?= $user->foto ?>" width="45px" height="45px" />
+                            <img class="rounded-circle" src="<?= base_url('/') ?>assets/img/profile/<?= $user->foto ?>" width="45px" height="45px" />
                         <?php } ?>
                         <?php if ($this->session->userdata('id_role') == 1) { ?>
                             <span class="ml-2 d-none d-lg-inline-block"><span>Selamat Datang,</span>

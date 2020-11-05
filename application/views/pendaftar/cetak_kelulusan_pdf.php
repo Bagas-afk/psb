@@ -12,16 +12,13 @@
     <table style="width: 100%;">
         <tr>
             <td style="width: 151px;" valign="center" align="center">
-                <img src="<?= base_url('/assets/img/sekolah/') . $logo_sekolah ?>" width="150px" alt="">
+                <img src="<?= base_url('/assets/img/sekolah/') . $logo_sekolah ?>" width="120px" alt="">
             </td>
             <td valign="center">
                 <div class="text-center">
-                    <p class="font-weight-bold mt-2" style="line-height: 1.2em; font-size: 11pt;">Pendidikan Anak Usia Dini (PAUD)</p>
-                    <p class="mt-n3 font-weight-bolder" style="font-size: 20pt; line-height: 1.2em;">MELATI</p>
-                    <p class="mt-n3 font-weight-bold" style="line-height: 1.2em; font-size: 11pt;">Izin Opersional : No. 421.1/Kep.6676.1-Dindik</p>
-                    <p class="mt-n3 font-weight-bold" style="line-height: 1em; font-size: 11pt;">NPSN : 69911270</p>
-                    <p class="mt-n3" style="font-size: 10pt; line-height: 2em;">Jl. Sumatra RT.004/RW.02 No. 4 Kel. Jombang</p>
-                    <p class="mt-n3" style="font-size: 10pt; line-height: 1em;">Kec. Ciputat - Kota Tangerang Selatan - Banten 15414 Hp. 0813 9803 4098</p>
+                    <p class="font-weight-bold mt-2" style="line-height: 1.2em; font-size: 11pt;">Sekolah Menengah Pertama (SMP)</p>
+                    <p class="mt-n3 font-weight-bolder" style="font-size: 20pt; line-height: 1.2em;"><?= $nama_sekolah ?></p>
+                    <p class="mt-n3" style="font-size: 10pt; line-height: 2em;"><?= $alamat_sekolah ?></p>
                 </div>
             </td>
         </tr>

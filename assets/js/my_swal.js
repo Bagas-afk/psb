@@ -26,11 +26,6 @@ function hapus_data(nama, href) {
 	}).then((result) => {
 		if (result.value) {
 			document.location.href = href
-			Swal.fire({
-				title: flashDataNotif,
-				text: flashDataPesan,
-				icon: 'success'
-			})
 		}
 	})
 }

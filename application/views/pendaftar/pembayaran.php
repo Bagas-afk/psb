@@ -43,8 +43,10 @@
                                 <?php } ?>
                             </div>
                             <div class="form-group">
-                                <label>Bukti Upload</label>
-                                <img src="<?= base_url('/assets/img/bukti_pembayaran/') . $detail_pembayaran->bukti_upload ?>" class="w-100" alt="Bukti - <?= $detail_pembayaran->nisn ?>">
+                                <?php if ($detail_pembayaran->bukti_upload) { ?>
+                                    <label>Bukti Upload</label>
+                                    <img src="<?= base_url('/assets/img/bukti_pembayaran/') . $detail_pembayaran->bukti_upload ?>" class="w-100" alt="Bukti - <?= $detail_pembayaran->nisn ?>">
+                                <?php } ?>
                             </div>
                         </div>
                         <div class="modal-footer">

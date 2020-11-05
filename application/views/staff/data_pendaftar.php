@@ -107,7 +107,7 @@
                             <td class="text-center">
                                 <a href="<?= base_url('staff/detail_pendaftar/' . md5($data->id_pendaftar)) ?>" class="btn btn-info btn-sm" style="width: 35px;"><i class="fas fa-info"></i></a>
                                 <a href="<?= base_url('staff/ubah_pendaftar/' . md5($data->id_pendaftar)) ?>" class="btn btn-warning btn-sm" style="width: 35px;"><i class="fas fa-edit"></i></a>
-                                <button class="btn btn-danger btn-sm" style="width: 35px;"><i class="fas fa-trash"></i></button>
+                                <button class="btn btn-danger btn-sm" id="tombol" onclick="hapus_data('<?= $data->nama_pendaftar ?>','<?= base_url('c_pendaftar/hapus_pendaftar/') . md5($data->id_pendaftar) ?>')" style="width: 35px;"><i class="fas fa-trash"></i></button>
                             </td>
                         </tr>
                         <?php if ($status == 'Diterima') { ?>

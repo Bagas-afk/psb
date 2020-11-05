@@ -51,7 +51,6 @@ class Pendaftar extends CI_Controller
         }
         $data['beasiswa_pendaftar'] = $this->Pendaftar_Model->tampil_beasiswa_pendaftar(md5($this->session->userdata('id_user')))->result();
         $data['prestasi_pendaftar'] = $this->Pendaftar_Model->tampil_prestasi_pendaftar(md5($this->session->userdata('id_user')))->result();
-        $data['pengasuh_pendaftar'] = $this->Pendaftar_Model->tampil_pengasuh_pendaftar(md5($this->session->userdata('id_user')))->result();
 
         if ($data['user']->agama == 'Islam') {
             $data['agama'] = ['selected', '', '', '', ''];
@@ -67,26 +66,9 @@ class Pendaftar extends CI_Controller
             $data['agama'] = ['', '', '', '', ''];
         }
 
-        if ($data['pengasuh_pendaftar'][0]) {
-            $data['ayah'] = $data['pengasuh_pendaftar'][0];
-            $data['checked_ayah'] = 'checked';
-        } else {
-            $data['checked_ayah'] = '';
-        }
-
-        if ($data['pengasuh_pendaftar'][1]) {
-            $data['ibu'] = $data['pengasuh_pendaftar'][1];
-            $data['checked_ibu'] = 'checked';
-        } else {
-            $data['checked_ibu'] = '';
-        }
-
-        if ($data['pengasuh_pendaftar'][2]) {
-            $data['wali'] = $data['pengasuh_pendaftar'][2];
-            $data['checked_wali'] = 'checked';
-        } else {
-            $data['checked_wali'] = '';
-        }
+        $data['ayah'] = $this->Pendaftar_Model->tampil_pengasuh_ayah(md5($this->session->userdata('id_user')))->row();
+        $data['ibu'] = $this->Pendaftar_Model->tampil_pengasuh_ibu(md5($this->session->userdata('id_user')))->row();
+        $data['wali'] = $this->Pendaftar_Model->tampil_pengasuh_wali(md5($this->session->userdata('id_user')))->row();
 
         $this->load->view('templates/header', $data);
         $this->load->view('templates/topbar');
@@ -138,27 +120,40 @@ class Pendaftar extends CI_Controller
         $data['logo_sekolah'] = $sekolah->logo_sekolah;
         $data['foto'] = $data['user']->foto;
         $data['nama_sekolah'] = strtoupper($sekolah->nama_sekolah);
-        $data['no_reg'] = $this->Pembayaran_Model->cari_noreg_pendaftar(md5($this->session->userdata('id_user')))->row();
-
-        if ($data['user']->status_pembayaran == 'Belum Dibayar') {
-            $this->session->set_flashdata('notif_perintah', "Belum Melakukan Pembayaran");
-            $this->session->set_flashdata('notif_pesan', "Harap melakukan pembayaran terlebih dahulu. Terima kasih");
-            $this->session->set_flashdata('notif_color', "info");
-        } else if ($data['user']->status_pembayaran == 'Processing') {
-            $this->session->set_flashdata('notif_perintah', "Pembayaran Sedang Diverifikasi");
-            $this->session->set_flashdata('notif_pesan', "Harap menunggu proses pengecekan terhadap pembayaran. Terima Kasih");
-            $this->session->set_flashdata('notif_color', "warning");
-        } else if ($data['user']->status_pembayaran == 'Ditolak') {
-            $this->session->set_flashdata('notif_perintah', "Pembayaran Tidak Diverifikasi");
-            $this->session->set_flashdata('notif_pesan', "Harap mengupload ulang bukti pembayaran. Terima Kasih");
-            $this->session->set_flashdata('notif_color', "danger");
-        }
+        $registrasi = $this->Pembayaran_Model->cari_noreg_pendaftar(md5($this->session->userdata('id_user')));
 
         if (($data['user']->tempat_lahir && $data['user']->tanggal_lahir && $data['user']->alamat && $data['user']->dusun && $data['user']->kelurahan && $data['user']->kecamatan && $data['user']->kota && $data['user']->provinsi) == '') {
             $this->session->set_flashdata('notif_perintah', "Lengkapi Data Peserta");
             $this->session->set_flashdata('notif_pesan', "Data Peserta Belum Lengkap. Silahkan Melengkapi Data Peserta");
             $this->session->set_flashdata('notif_color', "info");
         }
+
+        // print_r($registrasi->num_rows());
+        // die;
+        if ($registrasi->num_rows() > 0) {
+            // echo "ada";
+            // die;
+            $data['no_reg'] = $registrasi->row();
+        } else {
+            // echo "tidak ada";
+            // die;
+            if ($data['user']->status_pembayaran == 'Belum Dibayar' || $data['user']->status_pembayaran == '') {
+                $this->session->set_flashdata('notif_perintah', "Belum Melakukan Pembayaran");
+                $this->session->set_flashdata('notif_pesan', "Harap melakukan pembayaran terlebih dahulu. Terima kasih");
+                $this->session->set_flashdata('notif_color', "info");
+                // echo 'belum dibayar';
+                // die;
+            } else if ($data['user']->status_pembayaran == 'Processing') {
+                $this->session->set_flashdata('notif_perintah', "Pembayaran Sedang Diverifikasi");
+                $this->session->set_flashdata('notif_pesan', "Harap menunggu proses pengecekan terhadap pembayaran. Terima Kasih");
+                $this->session->set_flashdata('notif_color', "warning");
+            } else if ($data['user']->status_pembayaran == 'Ditolak') {
+                $this->session->set_flashdata('notif_perintah', "Pembayaran Tidak Diverifikasi");
+                $this->session->set_flashdata('notif_pesan', "Harap mengupload ulang bukti pembayaran. Terima Kasih");
+                $this->session->set_flashdata('notif_color', "danger");
+            }
+        }
+
 
         $this->load->view('templates/header', $data);
         $this->load->view('templates/topbar');

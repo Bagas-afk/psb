@@ -42,24 +42,16 @@
                                     </div>
                                     <div class="form-group">
                                         <label>Jumlah Pilihan Ganda</label>
-                                        <input type="number" class="form-control" maxlength="3" <?= $disabled ?> name="jumlah_pilihan_ganda" required>
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Bobot Nilai Pilihan Ganda</label>
-                                        <input type="number" maxlength="3" class="form-control" <?= $disabled ?> name="bobot_nilai_pilihan_ganda" required>
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Bobot Nilai Baca Tulis Qur'an</label>
-                                        <input type="number" maxlength="3" class="form-control" <?= $disabled ?> name="bobot_nilai_btq" required>
+                                        <input type="number" class="form-control" <?= $disabled ?> name="jumlah_pilihan_ganda" required>
                                     </div>
                                     <div class="form-group">
                                         <label>Jumlah Pendaftar Lulus</label>
-                                        <input type="number" maxlength="3" class="form-control" <?= $disabled ?> name="jumlah_pendaftar_lulus" required>
+                                        <input type="number" class="form-control" <?= $disabled ?> name="jumlah_pendaftar_lulus" required>
                                     </div>
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                <button type="submit" class="btn btn-success" <?= $disabled ?>>Simpan Data</button>
+                                <button type="submit" class="btn btn-success" <?= $disabled ?>>Simpan Tahun Ajaran</button>
                                 </form>
                             </div>
                         </div>
@@ -139,21 +131,13 @@
                                                 <input type="number" class="form-control" maxlength="3" name="jumlah_pilihan_ganda" value="<?= $data->jumlah_pilihan_ganda ?>" required>
                                             </div>
                                             <div class="form-group">
-                                                <label>Bobot Nilai Pilihan Ganda</label>
-                                                <input type="number" maxlength="3" class="form-control" name="bobot_nilai_pilihan_ganda" value="<?= $data->bobot_nilai_pilihan_ganda ?>" required>
-                                            </div>
-                                            <div class="form-group">
-                                                <label>Bobot Nilai Baca Tulis Qur'an</label>
-                                                <input type="number" maxlength="3" class="form-control" name="bobot_nilai_btq" value="<?= $data->bobot_nilai_btq ?>" required>
-                                            </div>
-                                            <div class="form-group">
                                                 <label>Jumlah Pendaftar Lulus</label>
-                                                <input type="number" maxlength="3" class="form-control" name="jumlah_pendaftar_lulus" value="<?= $data->jumlah_pendaftar_lulus ?>" required>
+                                                <input type="number" class="form-control" name="jumlah_pendaftar_lulus" value="<?= $data->jumlah_pendaftar_lulus ?>" required>
                                             </div>
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                        <button type="submit" class="btn btn-success">Ubah Data</button>
+                                        <button type="submit" class="btn btn-success">Ubah Tahun Ajaran</button>
                                         </form>
                                     </div>
                                 </div>

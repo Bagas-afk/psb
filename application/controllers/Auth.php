@@ -214,7 +214,7 @@ class Auth extends CI_Controller
             'password'        => $password,
             'nisn'            => $nisn,
             'id_tahun_ajaran' => $tahun_ajaran->id_tahun_ajaran,
-            'foto'            => 'default.jpg',
+            'foto'            => 'default.png',
             'date_created'    => date('Y-m-d H:i:s')
          ];
 

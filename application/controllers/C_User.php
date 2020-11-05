@@ -108,7 +108,7 @@ class C_User extends CI_Controller
 			if ($staff['foto']) {
 				$udata = $this->Staff_Model->cari_id($this->session->userdata('id_user'))->row();
 				$nama_gambar = $udata->foto;
-				if ($nama_gambar != 'default.jpg') {
+				if ($nama_gambar != 'default.png') {
 					$this->hapus_profile($nama_gambar);
 				}
 			}
@@ -118,7 +118,7 @@ class C_User extends CI_Controller
 			if ($pendaftar['foto']) {
 				$udata = $this->Pendaftar_Model->cari_id($this->session->userdata('id_user'))->row();
 				$nama_gambar = $udata->foto;
-				if ($nama_gambar != 'default.jpg') {
+				if ($nama_gambar != 'default.png') {
 					$this->hapus_profile($nama_gambar);
 				}
 			}

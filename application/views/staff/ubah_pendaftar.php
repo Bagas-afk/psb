@@ -276,11 +276,11 @@
                                 <input type="number" name="tinggi_badan" class="form-control" value="<?= $data->tinggi_badan ?>">
                             </div>
                             <div class="form-group">
-                                <label>Jarak (Km)</label>
+                                <label>Jarak tempuh dari rumah ke sekolah (Km)</label>
                                 <input type="number" name="jarak" class="form-control" value="<?= $data->jarak ?>">
                             </div>
                             <div class="form-group">
-                                <label>Waktu (Menit)</label>
+                                <label>Waktu tempuh dari rumah ke sekolah (Menit)</label>
                                 <input type="number" name="waktu" class="form-control" value="<?= $data->waktu ?>">
                             </div>
                             <div class="form-group">
@@ -291,26 +291,6 @@
 
                         <div class="tab">
                             <h2 class="text-center">Data Pengasuh Peserta Didik</h2>
-                            <div class="form-inline">
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" onclick="ayah()" id="ayahCheck" <?= $checked_ayah ?>>
-                                    <label class="form-check-label">
-                                        Ayah
-                                    </label>
-                                </div>
-                                <div class="form-check ml-3 mr-3">
-                                    <input class="form-check-input" type="checkbox" onclick="ibu()" id="ibuCheck" <?= $checked_ibu ?>>
-                                    <label class="form-check-label">
-                                        Ibu
-                                    </label>
-                                </div>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" onclick="wali()" id="waliCheck" <?= $checked_wali ?>>
-                                    <label class="form-check-label">
-                                        Wali
-                                    </label>
-                                </div>
-                            </div>
                             <hr />
                             <?php if ($ayah) { ?>
                                 <div id="ayahForm">
@@ -319,6 +299,7 @@
                                         <label>Nama</label>
                                         <input type="text" id="nama_ayah" name="nama_pengasuh[]" class="form-control" value="<?= $ayah->nama ?>">
                                         <input type="hidden" name="id_pengasuh[]" value="<?= $ayah->id_pengasuh_pendaftar ?>" class="form-control">
+                                        <input type="hidden" name="keterangan[]" value="Ayah" class="form-control">
                                     </div>
                                     <div class="form-group">
                                         <label>Tahun Lahir</label>
@@ -326,7 +307,15 @@
                                     </div>
                                     <div class="form-group">
                                         <label>Berkebutuhan Khusus</label>
-                                        <input type="text" name="berkebutuhan_khusus_pengasuh[]" class="form-control" value="<?= $ayah->berkebutuhan_khusus ?>">
+                                        <select name="berkebutuhan_khusus_pengasuh[]" class="form-control select">
+                                            <?php if ($ayah->berkebutuhan_khusus == 'Ya') { ?>
+                                                <option value="Ya" selected>Ya</option>
+                                                <option value="Tidak">Tidak</option>
+                                            <?php } else { ?>
+                                                <option value="Ya">Ya</option>
+                                                <option value="Tidak" selected>Tidak</option>
+                                            <?php } ?>
+                                        </select>
                                     </div>
                                     <div class="form-group">
                                         <label>Pekerjaan</label>
@@ -342,8 +331,42 @@
                                     </div>
                                     <hr />
                                 </div>
+                            <?php } else { ?>
+                                <div id="ayahForm">
+                                    <h2>Data Ayah</h2>
+                                    <div class="form-group">
+                                        <label>Nama</label>
+                                        <input type="text" id="nama_ayah" name="nama_pengasuh[]" class="form-control">
+                                        <input type="hidden" name="id_pengasuh[]" class="form-control">
+                                        <input type="hidden" name="keterangan[]" value="Ayah" class="form-control">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Tahun Lahir</label>
+                                        <input type="date" name="tanggal_lahir_pengasuh[]" class="form-control">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Berkebutuhan Khusus</label>
+                                        <select name="berkebutuhan_khusus_pengasuh[]" class="form-control select">
+                                            <option value="Ya">Ya</option>
+                                            <option value="-">Tidak</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Pekerjaan</label>
+                                        <input type="text" name="pekerjaan[]" class="form-control">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Pendidikan</label>
+                                        <input type="text" name="pendidikan[]" class="form-control">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Penghasilan</label>
+                                        <input type="text" oninput="this.value = this.value.replace(/[^0-9]/g,'').replace(/(\..*)\./g, '$1')" name="penghasilan[]" class="form-control">
+                                    </div>
+                                    <hr />
+                                </div>
                             <?php } ?>
-                            <div class="ayahDiv"></div>
+
                             <?php if ($ibu) { ?>
                                 <div id="ibuForm">
                                     <h2>Data Ibu</h2>
@@ -351,6 +374,7 @@
                                         <label>Nama</label>
                                         <input type="text" id="nama_ibu" name="nama_pengasuh[]" class="form-control" value="<?= $ibu->nama ?>">
                                         <input type="hidden" name="id_pengasuh[]" value="<?= $ibu->id_pengasuh_pendaftar ?>" class="form-control">
+                                        <input type="hidden" name="keterangan[]" value="Ibu" class="form-control">
                                     </div>
                                     <div class="form-group">
                                         <label>Tahun Lahir</label>
@@ -358,7 +382,15 @@
                                     </div>
                                     <div class="form-group">
                                         <label>Berkebutuhan Khusus</label>
-                                        <input type="text" name="berkebutuhan_khusus_pengasuh[]" class="form-control" value="<?= $ibu->berkebutuhan_khusus ?>">
+                                        <select name="berkebutuhan_khusus_pengasuh[]" class="form-control select">
+                                            <?php if ($ibu->berkebutuhan_khusus == 'Ya') { ?>
+                                                <option value="Ya" selected>Ya</option>
+                                                <option value="Tidak">Tidak</option>
+                                            <?php } else { ?>
+                                                <option value="Ya">Ya</option>
+                                                <option value="Tidak" selected>Tidak</option>
+                                            <?php } ?>
+                                        </select>
                                     </div>
                                     <div class="form-group">
                                         <label>Pekerjaan</label>
@@ -374,8 +406,42 @@
                                     </div>
                                     <hr />
                                 </div>
+                            <?php } else { ?>
+                                <div id="ibuForm">
+                                    <h2>Data Ibu</h2>
+                                    <div class="form-group">
+                                        <label>Nama</label>
+                                        <input type="text" id="nama_ibu" name="nama_pengasuh[]" class="form-control">
+                                        <input type="hidden" name="id_pengasuh[]" class="form-control">
+                                        <input type="hidden" name="keterangan[]" value="Ibu" class="form-control">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Tahun Lahir</label>
+                                        <input type="date" name="tanggal_lahir_pengasuh[]" class="form-control">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Berkebutuhan Khusus</label>
+                                        <select name="berkebutuhan_khusus_pengasuh[]" class="form-control select">
+                                            <option value="Ya">Ya</option>
+                                            <option value="-">Tidak</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Pekerjaan</label>
+                                        <input type="text" name="pekerjaan[]" class="form-control">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Pendidikan</label>
+                                        <input type="text" name="pendidikan[]" class="form-control">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Penghasilan</label>
+                                        <input type="text" oninput="this.value = this.value.replace(/[^0-9]/g,'').replace(/(\..*)\./g, '$1')" name="penghasilan[]" class="form-control">
+                                    </div>
+                                    <hr />
+                                </div>
                             <?php } ?>
-                            <div class="ibuDiv"></div>
+
                             <?php if ($wali) { ?>
                                 <div id="waliForm">
                                     <h2>Data Wali</h2>
@@ -383,6 +449,7 @@
                                         <label>Nama</label>
                                         <input type="text" id="nama_wali" name="nama_pengasuh[]" class="form-control" value="<?= $wali->nama ?>">
                                         <input type="hidden" name="id_pengasuh[]" value="<?= $wali->id_pengasuh_pendaftar ?>" class="form-control">
+                                        <input type="hidden" name="keterangan[]" value="Wali" class="form-control">
                                     </div>
                                     <div class="form-group">
                                         <label>Tahun Lahir</label>
@@ -390,7 +457,15 @@
                                     </div>
                                     <div class="form-group">
                                         <label>Berkebutuhan Khusus</label>
-                                        <input type="text" name="berkebutuhan_khusus_pengasuh[]" class="form-control" value="<?= $wali->berkebutuhan_khusus ?>">
+                                        <select name="berkebutuhan_khusus_pengasuh[]" class="form-control select">
+                                            <?php if ($wali->berkebutuhan_khusus == 'Ya') { ?>
+                                                <option value="Ya" selected>Ya</option>
+                                                <option value="Tidak">Tidak</option>
+                                            <?php } else { ?>
+                                                <option value="Ya">Ya</option>
+                                                <option value="Tidak" selected>Tidak</option>
+                                            <?php } ?>
+                                        </select>
                                     </div>
                                     <div class="form-group">
                                         <label>Pekerjaan</label>
@@ -406,8 +481,41 @@
                                     </div>
                                     <hr />
                                 </div>
+                            <?php } else { ?>
+                                <div id="waliForm">
+                                    <h2>Data Wali</h2>
+                                    <div class="form-group">
+                                        <label>Nama</label>
+                                        <input type="hidden" name="id_pengasuh[]" class="form-control">
+                                        <input type="text" id="nama_wali" name="nama_pengasuh[]" class="form-control">
+                                        <input type="hidden" name="keterangan[]" value="Wali" class="form-control">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Tahun Lahir</label>
+                                        <input type="date" name="tanggal_lahir_pengasuh[]" class="form-control">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Berkebutuhan Khusus</label>
+                                        <select name="berkebutuhan_khusus_pengasuh[]" class="form-control select">
+                                            <option value="Ya">Ya</option>
+                                            <option value="-">Tidak</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Pekerjaan</label>
+                                        <input type="text" name="pekerjaan[]" class="form-control">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Pendidikan</label>
+                                        <input type="text" name="pendidikan[]" class="form-control">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Penghasilan</label>
+                                        <input type="text" oninput="this.value = this.value.replace(/[^0-9]/g,'').replace(/(\..*)\./g, '$1')" name="penghasilan[]" class="form-control">
+                                    </div>
+                                    <hr />
+                                </div>
                             <?php } ?>
-                            <div class="waliDiv"></div>
                         </div>
 
                         <div style="overflow:auto;">

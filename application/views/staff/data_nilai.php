@@ -108,7 +108,7 @@
                                             </div>
                                             <div class="form-group">
                                                 <label>Nilai Baca Tulis Qur'an</label>
-                                                <input type="text" class="form-control" name="nilai_btq" value="<?= $nilai->nilai_btq ?>" required>
+                                                <input type="text" class="form-control" max="100" name="nilai_btq" value="<?= $nilai->nilai_btq ?>" required>
                                             </div>
                                     </div>
                                     <div class="modal-footer">

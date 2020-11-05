@@ -6,8 +6,29 @@ class C_Pendaftar extends CI_Controller
     function __construct()
     {
         parent::__construct();
+        $this->load->model('Pembayaran_Model');
+        $this->load->model('Penilaian_Model');
         $this->load->model('Pendaftar_Model');
         $this->load->model('Tahun_Ajaran_Model');
+    }
+
+    function hapus_pendaftar($id_pendaftar)
+    {
+        $cari_pembayaran_pendaftar = $this->Pembayaran_Model->cari_pembayaran_pendaftar($id_pendaftar)->row();
+        $cari_nilai_pendaftar = $this->Penilaian_Model->cari_nilai($id_pendaftar)->row();
+        if (($cari_pembayaran_pendaftar->status_pembayaran == '' || $cari_pembayaran_pendaftar->status_pembayaran == 'Belum Dibayar') && ($cari_nilai_pendaftar->score_penilaian == '' || $cari_nilai_pendaftar->score_penilaian == '0')) {
+            // Berhasil
+            $this->Pendaftar_Model->hapus_pendaftar($id_pendaftar);
+            $this->session->set_flashdata('notif', "Berhasil");
+            $this->session->set_flashdata('perintah', "Hapus Data Pendaftar");
+            $this->session->set_flashdata('pesan', "Data Pendaftar Berhasil Dihapus.");
+        } else {
+            // Gagal
+            $this->session->set_flashdata('notif', "Gagal");
+            $this->session->set_flashdata('perintah', "Hapus Data Pendaftar");
+            $this->session->set_flashdata('pesan', "Data Pendaftar Gagal Dihapus.");
+        }
+        redirect('staff/data_pendaftar');
     }
 
     function update_data_pendaftar()
@@ -62,7 +83,7 @@ class C_Pendaftar extends CI_Controller
         if ($pendaftar['foto']) {
             $udata = $this->Pendaftar_Model->cari_id($this->session->userdata('id_user'))->row();
             $nama_gambar = $udata->foto;
-            if ($nama_gambar != 'default.jpg') {
+            if ($nama_gambar != 'default.png') {
                 $this->hapus_profile($nama_gambar);
             }
         }
@@ -120,10 +141,13 @@ class C_Pendaftar extends CI_Controller
                 'pekerjaan'             => $this->input->post('pekerjaan', TRUE)[$index_pengasuh],
                 'pendidikan'            => $this->input->post('pendidikan', TRUE)[$index_pengasuh],
                 'penghasilan'           => $this->input->post('penghasilan', TRUE)[$index_pengasuh],
+                'keterangan'            => $this->input->post('keterangan', TRUE)[$index_pengasuh],
                 'id_pendaftar'          => $id_pendaftar,
             ]);
             if ($pengasuh_pendaftar[$index_pengasuh]['id_pengasuh_pendaftar'] == '') {
-                $this->Pendaftar_Model->simpan_pengasuh_pendaftar($pengasuh_pendaftar[$index_pengasuh]);
+                if ($pengasuh_pendaftar[$index_pengasuh]['nama'] != '') {
+                    $this->Pendaftar_Model->simpan_pengasuh_pendaftar($pengasuh_pendaftar[$index_pengasuh]);
+                }
             } else {
                 $this->Pendaftar_Model->update_pengasuh_pendaftar($pengasuh_pendaftar[$index_pengasuh], $pengasuh_pendaftar[$index_pengasuh]['id_pengasuh_pendaftar'], $id_pendaftar);
             }
@@ -159,7 +183,7 @@ class C_Pendaftar extends CI_Controller
                 'password'        => password_hash($password, PASSWORD_DEFAULT),
                 'nisn'            => $this->input->post('nisn', TRUE),
                 'id_tahun_ajaran' => $tahun_ajaran->id_tahun_ajaran,
-                'foto'            => 'default.jpg',
+                'foto'            => 'default.png',
                 'date_created'    => date('Y-m-d H:i:s')
             ];
             if ($this->Pendaftar_Model->simpan_registrasi($data)) {

@@ -14,6 +14,11 @@ class Pendaftar_Model extends CI_Model
         return $this->db->query("SELECT *, tb_pendaftar.id_pendaftar FROM tb_pendaftar INNER JOIN tb_pembayaran ON tb_pendaftar.id_pendaftar = tb_pembayaran.id_pendaftar INNER JOIN tb_staff ON tb_staff.id_staff = tb_pembayaran.id_staff");
     }
 
+    function hapus_pendaftar($id_pendaftar)
+    {
+        return $this->db->delete('tb_pendaftar', ['md5(id_pendaftar)' => $id_pendaftar]);
+    }
+
     function cari_id($id)
     {
         $this->db->where('id_pendaftar', $id);
@@ -24,6 +29,20 @@ class Pendaftar_Model extends CI_Model
     {
         $this->db->where('id_pendaftar', $id);
         return $this->db->update('tb_pendaftar', $pendaftar);
+    }
+
+    function tampil_jumlah_beasiswa_semua($id_pendaftar)
+    {
+        $this->db->select('count(id_beasiswa_pendaftar) as jumlah_beasiswa');
+        $this->db->where('id_pendaftar', $id_pendaftar);
+        return $this->db->get('tb_beasiswa_pendaftar');
+    }
+
+    function tampil_jumlah_prestasi_semua($id_pendaftar)
+    {
+        $this->db->select('count(id_prestasi_pendaftar) as jumlah_prestasi');
+        $this->db->where('id_pendaftar', $id_pendaftar);
+        return $this->db->get('tb_prestasi_pendaftar');
     }
 
     function tampil_beasiswa_pendaftar($id_pendaftar)
@@ -43,6 +62,30 @@ class Pendaftar_Model extends CI_Model
     function tampil_pengasuh_pendaftar($id_pendaftar)
     {
         $this->db->join('tb_pengasuh_pendaftar', 'tb_pengasuh_pendaftar.id_pendaftar = tb_pendaftar.id_pendaftar', 'inner');
+        $this->db->where('md5(tb_pendaftar.id_pendaftar)', $id_pendaftar);
+        return $this->db->get('tb_pendaftar');
+    }
+
+    function tampil_pengasuh_ayah($id_pendaftar)
+    {
+        $this->db->join('tb_pengasuh_pendaftar', 'tb_pengasuh_pendaftar.id_pendaftar = tb_pendaftar.id_pendaftar', 'inner');
+        $this->db->where('keterangan', 'Ayah');
+        $this->db->where('md5(tb_pendaftar.id_pendaftar)', $id_pendaftar);
+        return $this->db->get('tb_pendaftar');
+    }
+
+    function tampil_pengasuh_ibu($id_pendaftar)
+    {
+        $this->db->join('tb_pengasuh_pendaftar', 'tb_pengasuh_pendaftar.id_pendaftar = tb_pendaftar.id_pendaftar', 'inner');
+        $this->db->where('keterangan', 'Ibu');
+        $this->db->where('md5(tb_pendaftar.id_pendaftar)', $id_pendaftar);
+        return $this->db->get('tb_pendaftar');
+    }
+
+    function tampil_pengasuh_wali($id_pendaftar)
+    {
+        $this->db->join('tb_pengasuh_pendaftar', 'tb_pengasuh_pendaftar.id_pendaftar = tb_pendaftar.id_pendaftar', 'inner');
+        $this->db->where('keterangan', 'Wali');
         $this->db->where('md5(tb_pendaftar.id_pendaftar)', $id_pendaftar);
         return $this->db->get('tb_pendaftar');
     }

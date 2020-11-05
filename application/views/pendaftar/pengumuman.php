@@ -27,7 +27,7 @@
                         // $batas_lulus = $tahun_ajaran->;
                         if ($penilaian->keterangan_kelulusan == 'Lulus') { ?>
                             <p>Selamat anda dinyatakan <b class="bg-success text-light">Lulus</b>. Silahkan cetak bukti kelulusan.</p>
-                            <a href="<?= base_url('c_export/cetak_bukti_kelulusan') ?>" class="btn btn-success">Download Bukti Kelulusan</a>
+                            <a href="<?= base_url('c_export/cetak_bukti_kelulusan') ?>" target="_blank" class="btn btn-success">Download Bukti Kelulusan</a>
                         <?php } else { ?>
                             <p>Mohon maaf, anda dinyatakan <b class="bg-danger text-light">Tidak Lulus</b> dalam penilaian kriteria kelulusan.</p>
                         <?php } ?>

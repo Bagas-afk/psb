@@ -100,7 +100,6 @@ class Staff extends CI_Controller
         $data['data_pendaftar'] = $this->Pendaftar_Model->cari_data_pendaftar($id_pendaftar)->row();
         $data['beasiswa_pendaftar'] = $this->Pendaftar_Model->tampil_beasiswa_pendaftar($id_pendaftar)->result();
         $data['prestasi_pendaftar'] = $this->Pendaftar_Model->tampil_prestasi_pendaftar($id_pendaftar)->result();
-        $data['pengasuh_pendaftar'] = $this->Pendaftar_Model->tampil_pengasuh_pendaftar($id_pendaftar)->result();
 
         if ($data['data_pendaftar']->agama == 'Islam') {
             $data['agama'] = ['selected', '', '', '', ''];
@@ -116,26 +115,9 @@ class Staff extends CI_Controller
             $data['agama'] = ['', '', '', '', ''];
         }
 
-        if ($data['pengasuh_pendaftar'][0]) {
-            $data['ayah'] = $data['pengasuh_pendaftar'][0];
-            $data['checked_ayah'] = 'checked';
-        } else {
-            $data['checked_ayah'] = '';
-        }
-
-        if ($data['pengasuh_pendaftar'][1]) {
-            $data['ibu'] = $data['pengasuh_pendaftar'][1];
-            $data['checked_ibu'] = 'checked';
-        } else {
-            $data['checked_ibu'] = '';
-        }
-
-        if ($data['pengasuh_pendaftar'][2]) {
-            $data['wali'] = $data['pengasuh_pendaftar'][2];
-            $data['checked_wali'] = 'checked';
-        } else {
-            $data['checked_wali'] = '';
-        }
+        $data['ayah'] = $this->Pendaftar_Model->tampil_pengasuh_ayah($id_pendaftar)->row();
+        $data['ibu'] = $this->Pendaftar_Model->tampil_pengasuh_ibu($id_pendaftar)->row();
+        $data['wali'] = $this->Pendaftar_Model->tampil_pengasuh_wali($id_pendaftar)->row();
 
         $this->load->view('templates/header', $data);
         $this->load->view('templates/topbar');
