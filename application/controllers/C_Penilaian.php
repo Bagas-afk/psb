@@ -11,6 +11,27 @@ class C_Penilaian extends CI_Controller
         $this->load->model('Tahun_Ajaran_Model');
     }
 
+    function tambah_nilai()
+    {
+        $data = [
+            'id_penilaian_pendaftar'    => '',
+            'id_pendaftar'              => $this->input->post('id_pendaftar', TRUE),
+            'id_tahun_ajaran'           => $this->input->post('id_tahun_ajaran', TRUE),
+            'pilihan_ganda_benar'       => $this->input->post('pilihan_ganda_benar', TRUE),
+            'nilai_btq'                 => $this->input->post('nilai_btq', TRUE)
+        ];
+        if ($this->Penilaian_Model->tambah_penilaian($data)) {
+            $this->session->set_flashdata('notif', "Berhasil");
+            $this->session->set_flashdata('perintah', "Tambah Nilai Pendaftar");
+            $this->session->set_flashdata('pesan', "Penilaian Pendaftar Berhasil Disimpan.");
+        } else {
+            $this->session->set_flashdata('notif', "Gagal");
+            $this->session->set_flashdata('perintah', "Tambah Nilai Pendaftar");
+            $this->session->set_flashdata('pesan', "Penilaian Pendaftar Gagal Disimpan.");
+        }
+        redirect('staff/data_nilai');
+    }
+
     function update_nilai()
     {
         $id_penilaian_pendaftar = $this->input->post('id_penilaian_pendaftar', TRUE);

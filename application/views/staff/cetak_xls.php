@@ -93,7 +93,7 @@
                     <td align="center"><?= $data->no_un ?></td>
                     <td align="center">'<?= $data->nik ?></td>
                     <td><?= ucfirst($data->tempat_lahir) ?></td>
-                    <td align="center"><?= date('d-m-Y', strtotime($data->tanggal_lahir)) ?></td>
+                    <td align="center"><?= $data->tanggal_lahir ?></td>
                     <td align="center"><?= $data->agama ?></td>
                     <td align="center"><?= $data->berkebutuhan_khusus ?></td>
                     <td><?= $data->alamat ?></td>
@@ -113,7 +113,7 @@
                     <td align="center"><?= $data->jumlah_saudara_kandung ?></td>
                     <td align="center"><?= $data->status_pembayaran ?></td>
                     <td align="center"><?= $data->keterangan_pembayaran ?></td>
-                    <td align="center"><?= $data->pilihan_ganda_benar ?></td>
+                    <td align="center"><?= $data->pilihan_ganda_benar * (100 / $data->jumlah_pilihan_ganda) ?></td>
                     <td align="center"><?= $data->nilai_btq ?></td>
                     <td align="center"><?= $data->score_penilaian ?></td>
                     <td align="center"><?= $data->keterangan_kelulusan ?></td>

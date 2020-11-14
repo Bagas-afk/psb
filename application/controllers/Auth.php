@@ -92,7 +92,7 @@ class Auth extends CI_Controller
          [
             'field'  => 'nisn',
             'label'  => 'NISN',
-            'rules'  => 'required|trim|max_length[10]|min_length[10]',
+            'rules'  => 'required|trim|numeric|max_length[10]|min_length[10]',
             'errors' => [
                'max_length'   => 'NISN Harus 10 Digit Angka',
                'min_length'   => 'NISN Harus 10 Digit Angka',
@@ -169,10 +169,13 @@ class Auth extends CI_Controller
          [
             'field'  => 'nisn',
             'label'  => 'NISN',
-            'rules'  => 'required|trim|number|max_length[10]',
+            'rules'  => 'required|trim|numeric|min_length[10]|max_length[10]|is_unique[tb_pendaftar.nisn]',
             'errors' => [
                'required'     => 'NISN Harus Diisi.',
-               'max_length'   => 'NISN Tidak Lebih Dari 10 Karakter'
+               'max_length'   => 'NISN Harus 10 Karakter',
+               'min_length'   => 'NISN Harus 10 Karakter',
+               'is_unique'    => 'NISN sudah terdaftar',
+               'numeric'      => 'NISN Harus Angka'
 
             ]
          ],
@@ -223,13 +226,14 @@ class Auth extends CI_Controller
          if ($simpan_registrasi) {
             $this->session->set_flashdata('notif', "Berhasil");
             $this->session->set_flashdata('perintah', "Registrasi Berhasil");
-            $this->session->set_flashdata('Pesan', "Berhasil Registrasi! Silahkan Login.");
+            $this->session->set_flashdata('pesan', "Berhasil Registrasi! Silahkan Login.");
+            redirect('auth/pendaftar');
          } else {
             $this->session->set_flashdata('notif', "Gagal");
             $this->session->set_flashdata('perintah', "Gagal Registrasi");
-            $this->session->set_flashdata('Pesan', "Registrasi Gagal! Silahkan Cek Data Kembali.");
+            $this->session->set_flashdata('pesan', "Registrasi Gagal! Silahkan Cek Data Kembali.");
+            redirect('auth/registrasi');
          }
-         redirect('auth/pendaftar');
       }
    }
 
@@ -243,7 +247,7 @@ class Auth extends CI_Controller
          $this->session->set_flashdata('notif', "Gagal");
          $this->session->set_flashdata('perintah', "Gagal Login");
          $this->session->set_flashdata('pesan', "Harus Login Terlebih Dahulu. Silahkan Login!");
-         redirect('');
+         redirect(base_url());
       }
    }
 

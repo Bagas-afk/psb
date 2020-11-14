@@ -22,6 +22,9 @@
 <script src="<?= base_url('/') ?>assets/js/jquery-3.5.1.js"></script>
 <script src="<?= base_url('/') ?>assets/js/popper.js"></script>
 <script src="<?= base_url('/') ?>assets/js/bootstrap.min.js"></script>
+<script>
+    var id_role = <?= $this->session->userdata('id_role') ?>
+</script>
 <!-- apps -->
 <script src="<?= base_url('/') ?>assets/templates/js/app-style-switcher.js"></script>
 <script src="<?= base_url('/') ?>assets/templates/js/feather.min.js"></script>

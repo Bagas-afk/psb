@@ -31,6 +31,9 @@ class C_Pendaftar extends CI_Controller
             if ($gambar->foto != 'default.png') {
                 $this->hapus_profile($gambar->foto);
             }
+            if ($gambar->berkas != 'Sudah Diterima Staff') {
+                $this->hapus_berkas($gambar->berkas);
+            }
             $this->Pendaftar_Model->hapus_pendaftar($id_pendaftar);
             $this->session->set_flashdata('notif', "Berhasil");
             $this->session->set_flashdata('perintah', "Hapus Data Pendaftar");
@@ -93,6 +96,19 @@ class C_Pendaftar extends CI_Controller
             $pendaftar = array_merge($pendaftar, $foto);
         }
 
+        if ($this->session->userdata('id_role') == '1') {
+            $udata = $this->Pendaftar_Model->cari_id($this->session->userdata('id_user'))->row();
+            if ($udata->berkas == '' && $udata->berkas == 'Sudah Diterima Staff') {
+                $berkas = ['berkas' => 'Sudah Diterima Staff'];
+                $pendaftar = array_merge($pendaftar, $berkas);
+            }
+        } else {
+            if ($_FILES['berkas']['name']) {
+                $berkas = ['berkas' => $this->upload_berkas($this->input->post('nisn', TRUE))];
+                $pendaftar = array_merge($pendaftar, $berkas);
+            }
+        }
+
         if ($pendaftar['foto']) {
             $udata = $this->Pendaftar_Model->cari_id($this->session->userdata('id_user'))->row();
             $nama_gambar = $udata->foto;
@@ -130,7 +146,7 @@ class C_Pendaftar extends CI_Controller
                 'id_beasiswa_pendaftar' => $id,
                 'nama_beasiswa'         => $this->input->post('nama_beasiswa', TRUE)[$index_beasiswa],
                 'jenis_beasiswa'        => $this->input->post('jenis_beasiswa', TRUE)[$index_beasiswa],
-                'penyelenggara'          => $this->input->post('penyelenggara_beasiswa', TRUE)[$index_beasiswa],
+                'penyelenggara'         => $this->input->post('penyelenggara_beasiswa', TRUE)[$index_beasiswa],
                 'tahun_mulai'           => $this->input->post('tahun_mulai', TRUE)[$index_beasiswa],
                 'tahun_selesai'         => $this->input->post('tahun_selesai', TRUE)[$index_beasiswa],
                 'id_pendaftar'          => $id_pendaftar
@@ -240,9 +256,30 @@ class C_Pendaftar extends CI_Controller
         }
     }
 
+    function upload_berkas($nama)
+    {
+        $config['upload_path']          = './assets/berkas/';
+        $config['allowed_types']        = 'pdf';
+        $config['file_name']            = 'Berkas ' . $nama;
+        $config['overwrite']            = TRUE;
+
+        $this->load->library('upload', $config);
+
+        if ($this->upload->do_upload('berkas')) {
+            return $this->upload->data('file_name');
+        } else {
+            return $this->upload->display_errors();
+        }
+    }
+
     function hapus_profile($nama)
     {
         unlink('assets/img/profile/' . $nama);
+    }
+
+    function hapus_berkas($nama)
+    {
+        unlink('assets/berkas/' . $nama);
     }
 
     function hapus_bukti_upload($nama)

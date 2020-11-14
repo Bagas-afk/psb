@@ -37,10 +37,11 @@
                                 </button>
                             </div>
                             <div class="modal-body">
-                                <form action="" method="post">
+                                <form action="<?= base_url('c_penilaian/tambah_nilai') ?>" method="post">
                                     <div class="form-group">
                                         <label>Pilih Pendaftar</label>
                                         <select name="id_pendaftar" id="pilihan_pendaftar" class="form-control select"></select>
+                                        <input type="hidden" class="form-control" name="id_tahun_ajaran" id="tahun_ajaran_nilai" />
                                     </div>
                                     <div id="penilaian"></div>
                             </div>
@@ -71,7 +72,7 @@
                             <td>Tahun Ajaran <?= $nilai->tahun_ajaran ?></td>
                             <td><?= $nilai->nisn ?></td>
                             <td><?= $nilai->nama_pendaftar ?></td>
-                            <td class="text-center"><?= $nilai->pilihan_ganda_benar * 2 ?></td>
+                            <td class="text-center"><?= $nilai->pilihan_ganda_benar * (100 / $nilai->jumlah_pilihan_ganda) ?></td>
                             <td class="text-center"><?= $nilai->nilai_btq ?></td>
                             <td class="text-center">
                                 <?php if ($nilai->keterangan_kelulusan == '') { ?>
@@ -104,11 +105,11 @@
                                             </div>
                                             <div class="form-group">
                                                 <label>Pilihan Ganda Benar</label>
-                                                <input type="text" class="form-control" name="pilihan_ganda_benar" value="<?= $nilai->pilihan_ganda_benar ?>" required>
+                                                <input type="text" class="form-control" min="0" max="" name="pilihan_ganda_benar" value="<?= $nilai->pilihan_ganda_benar ?>" required>
                                             </div>
                                             <div class="form-group">
                                                 <label>Nilai Baca Tulis Qur'an</label>
-                                                <input type="text" class="form-control" max="100" name="nilai_btq" value="<?= $nilai->nilai_btq ?>" required>
+                                                <input type="text" class="form-control" min="0" max="100" name="nilai_btq" value="<?= $nilai->nilai_btq ?>" required>
                                             </div>
                                     </div>
                                     <div class="modal-footer">

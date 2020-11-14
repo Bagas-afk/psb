@@ -287,6 +287,15 @@
                                 <label>Jumlah Saudara Kandung</label>
                                 <input type="number" name="jumlah_saudara" class="form-control" value="<?= $user->jumlah_saudara_kandung ?>">
                             </div>
+                            <div class="form-group">
+                                <label>Upload Berkas <small>(Berkas Prestasi dan Beasiswa jika ada)</small></label> <br />
+                                <?php if ($user->berkas != 'Sudah Diterima Staff') { ?>
+                                    <a href="<?= base_url('/assets/berkas/') . $user->berkas ?>" target="_blank"><?= $user->berkas ?></a>
+                                    <input type="file" name="berkas" class="form-control-file w-100" accept=".pdf">
+                                <?php } else { ?>
+                                    <?= $data->berkas_prestasi ?>
+                                <?php } ?>
+                            </div>
                         </div>
 
                         <div class="tab">

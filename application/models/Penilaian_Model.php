@@ -14,6 +14,11 @@ class Penilaian_Model extends CI_Model
         return $this->db->get('tb_penilaian');
     }
 
+    function tambah_penilaian($data)
+    {
+        return $this->db->insert('tb_penilaian', $data);
+    }
+
     function update_nilai($id_penilaian_pendaftar, $data)
     {
         $this->db->where('id_penilaian_pendaftar', $id_penilaian_pendaftar);

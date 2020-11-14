@@ -156,23 +156,26 @@ $(document).ready(function () {
 
 	$('#tahun_ajaran_pendaftar').change(function () {
 		var id_tahun_ajaran = document.getElementById('tahun_ajaran_pendaftar').value
+
 		$.ajax({
 			type: 'get',
 			url: '/psb/staff/tampil_pendaftar_tahun_ajaran/' + id_tahun_ajaran,
 			dataType: 'json',
 			success: function (data) {
-				var html = ''
+				var html = '<option></option>'
 				data.forEach(data => {
 					html += '<option value="' + data.id_pendaftar + '">' + data.nisn + ' - ' + data.nama_pendaftar + '</option>'
 				})
 				$('#pilihan_pendaftar').html(html)
 			}
 		})
-
+		document.getElementById('tahun_ajaran_nilai').value = id_tahun_ajaran
 		document.getElementById('verifikasi_nilai').href = '/psb/c_penilaian/verifikasi_penilaian/' + md5(id_tahun_ajaran)
 	})
 
 	$('#pilihan_pendaftar').change(function () {
+		var id_tahun_ajaran = document.getElementById('tahun_ajaran_pendaftar').value
+		console.log(id_tahun_ajaran)
 		var id_pendaftar = document.getElementById('pilihan_pendaftar').value
 		var tombol = document.getElementById('simpan')
 		$.ajax({
@@ -187,20 +190,27 @@ $(document).ready(function () {
 						text: 'Data Penilaian Sudah Ada',
 						icon: 'error'
 					})
-					html += ''
 					tombol.disabled = true
 				} else {
 					html += '<div class="form-group">'
 					html += '<label>Pilihan Ganda Benar</label>'
-					html += '<input type="number" class="form-control" name="pilihan_ganda_benar" min="0" max="50" required>'
+					html += '<input type="number" class="form-control" id="pilihan_ganda_benar" name="pilihan_ganda_benar" min="0" max="" required>'
 					html += '</div>'
 					html += '<div class="form-group">'
 					html += '<label>Nilai Baca Tulis Al-Qur\'an</label>'
 					html += '<input type="number" name="nilai_btq" class="form-control" min="0" max="100" required>'
 					html += '</div>'
 					tombol.disabled = false
+					$('#penilaian').html(html)
+					$.ajax({
+						type: 'get',
+						url: '/psb/c_tahun_ajaran/cari_tahun_ajaran/' + id_tahun_ajaran,
+						dataType: 'json',
+						success: function (ta) {
+							document.getElementById('pilihan_ganda_benar').max = ta.jumlah_pilihan_ganda
+						}
+					})
 				}
-				$('#penilaian').html(html)
 			}
 		})
 	})
@@ -217,7 +227,6 @@ $(document).ready(function () {
 				table.search('Tahun Ajaran ' + data.tahun_ajaran).draw();
 			}
 		})
-
 	})
 
 	$('#tahun_ajaran_pendaftar').change(function () {
@@ -231,7 +240,6 @@ $(document).ready(function () {
 				table.search('Tahun Ajaran ' + data.tahun_ajaran).draw();
 			}
 		})
-
 	})
 
 	$('#tahun_ajaran_kelulusan').change(function () {
@@ -295,6 +303,25 @@ function tambahPrestasi() {
 	html += '<input type="text" name="penyelenggara_prestasi[]" class="form-control w-100">'
 	html += '</div>'
 	html += '</div>'
+	if (id_role == '1') {
+		html += '<div class="form-inline row mb-2">'
+		html += '<div class="col-2 d-flex justify-content-start">'
+		html += '<label>Berkas Prestasi</label>'
+		html += '</div>'
+		html += '<div class="col-10">'
+		html += '<input type="text" value="Sudah Diberikan Staff" name="berkas_prestasi[]" class="form-control w-100">'
+		html += '</div>'
+		html += '</div>'
+	} else if (id_role == '2') {
+		html += '<div class="form-inline row mb-2">'
+		html += '<div class="col-2 d-flex justify-content-start">'
+		html += '<label>Berkas Prestasi</label>'
+		html += '</div>'
+		html += '<div class="col-10">'
+		html += '<input type="file" name="berkas_prestasi[]" accept=".pdf" class="form-control-file w-100">'
+		html += '</div>'
+		html += '</div>'
+	}
 	html += '</div>'
 	$('#field_prestasi').append(html)
 }
@@ -345,6 +372,25 @@ function tambahBeasiswa() {
 	html += '<input type="number" name="tahun_selesai[]" class="form-control w-100" placeholder="contoh : 2019">'
 	html += '</div>'
 	html += '</div>'
+	if (id_role == '1') {
+		html += '<div class="form-inline row mb-2">'
+		html += '<div class="col-2 d-flex justify-content-start">'
+		html += '<label>Berkas Beasiswa</label>'
+		html += '</div>'
+		html += '<div class="col-10">'
+		html += '<input type="text" value="Sudah Diberikan Staff" name="berkas_beasiswa[]" class="form-control w-100">'
+		html += '</div>'
+		html += '</div>'
+	} else if (id_role == '2') {
+		html += '<div class="form-inline row mb-2">'
+		html += '<div class="col-2 d-flex justify-content-start">'
+		html += '<label>Berkas Beasiswa</label>'
+		html += '</div>'
+		html += '<div class="col-10">'
+		html += '<input type="file" name="berkas_beasiswa[]" accept=".pdf" class="form-control-file w-100">'
+		html += '</div>'
+		html += '</div>'
+	}
 	html += '</div>'
 	$('#field_beasiswa').append(html)
 }
