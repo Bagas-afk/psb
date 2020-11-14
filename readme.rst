@@ -2,13 +2,27 @@
 Penerimaan Santri Baru - SMP Tazkia Insani
 ###################
 
-CodeIgniter is an Application Development Framework - a toolkit - for people
-who build web sites using PHP. Its goal is to enable you to develop projects
-much faster than you could if you were writing code from scratch, by providing
-a rich set of libraries for commonly needed tasks, as well as a simple
-interface and logical structure to access these libraries. CodeIgniter lets
-you creatively focus on your project by minimizing the amount of code needed
-for a given task.
+Sistem Penerimaan Siswa Baru di SMP Tazkia Insani ini diperuntukan memenuhi 
+syarat kelulusan saya di Universitas Pamulang angkatan Tahun 2016. Program 
+yang saya buat ini adalah sistem pendaftaran dan seleksi siswa baru menggunakan 
+metode Weighted Product. Ini adalah karya saya untuk melengkapi skripsi saya 
+di jurusan Teknik Informatika. Oleh karena itu, saya membuat program ini dan 
+apabila ingin mengembangkan program yang saya buat, silahkan sertakan link 
+github saya. Terima Kasih.
+
+*******************
+Demo Login
+*******************
+Staff :
+
+# email = ilhammahier@gmail.com
+
+# password = staff
+
+
+Pendaftar :
+
+# Silahkan buat sendiri di registrasi pendaftar
 
 *******************
 Release Information
